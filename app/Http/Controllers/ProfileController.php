@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use App\Models\User;
 
@@ -32,7 +33,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * Update the authenticated user's profile information (basic).
+     * Update the authenticated user's profile information including photo.
      */
     public function update(Request $request): RedirectResponse
     {
@@ -43,6 +44,7 @@ class ProfileController extends Controller
             'birthday' => 'nullable|date',
             'about' => 'nullable|string',
             'email' => 'required|email|unique:users,email,' . $user->id,
+            'profile_photo' => 'nullable|image|max:2048',
         ]);
 
         $user->username = $validated['username'];
@@ -52,6 +54,14 @@ class ProfileController extends Controller
         if ($user->email !== $validated['email']) {
             $user->email = $validated['email'];
             $user->email_verified_at = null;
+        }
+
+        if ($request->hasFile('profile_photo')) {
+            if ($user->profile_photo) {
+                Storage::delete($user->profile_photo);
+            }
+            $path = $request->file('profile_photo')->store('profile_photos');
+            $user->profile_photo = $path;
         }
 
         $user->save();
@@ -64,5 +74,6 @@ class ProfileController extends Controller
      */
     public function destroy(Request $request)
     {
+
     }
 }
