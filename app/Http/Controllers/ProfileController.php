@@ -72,8 +72,25 @@ class ProfileController extends Controller
     /**
      * Delete the authenticated user's account.
      */
-    public function destroy(Request $request)
+    public function destroy(Request $request): RedirectResponse
     {
+        $request->validateWithBag('userDeletion', [
+            'password' => ['required', 'current_password'],
+        ]);
 
+        $user = $request->user();
+
+        Auth::logout();
+
+        if ($user->profile_photo) {
+            Storage::delete($user->profile_photo);
+        }
+
+        $user->delete();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return Redirect::to('/')->with('status', 'Account succesvol verwijderd.');
     }
 }
