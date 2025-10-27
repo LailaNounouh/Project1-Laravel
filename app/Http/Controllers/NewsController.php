@@ -9,19 +9,17 @@ use Illuminate\Support\Facades\Auth;
 
 class NewsController extends Controller
 {
-    // Publiek
     public function index()
     {
-        $news = News::latest()->paginate(10);
+        $news = \App\Models\News::latest()->paginate(10);
         return view('news.index', compact('news'));
     }
 
-    public function show(News $news)
+    public function show(\App\Models\News $news)
     {
         return view('news.show', compact('news'));
     }
 
-    // Admin CRUD (middleware zorgt dat alleen admin hier komt)
     public function create()
     {
         return view('news.create');
@@ -60,7 +58,6 @@ class NewsController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            // oude afbeelding verwijderen
             if ($news->image) {
                 Storage::delete($news->image);
             }
@@ -77,6 +74,7 @@ class NewsController extends Controller
         if ($news->image) {
             Storage::delete($news->image);
         }
+
         $news->delete();
 
         return redirect()->route('news.index')->with('success', 'Nieuwsitem verwijderd.');

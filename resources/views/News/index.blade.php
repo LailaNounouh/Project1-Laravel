@@ -1,4 +1,3 @@
-<?php
 @extends('layouts.app')
 
 @section('content')
@@ -12,7 +11,7 @@
         @foreach($news as $item)
             <article class="mb-6 border-b pb-4">
                 <h2 class="text-xl font-semibold">
-                    <a href="{{ route('news.show', $item) }}">{{ $item->title }}</a>
+                    <a href="{{ route('news.show', $item) }}" class="text-blue-600 hover:underline">{{ $item->title }}</a>
                 </h2>
 
                 @if($item->image)
@@ -21,12 +20,13 @@
 
                 <p class="text-sm text-gray-600">Geplaatst op {{ $item->created_at->format('d/m/Y') }}</p>
 
-                <p class="mt-2">{{ \Illuminate\Support\Str::limit(strip_tags($item->content), 200) }}</p>
-                <a href="{{ route('news.show', $item) }}" class="text-blue-600">Lees meer</a>
+                <p class="mt-2">{{ Str::limit(strip_tags($item->content), 150) }}</p>
             </article>
         @endforeach
 
-        {{ $news->links() }}
+        <div class="mt-4">
+            {{ $news->links() }}
+        </div>
     </div>
 @endsection
 
