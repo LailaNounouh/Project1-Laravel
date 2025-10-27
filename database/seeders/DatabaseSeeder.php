@@ -21,5 +21,24 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
+        $this->call(AdminUserSeeder::class);
+
+
+        \App\Models\Category::factory()->count(3)->create();
+
+
+        \App\Models\Faq::factory()->count(6)->create();
+
+
+        \App\Models\User::factory()->count(5)->create();
+
+
+        \App\Models\News::factory()->count(8)->create();
+
+
+        \App\Models\Comment::factory()->count(10)->create();
+
+
+        \App\Models\Contact::factory()->count(4)->create();
     }
 }
