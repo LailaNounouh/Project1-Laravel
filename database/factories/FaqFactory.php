@@ -17,7 +17,9 @@ class FaqFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'question' => $this->faker->sentence . '?',
+            'answer' => $this->faker->paragraph,
+            'category_id' => \App\Models\Category::factory(),
         ];
     }
 }

@@ -17,7 +17,10 @@ class NewsFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'title' => $this->faker->sentence,
+            'content' => $this->faker->paragraphs(3, true),
+            'image' => null,
+            'user_id' => \App\Models\User::factory(),
         ];
     }
 }

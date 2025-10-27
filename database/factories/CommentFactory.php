@@ -17,7 +17,9 @@ class CommentFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'content' => $this->faker->sentence,
+            'user_id' => \App\Models\User::factory(),
+            'news_id' => \App\Models\News::factory(),
         ];
     }
 }
