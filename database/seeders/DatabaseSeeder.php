@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Models\Category;
 use App\Models\Contact;
 use App\Models\Comment;
+use App\Models\Faq;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -50,3 +52,4 @@ class DatabaseSeeder extends Seeder
         ]);
     }
 }
+
