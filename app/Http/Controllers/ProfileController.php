@@ -3,95 +3,44 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\View\View;
-use App\Models\User;
 
 class ProfileController extends Controller
 {
-    /**
-     * Show a user's profile.
-     */
     public function show()
     {
-        $user = auth()->user();
+        $user = Auth::user();
         return view('profile.show', compact('user'));
     }
 
-
-    /**
-     * Display the authenticated user's profile edit form.
-     */
-    public function edit(Request $request): View
+    public function edit()
     {
-        return view('profile.edit', [
-            'user' => $request->user(),
-        ]);
+        $user = Auth::user();
+        return view('profile.edit', compact('user'));
     }
 
-    /**
-     * Update the authenticated user's profile information.
-     */
-    public function update(Request $request): RedirectResponse
+    public function update(Request $request)
     {
-        $user = $request->user();
+        $user = Auth::user();
 
-        // Validatie van de input
-        $validated = $request->validate([
-            'username' => 'required|string|max:255',
-            'birthday' => 'nullable|date',
-            'about' => 'nullable|string',
-            'profile_photo' => 'nullable|image|max:2048',
-            'email' => 'required|email|unique:users,email,' . $user->id,
+        $data = $request->validate([
+            'name'          => ['required', 'string', 'max:255'],
+            'first_name'    => ['nullable', 'string', 'max:255'],
+            'last_name'     => ['nullable', 'string', 'max:255'],
+            'email'         => ['required', 'email', 'max:255'],
+            'phone'         => ['nullable', 'string', 'max:30'],
+            'birthday'      => ['nullable', 'date'],
+            'about'         => ['nullable', 'string', 'max:2000'],
+            'profile_photo' => ['nullable', 'image', 'max:2048'],
         ]);
 
-        // Basisgegevens bijwerken
-        $user->username = $validated['username'];
-        $user->birthday = $validated['birthday'] ?? null;
-        $user->about = $validated['about'] ?? null;
-
-        // Email check: als veranderd, zet verified_at op null
-        if ($user->email !== $validated['email']) {
-            $user->email = $validated['email'];
-            $user->email_verified_at = null;
-        }
-
-        // Profielfoto uploaden
         if ($request->hasFile('profile_photo')) {
-            // Oude foto verwijderen
-            if ($user->profile_photo) {
-                Storage::delete($user->profile_photo);
-            }
-            $path = $request->file('profile_photo')->store('profile_photos');
-            $user->profile_photo = $path;
+            $path = $request->file('profile_photo')->store('profiles', 'public');
+            $data['profile_photo'] = $path;
         }
 
-        $user->save();
+        $user->update($data);
 
-        return Redirect::route('profile.edit')->with('status', 'Profiel succesvol bijgewerkt!');
-    }
-
-    /**
-     * Delete the authenticated user's account.
-     */
-    public function destroy(Request $request): RedirectResponse
-    {
-        $request->validateWithBag('userDeletion', [
-            'password' => ['required', 'current_password'],
-        ]);
-
-        $user = $request->user();
-
-        Auth::logout();
-
-        $user->delete();
-
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return Redirect::to('/')->with('status', 'Account succesvol verwijderd.');
+        return redirect()->route('profile.show')->with('success', 'Je profiel is succesvol bijgewerkt!');
     }
 }
