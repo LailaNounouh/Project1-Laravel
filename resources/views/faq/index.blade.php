@@ -49,9 +49,8 @@
                 @error('question') <p class="text-red-600 text-sm">{{ $message }}</p> @enderror
             </div>
 
-            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-                Verstuur je vraag
-            </button>
+            <button type="submit" class="btn-glam"> Verstuur vraag</button>
+
         </form>
     </div>
 @endsection

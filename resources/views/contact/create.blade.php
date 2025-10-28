@@ -62,14 +62,9 @@
                 @enderror
             </div>
 
-            {{--  Verbeterde Verstuur-knop  --}}
-            <button
-                type="submit"
-                style="background-color:#2563eb; color:white; padding:10px 20px; border:none; border-radius:6px; font-weight:600; cursor:pointer;"
-                onmouseover="this.style.backgroundColor='#1d4ed8'"
-                onmouseout="this.style.backgroundColor='#2563eb'">
-                Verstuur
-            </button>
+            {{-- Verstuur-knop  --}}
+            <button type="submit" class="btn-glam"> Verstuur</button>
+
         </form>
     </div>
 @endsection
