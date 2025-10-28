@@ -13,12 +13,6 @@ class ProfileController extends Controller
         return view('profile.show', compact('user'));
     }
 
-    public function edit()
-    {
-        $user = Auth::user();
-        return view('profile.edit', compact('user'));
-    }
-
     public function update(Request $request)
     {
         $user = Auth::user();
@@ -41,6 +35,6 @@ class ProfileController extends Controller
 
         $user->update($data);
 
-        return redirect()->route('profile.show')->with('success', 'Je profiel is succesvol bijgewerkt!');
+        return back()->with('success', 'Profiel succesvol bijgewerkt!');
     }
 }

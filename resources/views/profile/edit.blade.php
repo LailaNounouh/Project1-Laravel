@@ -1,75 +1,63 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Profile') }}
-        </h2>
-    </x-slot>
+@extends('layouts.app')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+@section('content')
+    <div class="container mx-auto py-8">
+        <h1 class="text-3xl font-bold mb-6 text-gray-800">Bewerk je profiel</h1>
 
-            <!-- Profielinformatie bijwerken -->
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
-                        @csrf
-                        @method('PATCH')
+        <form method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data" class="space-y-5 bg-white p-6 rounded-lg shadow-md">
+            @csrf
 
-                        <!-- Username -->
-                        <div>
-                            <label for="username" class="block font-medium text-sm text-gray-700">Username</label>
-                            <input id="username" type="text" name="username" value="{{ old('username', $user->username) }}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
-                            @error('username') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                        </div>
+            <div>
+                <label class="block font-semibold mb-1">Gebruikersnaam</label>
+                <input type="text" name="name" value="{{ old('name', $user->name) }}" class="border rounded w-full p-2" required>
+            </div>
 
-                        <!-- Verjaardag -->
-                        <div>
-                            <label for="birthday" class="block font-medium text-sm text-gray-700">Verjaardag</label>
-                            <input id="birthday" type="date" name="birthday" value="{{ old('birthday', $user->birthday) }}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
-                            @error('birthday') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                        </div>
-
-                        <!-- Over mij -->
-                        <div>
-                            <label for="about" class="block font-medium text-sm text-gray-700">Over mij</label>
-                            <textarea id="about" name="about" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">{{ old('about', $user->about) }}</textarea>
-                            @error('about') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                        </div>
-
-                        <!-- Profielfoto -->
-                        <div>
-                            <label for="profile_photo" class="block font-medium text-sm text-gray-700">Profielfoto</label>
-                            <input id="profile_photo" type="file" name="profile_photo" class="mt-1 block w-full">
-                            @if($user->profile_photo)
-                                <img src="{{ asset('storage/'.$user->profile_photo) }}" alt="Profielfoto" class="mt-2 w-32 h-32 object-cover rounded-full">
-                            @endif
-                            @error('profile_photo') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                        </div>
-
-                        <div>
-                            <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
-                                Opslaan
-                            </button>
-                        </div>
-                    </form>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block font-semibold mb-1">Voornaam</label>
+                    <input type="text" name="first_name" value="{{ old('first_name', $user->first_name) }}" class="border rounded w-full p-2">
+                </div>
+                <div>
+                    <label class="block font-semibold mb-1">Familienaam</label>
+                    <input type="text" name="last_name" value="{{ old('last_name', $user->last_name) }}" class="border rounded w-full p-2">
                 </div>
             </div>
 
-            <!-- Wachtwoord bijwerken -->
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-password-form')
-                </div>
+            <div>
+                <label class="block font-semibold mb-1">E-mail</label>
+                <input type="email" name="email" value="{{ old('email', $user->email) }}" class="border rounded w-full p-2" required>
             </div>
 
-            <!-- Account verwijderen -->
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.delete-user-form')
-                </div>
+            <div>
+                <label class="block font-semibold mb-1">GSM nummer</label>
+                <input type="text" name="phone" value="{{ old('phone', $user->phone) }}" class="border rounded w-full p-2">
             </div>
 
-        </div>
+            <div>
+                <label class="block font-semibold mb-1">Geboortedatum</label>
+                <input type="date" name="birthday" value="{{ old('birthday', $user->birthday) }}" class="border rounded w-full p-2">
+            </div>
+
+            <div>
+                <label class="block font-semibold mb-1">Over mij</label>
+                <textarea name="about" rows="4" class="border rounded w-full p-2">{{ old('about', $user->about) }}</textarea>
+            </div>
+
+            <div>
+                <label class="block font-semibold mb-1">Profielfoto</label>
+                <input type="file" name="profile_photo" accept="image/*" class="border rounded w-full p-2">
+                @if($user->profile_photo)
+                    <img src="{{ asset('storage/'.$user->profile_photo) }}" alt="Profielfoto" class="mt-3 w-32 h-32 rounded-full object-cover">
+                @endif
+            </div>
+
+            <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                Opslaan
+            </button>
+            <a href="{{ route('profile.show') }}" class="ml-2 text-gray-600 hover:underline">Annuleren</a>
+        </form>
     </div>
-</x-app-layout>
+@endsection
+
+
 
