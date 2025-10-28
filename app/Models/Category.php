@@ -12,10 +12,11 @@ class Category extends Model
 
     protected $fillable = ['name'];
 
-    public function faqs()
+    public function news()
     {
-        return $this->hasMany(\App\Models\Faq::class);
+        return $this->hasMany(News::class);
     }
+
 }
 
 

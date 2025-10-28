@@ -15,12 +15,12 @@ class ProfileController extends Controller
     /**
      * Show a user's profile.
      */
-    public function show(User $user): View
+    public function show()
     {
-        return view('profile.show', [
-            'user' => $user,
-        ]);
+        $user = auth()->user();
+        return view('profile.show', compact('user'));
     }
+
 
     /**
      * Display the authenticated user's profile edit form.

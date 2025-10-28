@@ -4,6 +4,13 @@
     <div class="container mx-auto py-8">
         <h1 class="text-2xl font-bold mb-4">Nieuws</h1>
 
+        @if(!Auth::check())
+            <div class="mb-6">
+                <a href="{{ route('login') }}" class="bg-blue-500 text-white px-4 py-2 rounded mr-2 hover:bg-blue-600">Login</a>
+                <a href="{{ route('register') }}" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Register</a>
+            </div>
+        @endif
+
         @if(session('success'))
             <div class="bg-green-100 text-green-800 p-2 mb-4 rounded">{{ session('success') }}</div>
         @endif

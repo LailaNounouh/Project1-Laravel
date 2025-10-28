@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\ContactController;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', [NewsController::class, 'index'])->name('home');
 Route::get('/news', [NewsController::class, 'index'])->name('news.index');
@@ -17,6 +18,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
 Route::get('/profile/{user}', [ProfileController::class, 'show'])->name('profile.show');
 
 Route::middleware('auth')->group(function () {

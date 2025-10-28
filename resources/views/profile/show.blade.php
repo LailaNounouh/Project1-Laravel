@@ -1,16 +1,22 @@
-<?php
-<h1>{{ $user->username }}'s Profiel</h1>
+@extends('layouts.app')
 
-@if($user->profile_photo)
-    <img src="{{ asset('storage/'.$user->profile_photo) }}" alt="Profielfoto" width="150">
-@endif
+@section('content')
+    <div class="container mx-auto py-8">
+        <h1 class="text-3xl font-bold mb-4">{{ $user->name }}'s profiel</h1>
 
-<p>Verjaardag: {{ $user->birthday }}</p>
-<p>Over mij: {{ $user->about }}</p>
+        @if($user->profile_photo)
+            <img src="{{ asset('storage/'.$user->profile_photo) }}" alt="Profielfoto" width="150" class="rounded mb-4">
+        @endif
 
-@auth
-    @if(Auth::id() === $user->id)
-        <a href="{{ route('profile.edit') }}">Bewerk profiel</a>
-    @endif
-@endauth
+        <p><strong>Verjaardag:</strong> {{ $user->birthday ?? 'Niet ingevuld' }}</p>
+        <p><strong>Over mij:</strong> {{ $user->about ?? 'Nog niets geschreven.' }}</p>
 
+        @auth
+            @if(Auth::id() === $user->id)
+                <div class="mt-4">
+                    <a href="{{ route('profile.edit') }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Bewerk profiel</a>
+                </div>
+            @endif
+        @endauth
+    </div>
+@endsection
