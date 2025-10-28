@@ -2,11 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
+
 .btn-glam {
-    @apply bg-pink-500 text-white font-semibold px-4 py-2 rounded transition duration-200;
+    background-color: #f472b6;
+    color: white;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    transition: all 0.2s ease-in-out;
+    border: none;
 }
 
 .btn-glam:hover {
-    @apply bg-pink-600;
+    background-color: #ec4899;
+    transform: scale(1.03);
 }
 
+
+body {
+    background-color: #fffafc;
+}
+
+h1, h2, h3 {
+    color: #db2777; }
