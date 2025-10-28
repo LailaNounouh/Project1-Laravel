@@ -15,16 +15,22 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+
                     <x-nav-link :href="route('news.index')" :active="request()->routeIs('news.*')">
                         {{ __('News') }}
                     </x-nav-link>
+
                     <x-nav-link :href="route('faq.index')" :active="request()->routeIs('faq.*')">
                         {{ __('FAQ') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('contact.create')" :active="request()->routeIs('contact.*')">
+                        {{ __('Contact') }}
                     </x-nav-link>
                 </div>
             </div>
 
-            <!-- Settings Dropdown -->
+            <!-- Settings Dropdown / Login Register -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 @if(Auth::check())
                     <x-dropdown align="right" width="48">
@@ -66,7 +72,7 @@
                 @endif
             </div>
 
-            <!-- Hamburger -->
+            <!-- Hamburger (mobile menu) -->
             <div class="-me-2 flex items-center sm:hidden">
                 <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
@@ -84,11 +90,17 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+
             <x-responsive-nav-link :href="route('news.index')" :active="request()->routeIs('news.*')">
                 {{ __('News') }}
             </x-responsive-nav-link>
+
             <x-responsive-nav-link :href="route('faq.index')" :active="request()->routeIs('faq.*')">
                 {{ __('FAQ') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('contact.create')" :active="request()->routeIs('contact.*')">
+                {{ __('Contact') }}
             </x-responsive-nav-link>
         </div>
 
@@ -105,7 +117,6 @@
                         {{ __('Profile') }}
                     </x-responsive-nav-link>
 
-                    <!-- Authentication -->
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <x-responsive-nav-link :href="route('logout')"
