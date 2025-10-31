@@ -2,26 +2,15 @@
 
 @section('content')
     <div class="container mx-auto py-8">
-        <h1 class="text-3xl font-bold mb-6">FAQ</h1>
+        <div class="flex items-center justify-between mb-6">
+            <h1 class="text-3xl font-bold">Nieuws</h1>
 
-        @if(session('success'))
-            <div class="bg-green-100 text-green-800 p-4 mb-6 rounded shadow">
-                {{ session('success') }}
-            </div>
-        @endif
-
-        @forelse($faqs as $faq)
-            <article class="mb-6 border-b pb-4">
-                <h2 class="text-xl font-semibold mb-2">{{ $faq->question }}</h2>
-                <p class="text-gray-700">{{ $faq->answer }}</p>
-            </article>
-        @empty
-            <p class="text-gray-500">Er zijn momenteel geen vragen beschikbaar.</p>
-        @endforelse
-
-        <hr class="my-8">
-
-        <h2 class="text-2xl font-semibold mb-3">Stel je vraag</h2>
+            @auth
+                @if(Auth::user()->is_admin)
+                    <a href="{{ route('news.create') }}" class="btn-glam">➕ Nieuw bericht</a>
+                @endif
+            @endauth
+        </div>
 
         @if(session('success'))
             <div class="bg-green-100 text-green-800 p-3 rounded mb-4">
@@ -29,29 +18,35 @@
             </div>
         @endif
 
-        <form action="{{ route('faq.question.store') }}" method="POST" class="space-y-4">
-            @csrf
-            <div>
-                <label class="block font-medium mb-1">Naam (optioneel)</label>
-                <input type="text" name="name" value="{{ old('name') }}" class="border rounded w-full p-2">
-                @error('name') <p class="text-red-600 text-sm">{{ $message }}</p> @enderror
-            </div>
+        @forelse($news as $item)
+            <article class="mb-8 border-b pb-6">
+                <h2 class="text-2xl font-semibold mb-2">
+                    <a href="{{ route('news.show', $item) }}" class="text-pink-600 hover:underline">
+                        {{ $item->title }}
+                    </a>
+                </h2>
 
-            <div>
-                <label class="block font-medium mb-1">E-mail (optioneel)</label>
-                <input type="email" name="email" value="{{ old('email') }}" class="border rounded w-full p-2">
-                @error('email') <p class="text-red-600 text-sm">{{ $message }}</p> @enderror
-            </div>
+                @if($item->image)
+                    <img src="{{ asset('storage/'.$item->image) }}" alt="{{ $item->title }}" class="w-full max-w-lg mb-3 rounded shadow">
+                @endif
 
-            <div>
-                <label class="block font-medium mb-1">Je vraag</label>
-                <textarea name="question" rows="4" class="border rounded w-full p-2" required>{{ old('question') }}</textarea>
-                @error('question') <p class="text-red-600 text-sm">{{ $message }}</p> @enderror
-            </div>
+                <p class="text-sm text-gray-500 mb-2">
+                    Geplaatst op {{ $item->created_at->format('d/m/Y') }}
+                </p>
 
-            <button type="submit" class="btn-glam"> Verstuur vraag</button>
+                <p class="text-gray-700 mb-2">
+                    {{ \Illuminate\Support\Str::limit(strip_tags($item->content), 160, '...') }}
+                </p>
 
-        </form>
+                <a href="{{ route('news.show', $item) }}" class="underline text-gray-700">Lees meer</a>
+            </article>
+        @empty
+            <p class="text-gray-500">Er zijn momenteel geen nieuwsitems.</p>
+        @endforelse
+
+        <div class="mt-6">
+            {{ $news->links() }}
+        </div>
     </div>
 @endsection
 
