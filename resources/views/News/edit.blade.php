@@ -11,7 +11,6 @@
             <div>
                 <label class="block font-semibold mb-1">Titel</label>
                 <input type="text" name="title" value="{{ old('title', $news->title) }}" class="border rounded w-full p-2" required>
-                @error('title') <p class="text-red-600 text-sm">{{ $message }}</p> @enderror
             </div>
 
             <div>
@@ -22,13 +21,11 @@
                     <p class="text-gray-500">Geen afbeelding</p>
                 @endif
                 <input type="file" name="image" accept="image/*" class="border rounded w-full p-2">
-                @error('image') <p class="text-red-600 text-sm">{{ $message }}</p> @enderror
             </div>
 
             <div>
                 <label class="block font-semibold mb-1">Inhoud</label>
                 <textarea name="content" rows="8" class="border rounded w-full p-2" required>{{ old('content', $news->content) }}</textarea>
-                @error('content') <p class="text-red-600 text-sm">{{ $message }}</p> @enderror
             </div>
 
             <div class="flex gap-3">
@@ -38,5 +35,6 @@
         </form>
     </div>
 @endsection
+
 
 
