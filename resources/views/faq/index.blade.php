@@ -2,50 +2,43 @@
 
 @section('content')
     <div class="container mx-auto py-8">
-        <div class="flex items-center justify-between mb-6">
-            <h1 class="text-3xl font-bold">Nieuws</h1>
+        <h1 class="text-3xl font-bold mb-6 text-pink-600">Veelgestelde vragen (FAQ)</h1>
 
-            @auth
-                @if(Auth::user()->is_admin)
-                    <a href="{{ route('news.create') }}" class="btn-glam">➕ Nieuw bericht</a>
-                @endif
-            @endauth
-        </div>
-
+        {{-- Succesbericht --}}
         @if(session('success'))
-            <div class="bg-green-100 text-green-800 p-3 rounded mb-4">
+            <div class="bg-green-100 text-green-800 p-3 mb-4 rounded">
                 {{ session('success') }}
             </div>
         @endif
 
-        @forelse($news as $item)
+        {{-- Lijst met vragen --}}
+        @forelse($faqs as $faq)
             <article class="mb-8 border-b pb-6">
-                <h2 class="text-2xl font-semibold mb-2">
-                    <a href="{{ route('news.show', $item) }}" class="text-pink-600 hover:underline">
-                        {{ $item->title }}
-                    </a>
-                </h2>
-
-                @if($item->image)
-                    <img src="{{ asset('storage/'.$item->image) }}" alt="{{ $item->title }}" class="w-full max-w-lg mb-3 rounded shadow">
-                @endif
-
-                <p class="text-sm text-gray-500 mb-2">
-                    Geplaatst op {{ $item->created_at->format('d/m/Y') }}
-                </p>
-
-                <p class="text-gray-700 mb-2">
-                    {{ \Illuminate\Support\Str::limit(strip_tags($item->content), 160, '...') }}
-                </p>
-
-                <a href="{{ route('news.show', $item) }}" class="underline text-gray-700">Lees meer</a>
+                <h2 class="text-2xl font-semibold mb-2 text-pink-600">❓ {{ $faq->question }}</h2>
+                <p class="text-gray-700">{{ $faq->answer }}</p>
             </article>
         @empty
-            <p class="text-gray-500">Er zijn momenteel geen nieuwsitems.</p>
+            <p class="text-gray-500">Er zijn momenteel geen vragen beschikbaar.</p>
         @endforelse
 
-        <div class="mt-6">
-            {{ $news->links() }}
+        {{-- Formulier om een vraag te stellen --}}
+        <div class="mt-10 bg-white p-6 rounded shadow-md">
+            <h2 class="text-2xl font-semibold mb-4 text-gray-800">Stel een vraag</h2>
+
+            <form method="POST" action="{{ route('faq.store') }}">
+                @csrf
+
+                <div class="mb-4">
+                    <label for="question" class="block font-semibold mb-1">Je vraag:</label>
+                    <textarea name="question" id="question" rows="4" class="border rounded w-full p-2" required>{{ old('question') }}</textarea>
+                </div>
+
+                <div class="flex justify-end">
+                    <button type="submit" class="btn-glam">Verstuur vraag</button>
+                </div>
+            </form>
         </div>
     </div>
 @endsection
+
+
