@@ -9,32 +9,35 @@ use Illuminate\Support\Facades\Storage;
 
 class NewsController extends Controller
 {
-    // Publiek: lijst
+
     public function index()
     {
         $news = News::latest()->paginate(10);
         return view('news.index', compact('news'));
     }
 
-    // Publiek: detail
+
     public function show(News $news)
     {
         return view('news.show', compact('news'));
     }
 
-    // Admin: nieuw formulier
+
     public function create()
     {
+        $this->authorizeAdmin();
         return view('news.create');
     }
 
-    // Admin: opslaan
+
     public function store(Request $request)
     {
+        $this->authorizeAdmin();
+
         $data = $request->validate([
-            'title'   => ['required','string','max:255'],
-            'content' => ['required','string'],
-            'image'   => ['nullable','image','max:2048'],
+            'title'   => ['required', 'string', 'max:255'],
+            'content' => ['required', 'string'],
+            'image'   => ['nullable', 'image', 'max:2048'],
         ]);
 
         if ($request->hasFile('image')) {
@@ -45,22 +48,25 @@ class NewsController extends Controller
 
         News::create($data);
 
-        return redirect()->route('news.index')->with('success', 'Nieuws aangemaakt.');
+        return redirect()->route('news.index')->with('success', '🎉 Nieuwsbericht aangemaakt!');
     }
 
-    // Admin: bewerk formulier
+
     public function edit(News $news)
     {
+        $this->authorizeAdmin();
         return view('news.edit', compact('news'));
     }
 
-    // Admin: bijwerken
+
     public function update(Request $request, News $news)
     {
+        $this->authorizeAdmin();
+
         $data = $request->validate([
-            'title'   => ['required','string','max:255'],
-            'content' => ['required','string'],
-            'image'   => ['nullable','image','max:2048'],
+            'title'   => ['required', 'string', 'max:255'],
+            'content' => ['required', 'string'],
+            'image'   => ['nullable', 'image', 'max:2048'],
         ]);
 
         if ($request->hasFile('image')) {
@@ -72,17 +78,28 @@ class NewsController extends Controller
 
         $news->update($data);
 
-        return redirect()->route('news.show', $news)->with('success', 'Nieuws bijgewerkt.');
+        return redirect()->route('news.show', $news)->with('success', '✅ Nieuws bijgewerkt.');
     }
 
-    // Admin: verwijderen
+
     public function destroy(News $news)
     {
+        $this->authorizeAdmin();
+
         if ($news->image) {
             Storage::disk('public')->delete($news->image);
         }
+
         $news->delete();
 
-        return redirect()->route('news.index')->with('success', 'Nieuws verwijderd.');
+        return redirect()->route('news.index')->with('success', '🗑️ Nieuws verwijderd.');
+    }
+
+
+    private function authorizeAdmin()
+    {
+        if (!Auth::check() || !Auth::user()->is_admin) {
+            abort(403, 'Onvoldoende rechten om deze actie uit te voeren.');
+        }
     }
 }
