@@ -98,9 +98,7 @@
 
             @auth
                 @if(Auth::user()->is_admin)
-                    <x-responsive-nav-link :href="route('news.create')" :active="request()->routeIs('news.create')">
-                        {{ __('Nieuw bericht') }}
-                    </x-responsive-nav-link>
+
                 @endif
             @endauth
 

@@ -2,15 +2,13 @@
 
 @section('content')
     <div class="container mx-auto py-8">
-        <div class="flex items-center justify-between mb-6">
-            <h1 class="text-3xl font-bold text-pink-600">Nieuws</h1>
+        <h1 class="text-3xl font-bold text-pink-600 mb-6">Nieuws</h1>
 
-            @auth
-                @if(Auth::user()->is_admin)
-                    <a href="{{ route('news.create') }}" class="btn-glam">➕ Nieuw bericht</a>
-                @endif
-            @endauth
-        </div>
+        @if(Auth::check() && Auth::user()->is_admin)
+            <div class="mb-4">
+                <a href="{{ route('news.create') }}" class="btn-glam">➕ Nieuw bericht</a>
+            </div>
+        @endif
 
         @if(session('success'))
             <div class="bg-green-100 text-green-800 p-3 rounded mb-4">
@@ -42,5 +40,4 @@
         </div>
     </div>
 @endsection
-
 
