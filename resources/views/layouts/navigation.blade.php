@@ -17,13 +17,7 @@
                         {{ __('News') }}
                     </x-nav-link>
 
-                    @auth
-                        @if(Auth::user()->is_admin)
-                            <x-nav-link :href="route('news.create')" :active="request()->routeIs('news.create')">
-                                {{ __('Nieuw bericht') }}
-                            </x-nav-link>
-                        @endif
-                    @endauth
+
 
                     <x-nav-link :href="route('faq.index')" :active="request()->routeIs('faq.*')">
                         {{ __('FAQ') }}
