@@ -6,6 +6,8 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FaqQuestionController;
+use App\Http\Controllers\Admin\FaqController as AdminFaqController;
+use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 
 Route::get('/', [NewsController::class, 'index'])->name('home');
 
@@ -36,6 +38,13 @@ Route::get('/dashboard', function () {
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
     Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+});
+
+
+
+Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::resource('faqs', AdminFaqController::class)->except(['show']);
+    Route::resource('categories', AdminCategoryController::class)->except(['show']);
 });
 
 require __DIR__ . '/auth.php';

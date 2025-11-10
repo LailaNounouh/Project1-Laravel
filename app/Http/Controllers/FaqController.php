@@ -7,15 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class FaqController extends Controller
-<?php
-
-namespace App\Http\Controllers;
-
-use App\Models\Faq;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-
-class FaqController extends Controller
 {
     public function index(Request $request)
     {
@@ -26,7 +17,7 @@ class FaqController extends Controller
                 $q->where('category_id', $request->category);
             })
             ->orderBy('id', 'desc')
-            ->get();
+            ->get(); // gebruik get() (geen paginate) tenzij je al paginate gebruikt
 
         return view('faq.index', compact('faqs', 'categories'));
     }
