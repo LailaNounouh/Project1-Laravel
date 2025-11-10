@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,7 +11,7 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     /**
-     * The attributes that are mass assignable.
+     * De velden die massaal ingevuld kunnen worden.
      *
      * @var array<int, string>
      */
@@ -18,11 +19,11 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'is_admin', // ✅ toegevoegd
+        'is_admin',
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
+     * Velden die verborgen blijven bij serialisatie.
      *
      * @var array<int, string>
      */
@@ -32,23 +33,25 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * Type casting van kolommen.
      *
-     * @return array<string, string>
+     * @var array<string, string>
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'password' => 'hashed',
+        'password' => 'string',
         'is_admin' => 'boolean',
     ];
+
+
     public function news()
     {
         return $this->hasMany(News::class);
     }
 
+
     public function comments()
     {
         return $this->hasMany(Comment::class);
     }
-
 }
