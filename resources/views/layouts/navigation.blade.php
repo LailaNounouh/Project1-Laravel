@@ -17,8 +17,6 @@
                         {{ __('News') }}
                     </x-nav-link>
 
-
-
                     <x-nav-link :href="route('faq.index')" :active="request()->routeIs('faq.*')">
                         {{ __('FAQ') }}
                     </x-nav-link>
@@ -26,6 +24,17 @@
                     <x-nav-link :href="route('contact.create')" :active="request()->routeIs('contact.*')">
                         {{ __('Contact') }}
                     </x-nav-link>
+
+                    @auth
+                        @if(Auth::user()->is_admin)
+                            <x-nav-link :href="route('admin.faqs.index')" :active="request()->is('admin/faqs*')">
+                                {{ __('FAQ beheer') }}
+                            </x-nav-link>
+                            <x-nav-link :href="route('admin.categories.index')" :active="request()->is('admin/categories*')">
+                                {{ __('Categorieën') }}
+                            </x-nav-link>
+                        @endif
+                    @endauth
                 </div>
             </div>
 
@@ -90,12 +99,6 @@
                 {{ __('News') }}
             </x-responsive-nav-link>
 
-            @auth
-                @if(Auth::user()->is_admin)
-
-                @endif
-            @endauth
-
             <x-responsive-nav-link :href="route('faq.index')" :active="request()->routeIs('faq.*')">
                 {{ __('FAQ') }}
             </x-responsive-nav-link>
@@ -103,6 +106,17 @@
             <x-responsive-nav-link :href="route('contact.create')" :active="request()->routeIs('contact.*')">
                 {{ __('Contact') }}
             </x-responsive-nav-link>
+
+            @auth
+                @if(Auth::user()->is_admin)
+                    <x-responsive-nav-link :href="route('admin.faqs.index')" :active="request()->is('admin/faqs*')">
+                        {{ __('FAQ beheer') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('admin.categories.index')" :active="request()->is('admin/categories*')">
+                        {{ __('Categorieën') }}
+                    </x-responsive-nav-link>
+                @endif
+            @endauth
         </div>
 
         <div class="pt-4 pb-1 border-t border-gray-200">
@@ -138,4 +152,3 @@
         </div>
     </div>
 </nav>
-
