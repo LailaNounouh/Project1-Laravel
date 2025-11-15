@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container mx-auto py-8">
+    <div class="max-w-4xl mx-auto py-8">
         <h1 class="text-3xl font-bold mb-6 text-pink-600">Veelgestelde vragen (FAQ)</h1>
 
         {{-- Filter op categorie --}}
@@ -42,24 +42,18 @@
         @endforelse
 
         {{-- Formulier om een vraag te stellen --}}
-        <div class="mt-10 bg-white p-6 rounded shadow-md">
-            <h2 class="text-2xl font-semibold mb-4 text-gray-800">Stel een vraag</h2>
+        <div class="mt-10 p-6 bg-white rounded shadow">
+            <h3 class="text-xl font-semibold mb-3">❔ Stel een vraag</h3>
 
             <form method="POST" action="{{ route('faq.store') }}">
                 @csrf
 
-                <div class="mb-4">
-                    <label for="question" class="block font-semibold mb-1">Je vraag:</label>
-                    <textarea name="question" id="question" rows="4" class="border rounded w-full p-2" required>{{ old('question') }}</textarea>
-                </div>
+                <label for="question" class="block font-semibold mb-1">Je vraag</label>
+                <textarea name="question" id="question" rows="4"
+                          class="w-full border rounded p-2 mb-3" required>{{ old('question') }}</textarea>
 
-                <div class="flex justify-end">
-                    <button type="submit" class="btn-glam">Verstuur vraag</button>
-                </div>
+                <button type="submit" class="btn-glam">Verstuur vraag</button>
             </form>
         </div>
     </div>
 @endsection
-
-
-
