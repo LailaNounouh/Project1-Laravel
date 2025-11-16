@@ -6,7 +6,8 @@
 
         @if(Auth::check() && Auth::user()->is_admin)
             <div class="mb-4">
-                <a href="{{ route('news.create') }}" class="btn-glam">➕ Nieuw bericht</a>
+                <a href="{{ route('admin.news.create') }}" class="btn-glam">+ Nieuw bericht</a>
+
             </div>
         @endif
 
