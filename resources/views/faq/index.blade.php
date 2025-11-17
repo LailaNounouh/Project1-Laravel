@@ -5,7 +5,13 @@
 
         <h1 class="text-3xl font-bold mb-6 text-pink-600">Veelgestelde vragen (FAQ)</h1>
 
-        {{-- Filter op categorie --}}
+        {{-- ✔️ Succesbericht tonen --}}
+        @if(session('success'))
+            <div class="bg-green-100 text-green-800 p-3 mb-4 rounded">
+                {{ session('success') }}
+            </div>
+        @endif
+
         <form method="GET" action="{{ route('faq.index') }}" class="mb-6 flex items-center gap-3">
             <label class="font-semibold">Categorie:</label>
 
@@ -57,8 +63,8 @@
                 <p class="text-sm text-gray-500 mt-1">
                     Categorie:
                     <span class="font-semibold">
-                    {{ $faq->category->name ?? '—' }}
-                </span>
+                        {{ $faq->category->name ?? '—' }}
+                    </span>
                 </p>
             </article>
         @empty
