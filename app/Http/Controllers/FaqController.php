@@ -2,38 +2,38 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Faq;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Faq;
+use App\Models\Category;
+use App\Models\FaqQuestion;
 
 class FaqController extends Controller
 {
     public function index(Request $request)
     {
-        $categories = \App\Models\Category::orderBy('name')->get();
+        $categories = Category::orderBy('name')->get();
 
-        $faqs = \App\Models\Faq::with('category')
+        $faqs = Faq::with('category')
             ->when($request->filled('category'), function ($q) use ($request) {
                 $q->where('category_id', $request->category);
             })
             ->orderBy('id', 'desc')
-            ->get(); // gebruik get() (geen paginate) tenzij je al paginate gebruikt
+            ->get();
 
         return view('faq.index', compact('faqs', 'categories'));
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'question' => 'required|string|max:500',
+
+        $data = $request->validate([
+            'question' => ['required', 'string', 'min:5'],
         ]);
 
-        Faq::create([
-            'question' => $request->question,
-            'answer' => 'Bedankt voor je vraag! Ons team zal deze binnenkort beantwoorden.',
-            'category_id' => 1, // 'Algemeen'
-        ]);
 
-        return redirect()->route('faq.index')->with('success', 'Je vraag is verzonden!');
+        FaqQuestion::create($data);
+
+        return redirect()->route('faq.index')
+            ->with('success', 'Je vraag werd verstuurd. We bekijken ze zo snel mogelijk!');
     }
 }
