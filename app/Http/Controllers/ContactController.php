@@ -20,12 +20,20 @@ class ContactController extends Controller
             'message' => ['required', 'string', 'max:2000'],
         ]);
 
+
         Mail::raw(
             "Nieuw contactbericht:\n\nNaam: {$data['name']}\nE-mail: {$data['email']}\n\nBericht:\n{$data['message']}",
             function ($m) {
                 $m->to('admin@ehb.be')->subject('Nieuw contactbericht');
             }
         );
+
+
+        \Log::info("Nieuw contactbericht ontvangen", [
+            'name' => $request->name,
+            'email' => $request->email,
+            'message' => $request->message,
+        ]);
 
         return back()->with('success', 'Bedankt! Je bericht werd verzonden.');
     }
