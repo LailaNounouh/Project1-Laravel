@@ -22,12 +22,13 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'name' => ['required','string','max:100','unique:categories,name'],
+            'name' => ['required', 'string', 'max:255'],
         ]);
 
         Category::create($data);
 
-        return redirect()->route('admin.categories.index')->with('success','Categorie aangemaakt.');
+        return redirect()->route('admin.categories.index')
+            ->with('success', 'Categorie aangemaakt.');
     }
 
     public function edit(Category $category)
@@ -38,17 +39,20 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         $data = $request->validate([
-            'name' => ['required','string','max:100','unique:categories,name,'.$category->id],
+            'name' => ['required', 'string', 'max:255'],
         ]);
 
         $category->update($data);
 
-        return redirect()->route('admin.categories.index')->with('success','Categorie bijgewerkt.');
+        return redirect()->route('admin.categories.index')
+            ->with('success', 'Categorie bijgewerkt.');
     }
 
     public function destroy(Category $category)
     {
         $category->delete();
-        return redirect()->route('admin.categories.index')->with('success','Categorie verwijderd.');
+
+        return redirect()->route('admin.categories.index')
+            ->with('success', 'Categorie verwijderd.');
     }
 }
