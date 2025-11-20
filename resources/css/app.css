@@ -4,6 +4,7 @@
 
 
 .btn-glam {
+    @apply inline-flex items-center justify-center;
     background-color: #f472b6;
     color: white;
     font-weight: 600;
@@ -11,6 +12,7 @@
     padding: 0.5rem 1rem;
     transition: all 0.2s ease-in-out;
     border: none;
+    cursor: pointer;
 }
 
 .btn-glam:hover {
@@ -18,10 +20,25 @@
     transform: scale(1.03);
 }
 
+.btn-glam:focus {
+    outline: 3px solid #f9a8d4;
+    outline-offset: 2px;
+}
+
+
+.btn-glam:disabled {
+    background-color: #f9a8d4;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
 
 body {
     background-color: #fffafc;
 }
 
+
 h1, h2, h3 {
-    color: #db2777; }
+    color: #db2777;
+    font-weight: 700;
+}
