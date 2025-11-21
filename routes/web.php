@@ -1,4 +1,4 @@
-<<?php
+<?php
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
@@ -8,6 +8,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FaqQuestionController;
 use App\Http\Controllers\Admin\FaqController as AdminFaqController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\CommentController; // <-- toegevoegd voor comments
 
 Route::get('/', [NewsController::class, 'index'])->name('home');
 
@@ -34,10 +35,9 @@ Route::get('/dashboard', fn () => view('dashboard'))
     ->name('dashboard');
 
 
-
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
-    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');   // <-- toegevoegd
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 });
 
@@ -49,5 +49,10 @@ Route::middleware(['auth', \App\Http\Middleware\IsAdmin::class])
         Route::resource('faqs', AdminFaqController::class)->except(['show']);
         Route::resource('categories', AdminCategoryController::class)->except(['show']);
     });
+
+
+Route::post('/news/{news}/comments', [CommentController::class, 'store'])
+    ->middleware('auth')
+    ->name('comments.store');
 
 require __DIR__ . '/auth.php';
