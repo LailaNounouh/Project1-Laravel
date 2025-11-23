@@ -25,7 +25,6 @@ class NewsController extends Controller
 
     public function create()
     {
-        $this->authorizeAdmin();
         return view('news.create');
     }
 

@@ -26,7 +26,7 @@
             @forelse($news->comments as $comment)
                 <div class="p-4 bg-gray-100 rounded-lg mb-3">
                     <strong class="text-pink-600">{{ $comment->user->name }}</strong>
-                    <p class="mt-1 text-gray-700">{{ $comment->body }}</p>
+                    <p class="mt-1 text-gray-700">{{ $comment->content }}</p>
                     <p class="text-xs text-gray-500 mt-1">
                         {{ $comment->created_at->diffForHumans() }}
                     </p>

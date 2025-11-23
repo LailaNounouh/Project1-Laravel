@@ -7,10 +7,10 @@ use Illuminate\Http\Request;
 
 class IsAdmin
 {
-    public function handle(Request $request, Closure $next)
+    public function handle($request, Closure $next)
     {
-        if (!auth()->check() || !auth()->user()->is_admin) {
-            abort(403, 'Unauthorized.');
+        if (!auth()->check() || (int) auth()->user()->is_admin !== 1) {
+            abort(404);
         }
 
         return $next($request);

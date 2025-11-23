@@ -16,7 +16,7 @@ class CommentController extends Controller
         Comment::create([
             'user_id' => auth()->id(),
             'news_id' => $news_id,
-            'body' => $data['body'],
+            'content' => $data['body'],
         ]);
 
         return back();
