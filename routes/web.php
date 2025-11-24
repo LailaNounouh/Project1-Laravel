@@ -8,6 +8,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FaqQuestionController;
 use App\Http\Controllers\Admin\FaqController as AdminFaqController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\ContactController as AdminContactController;
 use App\Http\Controllers\CommentController;
 
 Route::get('/', [NewsController::class, 'index'])->name('home');
@@ -49,6 +50,9 @@ Route::middleware(['auth', \App\Http\Middleware\IsAdmin::class])
     ->group(function () {
         Route::resource('faqs', AdminFaqController::class)->except(['show']);
         Route::resource('categories', AdminCategoryController::class)->except(['show']);
+        Route::get('contacts', [AdminContactController::class, 'index'])->name('contacts.index');
+        Route::get('contacts/{contact}', [AdminContactController::class, 'show'])->name('contacts.show');
+
     });
 
 
