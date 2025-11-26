@@ -2,17 +2,21 @@
 
 @section('content')
     <div class="max-w-4xl mx-auto py-8">
+
+        <!-- ⭐ Consistente Pagina Titel -->
         <div class="flex items-center justify-between mb-6">
             <h1 class="text-3xl font-bold text-pink-600">Categorieën beheren</h1>
             <a href="{{ route('admin.categories.create') }}" class="btn-glam">+ Nieuwe categorie</a>
         </div>
 
+        <!-- Succes melding -->
         @if(session('success'))
             <div class="bg-green-100 text-green-800 p-3 mb-4 rounded">
                 {{ session('success') }}
             </div>
         @endif
 
+        <!-- Categorieën Tabel -->
         <table class="w-full bg-white rounded shadow">
             <thead>
             <tr class="border-b">
@@ -27,10 +31,13 @@
                     <td class="p-3">{{ $category->name }}</td>
 
                     <td class="p-3 text-right space-x-2">
-                        <a href="{{ route('admin.categories.edit', $category) }}" class="text-blue-600 underline">
+                        <!-- Bewerken -->
+                        <a href="{{ route('admin.categories.edit', $category) }}"
+                           class="text-blue-600 underline">
                             Bewerken
                         </a>
 
+                        <!-- Verwijderen -->
                         <form action="{{ route('admin.categories.destroy', $category) }}"
                               method="POST" class="inline"
                               onsubmit="return confirm('Weet je zeker dat je deze categorie wil verwijderen?')">
@@ -48,8 +55,10 @@
             </tbody>
         </table>
 
+        <!-- Paginatie -->
         <div class="mt-4">
             {{ $categories->links() }}
         </div>
+
     </div>
 @endsection
