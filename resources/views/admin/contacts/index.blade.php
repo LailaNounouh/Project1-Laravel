@@ -3,7 +3,8 @@
 @section('content')
     <div class="max-w-5xl mx-auto py-8">
 
-        <h1 class="text-3xl font-bold mb-6 text-pink-600">💌 Contactberichten</h1>
+        <!-- ⭐ Consistente Pagina Titel -->
+        <h1 class="text-3xl font-bold mb-6 text-pink-600">Contactberichten</h1>
 
         @if($contacts->isEmpty())
             <p class="text-gray-500">Er zijn nog geen berichten.</p>
@@ -18,6 +19,7 @@
                         <th class="text-right px-4 py-3">Acties</th>
                     </tr>
                     </thead>
+
                     <tbody>
                     @foreach($contacts as $contact)
                         <tr class="border-b hover:bg-pink-50/40">
@@ -42,6 +44,6 @@
                 {{ $contacts->links() }}
             </div>
         @endif
+
     </div>
 @endsection
-
