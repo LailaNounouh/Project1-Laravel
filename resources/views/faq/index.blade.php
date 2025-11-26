@@ -3,13 +3,10 @@
 @section('content')
     <div class="max-w-4xl mx-auto py-8">
 
+        <!-- ⭐ Consistente Titel -->
+        <h1 class="text-3xl font-bold mb-6 text-pink-600">Veelgestelde vragen (FAQ)</h1>
 
-        <h1 class="text-3xl font-bold mb-6 flex items-center gap-2">
-            <span class="text-pink-500 text-4xl">🌸</span>
-            Veelgestelde vragen (FAQ)
-        </h1>
-
-
+        <!-- Admin beheer knoppen -->
         @if(auth()->check() && auth()->user()->is_admin)
             <div class="flex flex-wrap gap-4 mb-10 mt-2">
                 <a href="{{ route('admin.faqs.index') }}"
@@ -28,7 +25,7 @@
             </div>
         @endif
 
-
+        <!-- Categorie filter -->
         <div class="bg-white shadow-sm rounded-lg p-6 mb-8">
             <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
                 🔍 Filter op categorie
@@ -60,7 +57,7 @@
             </form>
         </div>
 
-
+        <!-- FAQ Overzicht -->
         <div class="space-y-6">
             @forelse($faqs as $faq)
                 <div class="bg-white shadow-sm rounded-lg p-6 border-l-4 border-pink-400">
@@ -79,14 +76,14 @@
             @endforelse
         </div>
 
-
+        <!-- Paginatie -->
         @if(method_exists($faqs, 'links'))
             <div class="mt-8">
                 {{ $faqs->links() }}
             </div>
         @endif
 
-
+        <!-- Vraag insturen -->
         <div class="mt-12 bg-white shadow-sm rounded-lg p-6">
             <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
                 💬 Stel een vraag
@@ -108,22 +105,14 @@
 
                 <button
                     type="submit"
-                    class="
-        mt-4 px-6 py-3 rounded-xl font-semibold
-        text-white !text-white
-        bg-gradient-to-r from-pink-400 to-pink-600
-        hover:from-pink-500 hover:to-pink-700
-        shadow-md transition-all duration-300
-        border-0
-        focus:outline-none focus:ring-2 focus:ring-pink-300
-    "
-                    style="background: linear-gradient(90deg, #f472b6, #ec4899) !important; color:white !important;"
-                >
+                    class="mt-4 px-6 py-3 rounded-xl font-semibold text-white
+                           bg-gradient-to-r from-pink-400 to-pink-600
+                           hover:from-pink-500 hover:to-pink-700
+                           shadow-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-pink-300">
                     Verstuur vraag
                 </button>
-
-
             </form>
         </div>
     </div>
 @endsection
+
