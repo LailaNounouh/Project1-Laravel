@@ -3,7 +3,8 @@
 @section('content')
     <div class="max-w-3xl mx-auto py-10">
 
-        <h1 class="text-3xl font-bold mb-6">Mijn profiel</h1>
+        <!-- ⭐ Consistente Pagina Titel -->
+        <h1 class="text-3xl font-bold mb-6 text-pink-600">Mijn profiel</h1>
 
         <div class="bg-white shadow p-6 rounded-lg">
 
@@ -16,7 +17,9 @@
                     <p class="text-gray-600">{{ $user->email }}</p>
 
                     @if($user->birthday)
-                        <p class="text-gray-700 mt-2"><strong>Verjaardag:</strong> {{ $user->birthday }}</p>
+                        <p class="text-gray-700 mt-2">
+                            <strong>Verjaardag:</strong> {{ $user->birthday }}
+                        </p>
                     @endif
                 </div>
             </div>
