@@ -85,11 +85,7 @@
                 <div class="pt-2">
                     <button
                         type="submit"
-                        class="w-full inline-flex items-center justify-center gap-2
-                               px-4 py-3 rounded-full font-semibold text-white
-                               bg-gradient-to-r from-pink-400 via-pink-500 to-rose-500
-                               shadow-md hover:shadow-lg hover:from-pink-500 hover:to-rose-600
-                               transition-all duration-300"
+                        class="btn-glam"
                     >
                         💌 Verstuur bericht
                     </button>
