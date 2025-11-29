@@ -9,36 +9,33 @@ use Illuminate\Support\Facades\Storage;
 
 class NewsController extends Controller
 {
-
-
     public function index(Request $request)
     {
-        $query = News::query()->latest();
+        $query = $request->input('q');
 
-        if ($search = $request->input('q')) {
-            $query->where(function ($q) use ($search) {
-                $q->where('title', 'like', "%{$search}%")
-                    ->orWhere('content', 'like', "%{$search}%");
+        $newsQuery = News::query()->latest();
+
+        if ($query) {
+            $newsQuery->where(function ($q) use ($query) {
+                $q->where('title', 'like', '%' . $query . '%')
+                    ->orWhere('content', 'like', '%' . $query . '%');
             });
         }
 
-        $news = $query->paginate(10)->withQueryString();
+        $news = $newsQuery->paginate(10)->withQueryString();
 
-        return view('news.index', compact('news', 'search'));
+        return view('news.index', compact('news', 'query'));
     }
-
 
     public function show(News $news)
     {
         return view('news.show', compact('news'));
     }
 
-
     public function create()
     {
         return view('news.create');
     }
-
 
     public function store(Request $request)
     {
@@ -61,13 +58,11 @@ class NewsController extends Controller
         return redirect()->route('news.index')->with('success', '🎉 Nieuwsbericht aangemaakt!');
     }
 
-
     public function edit(News $news)
     {
         $this->authorizeAdmin();
         return view('news.edit', compact('news'));
     }
-
 
     public function update(Request $request, News $news)
     {
@@ -91,7 +86,6 @@ class NewsController extends Controller
         return redirect()->route('news.show', $news)->with('success', '✅ Nieuws bijgewerkt.');
     }
 
-
     public function destroy(News $news)
     {
         $this->authorizeAdmin();
@@ -104,7 +98,6 @@ class NewsController extends Controller
 
         return redirect()->route('news.index')->with('success', '🗑️ Nieuws verwijderd.');
     }
-
 
     private function authorizeAdmin()
     {
