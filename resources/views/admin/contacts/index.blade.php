@@ -43,7 +43,7 @@
                                 <form action="{{ route('admin.contacts.destroy', $contact) }}" method="POST" class="inline" onsubmit="return confirm('Weet je zeker dat je dit bericht wilt verwijderen?')">
                                     @csrf
                                     @method('DELETE')
-                                    <button class="ml-2 text-red-600 hover:underline">Verwijder</button>
+                                    <button class="btn-glam">Verwijder</button>
                                 </form>
                             </td>
                         </tr>

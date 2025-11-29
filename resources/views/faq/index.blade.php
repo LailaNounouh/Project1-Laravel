@@ -43,8 +43,7 @@
                     @endforeach
                 </select>
 
-                <button type="submit"
-                        class="px-4 py-2 bg-pink-500 text-white rounded-lg hover:bg-pink-600 transition">
+                <button type="submit" class="btn-glam">
                     Filter
                 </button>
 

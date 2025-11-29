@@ -33,7 +33,7 @@
             </div>
 
             <div class="flex gap-3">
-                <button class="bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600 transition">Opslaan</button>
+                <button class="btn-glam">Opslaan</button>
                 <a href="{{ route('news.index') }}" class="underline text-gray-600 hover:text-pink-600">Annuleren</a>
             </div>
         </form>

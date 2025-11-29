@@ -16,19 +16,19 @@
             </p>
         </div>
 
-        <!-- Succes message -->
+
         @if(session('success'))
             <div class="mb-6 rounded-xl bg-green-50 border border-green-200 px-4 py-3 text-sm text-green-800 shadow-sm">
                 {{ session('success') }}
             </div>
         @endif
 
-        <!-- Contact Form -->
+
         <div class="bg-white rounded-2xl shadow-lg p-6 border border-pink-50">
             <form method="POST" action="{{ route('contact.store') }}" class="space-y-5">
                 @csrf
 
-                <!-- Naam -->
+
                 <div>
                     <label for="name" class="block text-sm font-semibold text-gray-700 mb-1">
                         Naam
@@ -47,7 +47,7 @@
                     @enderror
                 </div>
 
-                <!-- E-mail -->
+
                 <div>
                     <label for="email" class="block text-sm font-semibold text-gray-700 mb-1">
                         E-mail
@@ -66,7 +66,7 @@
                     @enderror
                 </div>
 
-                <!-- Bericht -->
+
                 <div>
                     <label for="message" class="block text-sm font-semibold text-gray-700 mb-1">
                         Bericht
@@ -84,7 +84,7 @@
                     @enderror
                 </div>
 
-                <!-- Verstuur -->
+
                 <div class="pt-2">
                     <button type="submit" class="btn-glam">
                         💌 Verstuur bericht
