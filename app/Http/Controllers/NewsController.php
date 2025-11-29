@@ -11,20 +11,20 @@ class NewsController extends Controller
 {
     public function index(Request $request)
     {
-        $query = $request->input('q');
+        $search = $request->input('q');
 
-        $newsQuery = News::query()->latest();
+        $query = News::query()->latest();
 
-        if ($query) {
-            $newsQuery->where(function ($q) use ($query) {
-                $q->where('title', 'like', '%' . $query . '%')
-                    ->orWhere('content', 'like', '%' . $query . '%');
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                    ->orWhere('content', 'like', "%{$search}%");
             });
         }
 
-        $news = $newsQuery->paginate(10)->withQueryString();
+        $news = $query->paginate(10)->withQueryString();
 
-        return view('news.index', compact('news', 'query'));
+        return view('news.index', compact('news', 'search'));
     }
 
     public function show(News $news)
@@ -34,6 +34,7 @@ class NewsController extends Controller
 
     public function create()
     {
+        $this->authorizeAdmin();
         return view('news.create');
     }
 
