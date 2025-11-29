@@ -1,135 +1,113 @@
-GlamNet — Student Project
+# GlamConnect — Student Project
 
-GlamNet is een dynamische webapplicatie gebouwd met Laravel om studenten en docenten een centrale plek te bieden voor nieuws, FAQ’s, contactberichten en gebruikersprofielen. Het platform bevat een beheerpaneel voor administrators om content te beheren en gebruikersinteracties te modereren.
+GlamConnect is een Laravel-project gebouwd als oefening rond authenticatie, CRUD-functionaliteiten, filtering, uploads, reactiesystemen en algemeen webdevelopment.  
+Het project is bedoeld als portfolio-opdracht en bevat een publiek gedeelte en een admingedeelte.
 
-Quick Start (Lokaal draaien)
+---
 
-Volg deze stappen om het project lokaal werkend te krijgen:
+## Installatie (quick start)
 
-Project klonen
-git clone <je-repo-url>
-cd project1-laravel
+1. Clone de repo:
+```bash
+git clone <repository-url>
+cd <projectfolder>
+Installeer dependencies:
 
-Dependencies installeren
 composer install
 npm install
-npm run dev
+Kopieer en configureer het environment bestand:
 
-.env instellen
+
 cp .env.example .env
-php artisan key:generate
-Pas daarna database- en mailinstellingen aan in .env.
+Bewerk .env en zet minstens de database-instellingen en:
 
-Database migreren en seeders uitvoeren
-php artisan migrate
-php artisan db:seed
 
-Storage link aanmaken (voor uploads)
+MAIL_MAILER=log
+Maak de storage-link:
+
+
 php artisan storage:link
+Voer migraties en seeders uit (zodat er een admin-account en voorbeelddata komen):
 
-Project starten
+
+php artisan migrate --seed
+Bouw de frontend assets:
+
+
+npm run build
+(voor development kan npm run dev gebruikt worden)
+
+Start de server (of gebruik Herd):
+
 php artisan serve
-Open de aangegeven URL in je browser.
-
-Login als admin
-Standaard admin-account voor testen:
-E-mail: admin@ehb.be
+Inloggegevens (default admin)
+Email: admin@ehb.be
 
 Wachtwoord: Password!321
 
-Functionaliteiten
-Publieke gebruiker (niet ingelogd)
+Belangrijkste features
+Publiek
+Home / nieuws (list & detail)
 
-Nieuwsberichten bekijken
+FAQ-pagina met categorie-filter
 
-Zoeken in nieuwsartikels
+Contactformulier (validatie + log van mails naar storage/logs/laravel.log)
 
-FAQ-sectie bekijken en filteren per categorie
-
-Contactformulier invullen (berichten worden gelogd)
+Registratie en login
 
 Ingelogde gebruiker
+Profielpagina (naam, e-mail, bio, profielfoto)
 
-Eigen profiel bekijken en aanpassen (naam, e-mail, bio, profielfoto)
+Profiel bewerken en profielfoto uploaden (via Laravel storage)
 
-Reageren op nieuwsartikels (comments)
+Reacties plaatsen onder nieuwsartikelen
 
-Administrator
+Admin
+CRUD voor nieuws (nieuw bericht, bewerken, verwijderen)
 
-Nieuws CRUD: aanmaken, bewerken, verwijderen
+CRUD voor FAQ’s en categorieën
 
-FAQ CRUD: vragen beheren
+Admin-paneel met inzendingen/contactberichten
 
-Categorieën beheren
+Alleen admin kan news/faq beheren (middleware is_admin)
 
-Overzicht van contactberichten in admin-panel
+Projectstructuur (kort)
+app/Models — Eloquent modellen (User, News, Faq, Category, Contact, Comment)
 
-Beheren van gebruikersreacties op nieuws
+app/Http/Controllers — Controllers (NewsController, FaqController, ContactController, ProfileController, Admin/*)
 
-Dashboard en extra features zoals zoeken in nieuws
+database/migrations — Migrations
 
-Extra Functionaliteiten
+database/seeders — Seeders (AdminUserSeeder, FaqSeeder, NewsSeeder, etc.)
 
-Admin panel voor contactberichten
+resources/views — Blade views (layouts, news, faq, admin, contact, profile)
 
-Nieuws zoekfunctie (titel + content)
+routes/web.php — Webroutes
 
-UI-polijsten: navbar, footer en layout verbeterd
+Testing / debug tips
+Als afbeeldingen ontbreken: controleer php artisan storage:link.
 
-Mogelijkheid om statistieken te tonen (optioneel)
+Mail testen: MAIL_MAILER=log (berichten verschijnen in storage/logs/laravel.log).
 
-Like-systeem voor nieuwsartikelen (optioneel)
+Sessies/CSRF errors: controleer .env APP_URL en herstart de server.
 
-Technische Details
+Routes bekijken: php artisan route:list
 
-Framework: Laravel 10
+Cache/route view clear: php artisan optimize:clear (zorg dat je geen belangrijke cache-bestanden verwijderd die je handmatig had bewerkt)
 
-CSS: Tailwind
+Bronvermelding & hulpbronnen
+Laravel (officiële docs) — https://laravel.com/docs
 
-Authenticatie: Laravel Breeze
+TailwindCSS (styling) — https://tailwindcss.com/docs
 
-Database: lokaal ingesteld in .env (MySQL/MariaDB of andere, afhankelijk van je setup)
+StackOverflow & Laravel community voor foutoplossingen
 
-Uploads: opgeslagen in storage/app/public
+Extra notities voor de docent / beoordelaar
+Het project bevat seed-data zodat het snel te testen is.
 
-Mailer: log, berichten naar storage/logs/laravel.log
+Admin-account staat in seeder (credentials hierboven).
 
-Blade-componenten voor herbruikbare UI-elementen
+Features zijn gebouwd rekening houdend met de technische vereisten (Eloquent-relaties, controllers, middleware, CSRF-protectie, XSS-bescherming in views waar nodig, resource controllers waar toepasbaar).
 
-Middleware: authenticatie + admin-check
-
-Comments: relaties via Eloquent (User ↔ Comments ↔ News)
-
-Gebruikte Modules/Pagina’s
-
-Profielpagina met foto, bio en uploadfunctie
-
-Nieuws: index, show, admin CRUD, zoekfunctie
-
-FAQ + categorieën: filterbaar, admin CRUD
-
-Contactformulier: validatie en logging
-
-Admin panel: overzicht contactberichten, FAQ, nieuws en categorieën
-
-Bronvermeldingen
-
-Laravel documentation: https://laravel.com/docs
-
-Tailwind CSS: https://tailwindcss.com/docs
-
-Laravel Breeze: https://laravel.com/docs/10.x/starter-kits#breeze
-
-StackOverflow & online tutorials als referentie (code volledig begrepen en aangepast)
-
-Testen & Gebruik
-
-Nieuws zoeken: gebruik de zoekbalk bovenaan /news
-
-Contactformulier: berichten verschijnen in storage/logs/laravel.log
-
-Admin: login en controleer /admin/contacts
-
-UI: buttons moeten duidelijk zichtbaar zijn, .btn-glam gebruikt
-
-GlamNet is volledig functioneel en bevat zowel alle verplichte functionaliteiten als extra features zoals het admin-panel en nieuws-zoekfunctie.
+Auteur
+Laila Nounouh — Student, Erasmus Hogeschool Brussel
