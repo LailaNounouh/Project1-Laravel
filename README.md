@@ -1,113 +1,99 @@
-# GlamConnect — Student Project
+GlamNet — Student Project
 
-GlamConnect is een Laravel-project gebouwd als oefening rond authenticatie, CRUD-functionaliteiten, filtering, uploads, reactiesystemen en algemeen webdevelopment.  
-Het project is bedoeld als portfolio-opdracht en bevat een publiek gedeelte en een admingedeelte.
+GlamNet is een dynamische Laravel-webapplicatie voor studenten en docenten, met nieuws, FAQ’s, contactformulieren en gebruikersprofielen. Administrators kunnen content beheren via een admin-panel.
 
----
+Quick Start (Lokaal draaien)
 
-## Installatie (quick start)
+Project klonen
+git clone <je-repo-url>
+cd project1-laravel
 
-1. Clone de repo:
-```bash
-git clone <repository-url>
-cd <projectfolder>
-Installeer dependencies:
-
+Dependencies installeren
 composer install
 npm install
-Kopieer en configureer het environment bestand:
+npm run dev
 
-
+.env instellen
 cp .env.example .env
-Bewerk .env en zet minstens de database-instellingen en:
+php artisan key:generate
+Pas database- en mailinstellingen aan in .env.
 
+Database migreren & seeders uitvoeren
+php artisan migrate
+php artisan db:seed
 
-MAIL_MAILER=log
-Maak de storage-link:
-
-
+Storage link aanmaken
 php artisan storage:link
-Voer migraties en seeders uit (zodat er een admin-account en voorbeelddata komen):
 
-
-php artisan migrate --seed
-Bouw de frontend assets:
-
-
-npm run build
-(voor development kan npm run dev gebruikt worden)
-
-Start de server (of gebruik Herd):
-
+Project starten
 php artisan serve
-Inloggegevens (default admin)
-Email: admin@ehb.be
+
+Admin login
+E-mail: admin@ehb.be
 
 Wachtwoord: Password!321
 
-Belangrijkste features
-Publiek
-Home / nieuws (list & detail)
+Functionaliteiten
+Publieke gebruiker
 
-FAQ-pagina met categorie-filter
+Nieuws bekijken en zoeken
 
-Contactformulier (validatie + log van mails naar storage/logs/laravel.log)
+FAQ lezen en filteren
 
-Registratie en login
+Contactformulier invullen
 
 Ingelogde gebruiker
-Profielpagina (naam, e-mail, bio, profielfoto)
 
-Profiel bewerken en profielfoto uploaden (via Laravel storage)
+Profiel bekijken en bewerken (foto, bio, naam, e-mail)
 
-Reacties plaatsen onder nieuwsartikelen
+Reageren op nieuwsartikelen
 
-Admin
-CRUD voor nieuws (nieuw bericht, bewerken, verwijderen)
+Administrator
 
-CRUD voor FAQ’s en categorieën
+Nieuws CRUD (aanmaken, bewerken, verwijderen)
 
-Admin-paneel met inzendingen/contactberichten
+FAQ + categoriebeheer
 
-Alleen admin kan news/faq beheren (middleware is_admin)
+Overzicht contactberichten
 
-Projectstructuur (kort)
-app/Models — Eloquent modellen (User, News, Faq, Category, Contact, Comment)
+Gebruikersreacties beheren
 
-app/Http/Controllers — Controllers (NewsController, FaqController, ContactController, ProfileController, Admin/*)
+Extra features: zoekfunctie in nieuws, UI-polijsten, eventueel dashboard/like-systeem
 
-database/migrations — Migrations
+Technische Details
 
-database/seeders — Seeders (AdminUserSeeder, FaqSeeder, NewsSeeder, etc.)
+Framework: Laravel 10
 
-resources/views — Blade views (layouts, news, faq, admin, contact, profile)
+CSS: Tailwind
 
-routes/web.php — Webroutes
+Authenticatie: Laravel Breeze
 
-Testing / debug tips
-Als afbeeldingen ontbreken: controleer php artisan storage:link.
+Database: lokaal ingesteld in .env (MySQL/MariaDB of alternatief)
 
-Mail testen: MAIL_MAILER=log (berichten verschijnen in storage/logs/laravel.log).
+Uploads: storage/app/public
 
-Sessies/CSRF errors: controleer .env APP_URL en herstart de server.
+Mailer: log (storage/logs/laravel.log)
 
-Routes bekijken: php artisan route:list
+Blade-componenten gebruikt voor herbruikbare UI
 
-Cache/route view clear: php artisan optimize:clear (zorg dat je geen belangrijke cache-bestanden verwijderd die je handmatig had bewerkt)
+Middleware: authenticatie + admin-check
 
-Bronvermelding & hulpbronnen
-Laravel (officiële docs) — https://laravel.com/docs
+Testen
 
-TailwindCSS (styling) — https://tailwindcss.com/docs
+Nieuws zoeken via /news
 
-StackOverflow & Laravel community voor foutoplossingen
+Contactformulieren controleren in storage/logs/laravel.log
 
-Extra notities voor de docent / beoordelaar
-Het project bevat seed-data zodat het snel te testen is.
+Admin-panel checken op /admin/contacts
 
-Admin-account staat in seeder (credentials hierboven).
+Buttons: .btn-glam gebruikt voor duidelijke styling
 
-Features zijn gebouwd rekening houdend met de technische vereisten (Eloquent-relaties, controllers, middleware, CSRF-protectie, XSS-bescherming in views waar nodig, resource controllers waar toepasbaar).
+Bronvermelding
 
-Auteur
-Laila Nounouh — Student, Erasmus Hogeschool Brussel
+Laravel documentation
+
+Tailwind CSS
+
+Laravel Breeze
+
+StackOverflow en tutorials als referentie (code volledig begrepen en aangepast)
