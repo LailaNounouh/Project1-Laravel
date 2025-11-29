@@ -1,61 +1,183 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+GlamConnect
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+GlamConnect is een webapplicatie gebouwd in Laravel voor studenten en docenten. Het platform centraliseert nieuws, FAQ’s, contactberichten en gebruikersprofielen. Daarnaast bevat het een beheerpaneel waar een administrator inhoud kan beheren.
 
-## About Laravel
+Dit project werd uitgevoerd in het kader van het vak Professional Skills Development.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Installatie
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Volg onderstaande stappen om het project lokaal te installeren.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+1. Project klonen
+git clone <repository-url>
+cd glamconnect
 
-## Learning Laravel
+2. Dependencies installeren
+composer install
+npm install
+npm run build
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+3. .env bestand instellen
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Kopieer het voorbeeldbestand:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+cp .env.example .env
 
-## Laravel Sponsors
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Stel vervolgens de database-instellingen in op basis van je lokale omgeving.
 
-### Premium Partners
+4. Database migreren en seeders uitvoeren
+php artisan migrate --seed
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+5. Storage koppelen
+php artisan storage:link
 
-## Contributing
+6. Project starten
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Indien je Herd gebruikt, opent het project automatisch.
+Anders:
 
-## Code of Conduct
+php artisan serve
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Inloggen als admin
 
-## Security Vulnerabilities
+Voor testdoeleinden bestaat er een administratoraccount:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+E-mail: admin@ehb.be
 
-## License
+Wachtwoord: Password!321
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Met dit account kan je nieuws beheren, FAQ's beheren, categorieën aanmaken en contactberichten bekijken.
+
+Functionaliteiten
+Publieke gebruiker (niet ingelogd)
+
+Nieuwsberichten bekijken
+
+Zoeken op nieuwsartikel (indien ingeschakeld)
+
+FAQ-sectie bekijken
+
+Filteren op FAQ-categorie
+
+Contactformulier gebruiken
+(berichten worden gelogd via de Laravel mailer)
+
+Registreren en inloggen
+
+Ingelogde gebruiker
+
+Eigen profiel bekijken
+
+Profielgegevens aanpassen (naam, e-mail, bio)
+
+Profielfoto uploaden
+
+Reageren op nieuwsartikels (comments)
+
+Administrator
+
+Nieuws CRUD: aanmaken, bewerken, verwijderen
+
+FAQ CRUD: vragen beheren
+
+Categorieën beheren
+
+Contactberichten in een adminoverzicht bekijken
+
+Reageren op contactberichten (optioneel)
+
+Beheer van gebruikersreacties op nieuws
+
+Technische details
+
+Framework: Laravel 10
+
+CSS: Tailwind
+
+Authenticatie: Laravel Breeze
+
+Database: MySQL / MariaDB
+
+Uploads: Wordt opgeslagen in storage/app/public
+
+Mailer: Ingesteld op log, zodat berichten in storage/logs/laravel.log terechtkomen
+
+Blade-componenten: gebruikt voor herbruikbare UI-elementen
+
+Middleware: authenticatie + admin-check
+
+Comments: relaties via Eloquent (User ↔ Comments ↔ News)
+
+Gebruikte modules en pagina’s
+1. Profielsysteem
+
+Profielpagina met naam, e-mail, bio en profielfoto
+
+Upload functionaliteit voor afbeeldingen
+
+Validatie en opslag in public disk
+
+2. Nieuws
+
+Index, detail, beheer en zoekfunctie
+
+Reactiesysteem per artikel
+
+3. FAQ + categorieën
+
+FAQ filterbaar per categorie
+
+Admin kan categorieën en vragen beheren
+
+4. Contactformulier
+
+Validatie van naam, e-mail en bericht
+
+Berichten worden opgeslagen in de database
+
+Een kopie wordt gelogd via de Laravel mailer
+
+5. Admin panel
+
+Overzicht van alle contactberichten
+
+FAQ beheer
+
+Nieuwsbeheer
+
+Categoriebeheer
+
+Handleiding testen
+Als gast
+
+Homepagina bezoeken
+
+Nieuws bekijken + zoeken
+
+FAQ bekijken + filter
+
+Contactformulier invullen
+
+Als gewone gebruiker
+
+Profiel bewerken
+
+Profielfoto uploaden
+
+Comment plaatsen bij een nieuwsartikel
+
+Als administrator
+
+Nieuwe nieuwsartikels aanmaken
+
+FAQ’s beheren
+
+Nieuwe categorie aanmaken
+
+Contactberichten openen
+
+Projectstatus
+
+Alle verplichte onderdelen van het project zijn geïmplementeerd.
+Extra functionaliteiten zoals comments, zoekfunctie en admin contactoverzicht zijn toegevoegd om de site gebruiksvriendelijker te maken.
