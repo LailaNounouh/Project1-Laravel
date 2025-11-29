@@ -1,80 +1,56 @@
-GlamConnect — Student Project
+GlamNet — Student Project
 
-GlamConnect is een webapplicatie gebouwd met Laravel voor studenten en docenten. Het platform centraliseert nieuws, FAQ’s, contactberichten en gebruikersprofielen. Daarnaast bevat het een beheerpaneel waar een administrator inhoud kan beheren.
+GlamNet is een dynamische webapplicatie gebouwd met Laravel om studenten en docenten een centrale plek te bieden voor nieuws, FAQ’s, contactberichten en gebruikersprofielen. Het platform bevat een beheerpaneel voor administrators om content te beheren en gebruikersinteracties te modereren.
 
-Dit project werd uitgevoerd in het kader van het vak Professional Skills Development.
+Quick Start (Lokaal draaien)
 
-Installatie
-
-Volg onderstaande stappen om het project lokaal te installeren:
+Volg deze stappen om het project lokaal werkend te krijgen:
 
 Project klonen
-git clone <your-repo-url>
-cd Project1-Laravel
+git clone <je-repo-url>
+cd project1-laravel
 
-PHP dependencies installeren
+Dependencies installeren
 composer install
-cp .env.example .env
-php artisan key:generate
-
-Configureer .env
-
-Stel database-instellingen in (DB_CONNECTION, DB_HOST, DB_PORT, DB_DATABASE, DB_USERNAME, DB_PASSWORD)
-
-Stel mailer in op MAIL_MAILER=log (zodat e-mails gelogd worden in plaats van verzonden)
-
-Frontend dependencies
 npm install
 npm run dev
 
-Storage link aanmaken
-php artisan storage:link
+.env instellen
+cp .env.example .env
+php artisan key:generate
+Pas daarna database- en mailinstellingen aan in .env.
 
 Database migreren en seeders uitvoeren
 php artisan migrate
 php artisan db:seed
 
+Storage link aanmaken (voor uploads)
+php artisan storage:link
+
 Project starten
 php artisan serve
+Open de aangegeven URL in je browser.
 
-Of gebruik Herd / Valet als je dat hebt.
-
-Admin-login (testaccount)
-
-Voor testdoeleinden is er een standaard administratoraccount:
-
+Login als admin
+Standaard admin-account voor testen:
 E-mail: admin@ehb.be
 
 Wachtwoord: Password!321
 
-Met dit account kan je:
-
-Nieuws beheren (CRUD)
-
-FAQ’s beheren
-
-Categorieën aanmaken/bewerken
-
-Contactberichten bekijken
-
 Functionaliteiten
 Publieke gebruiker (niet ingelogd)
 
-Nieuws bekijken (lijst + detail)
+Nieuwsberichten bekijken
 
-Zoeken op nieuwsartikelen
+Zoeken in nieuwsartikels
 
-FAQ bekijken en filteren per categorie
+FAQ-sectie bekijken en filteren per categorie
 
 Contactformulier invullen (berichten worden gelogd)
 
 Ingelogde gebruiker
 
-Eigen profiel bekijken
-
-Profielgegevens aanpassen (naam, e-mail, bio)
-
-Profielfoto uploaden
+Eigen profiel bekijken en aanpassen (naam, e-mail, bio, profielfoto)
 
 Reageren op nieuwsartikels (comments)
 
@@ -86,23 +62,25 @@ FAQ CRUD: vragen beheren
 
 Categorieën beheren
 
-Contactberichten in adminoverzicht bekijken
+Overzicht van contactberichten in admin-panel
 
-Reacties op nieuws beheren
+Beheren van gebruikersreacties op nieuws
 
-Extra functionaliteiten
+Dashboard en extra features zoals zoeken in nieuws
 
-Admin-panel voor contactberichten: Admin kan alle ingevulde berichten bekijken en verwijderen
+Extra Functionaliteiten
 
-Zoekfunctie op nieuwsartikelen: Bezoekers kunnen zoeken op titel en content
+Admin panel voor contactberichten
+
+Nieuws zoekfunctie (titel + content)
+
+UI-polijsten: navbar, footer en layout verbeterd
+
+Mogelijkheid om statistieken te tonen (optioneel)
 
 Like-systeem voor nieuwsartikelen (optioneel)
 
-Dashboard met statistieken (bijvoorbeeld aantal gebruikers, aantal berichten, FAQ’s)
-
-Verbeterde UI: buttons met btn-glam, consistente layout, responsive design
-
-Technische details
+Technische Details
 
 Framework: Laravel 10
 
@@ -110,66 +88,48 @@ CSS: Tailwind
 
 Authenticatie: Laravel Breeze
 
-Database: MySQL / MariaDB
+Database: lokaal ingesteld in .env (MySQL/MariaDB of andere, afhankelijk van je setup)
 
-Uploads: Wordt opgeslagen in storage/app/public
+Uploads: opgeslagen in storage/app/public
 
-Mailer: Gelogd in storage/logs/laravel.log
+Mailer: log, berichten naar storage/logs/laravel.log
 
-Blade-componenten: gebruikt voor herbruikbare UI-elementen
+Blade-componenten voor herbruikbare UI-elementen
 
 Middleware: authenticatie + admin-check
 
-Relaties: Eloquent relaties, inclusief one-to-many en many-to-many
+Comments: relaties via Eloquent (User ↔ Comments ↔ News)
 
-Gebruikte modules/pagina’s
+Gebruikte Modules/Pagina’s
 
-Profielsysteem: Naam, e-mail, bio en profielfoto; upload functionaliteit voor afbeeldingen
+Profielpagina met foto, bio en uploadfunctie
 
-Nieuws: Index, detail, beheer en zoekfunctie; reactiesysteem per artikel
+Nieuws: index, show, admin CRUD, zoekfunctie
 
-FAQ + categorieën: Filterbaar per categorie; admin kan categorieën en vragen beheren
+FAQ + categorieën: filterbaar, admin CRUD
 
-Contactformulier: Validatie van naam, e-mail en bericht; berichten worden opgeslagen en gelogd
+Contactformulier: validatie en logging
 
-Admin panel: Overzicht van contactberichten; nieuwsbeheer; FAQ- en categoriebeheer
+Admin panel: overzicht contactberichten, FAQ, nieuws en categorieën
 
-Testhandleiding
-
-Als gast:
-
-Homepagina bezoeken
-
-Nieuws bekijken + zoeken
-
-FAQ bekijken + filteren
-
-Contactformulier invullen
-
-Als gewone gebruiker:
-
-Profiel bewerken
-
-Profielfoto uploaden
-
-Comment plaatsen bij een nieuwsartikel
-
-Als administrator:
-
-Nieuwsberichten aanmaken/bewerken/verwijderen
-
-FAQ’s beheren
-
-Nieuwe categorieën aanmaken
-
-Contactberichten openen en beheren
-
-Extra dashboards en statistieken bekijken
-
-Bronvermelding
+Bronvermeldingen
 
 Laravel documentation: https://laravel.com/docs
 
-Tailwind CSS documentation: https://tailwindcss.com/docs
+Tailwind CSS: https://tailwindcss.com/docs
 
 Laravel Breeze: https://laravel.com/docs/10.x/starter-kits#breeze
+
+StackOverflow & online tutorials als referentie (code volledig begrepen en aangepast)
+
+Testen & Gebruik
+
+Nieuws zoeken: gebruik de zoekbalk bovenaan /news
+
+Contactformulier: berichten verschijnen in storage/logs/laravel.log
+
+Admin: login en controleer /admin/contacts
+
+UI: buttons moeten duidelijk zichtbaar zijn, .btn-glam gebruikt
+
+GlamNet is volledig functioneel en bevat zowel alle verplichte functionaliteiten als extra features zoals het admin-panel en nieuws-zoekfunctie.
