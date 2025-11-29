@@ -1,92 +1,109 @@
-# GlamConnect — Student Project
+GlamConnect — Student Project
 
-**GlamConnect** is een Laravel webapplicatie ontwikkeld door studenten om full-stack vaardigheden te oefenen. Het platform centraliseert nieuws, FAQ’s, contactberichten en gebruikersprofielen. Daarnaast bevat het een admin panel waar een administrator inhoud kan beheren.  
+GlamConnect is een webapplicatie gebouwd met Laravel voor studenten en docenten. Het platform centraliseert nieuws, FAQ’s, contactberichten en gebruikersprofielen. Daarnaast bevat het een beheerpaneel waar een administrator inhoud kan beheren.
 
-Uitgevoerd in het kader van het vak **Professional Skills Development**.
+Dit project werd uitgevoerd in het kader van het vak Professional Skills Development.
 
----
+Installatie
 
-##  Quick Start (Lokaal draaien)
+Volg onderstaande stappen om het project lokaal te installeren:
 
-1. **Project klonen**
-```bash
+Project klonen
 git clone <your-repo-url>
-cd glamconnect
+cd Project1-Laravel
+
 PHP dependencies installeren
-
-bash
-Copier le code
 composer install
-.env bestand instellen
-
-bash
-Copier le code
 cp .env.example .env
-Pas database-instellingen aan op basis van je lokale omgeving.
+php artisan key:generate
 
-Frontend dependencies installeren
+Configureer .env
 
-bash
-Copier le code
+Stel database-instellingen in (DB_CONNECTION, DB_HOST, DB_PORT, DB_DATABASE, DB_USERNAME, DB_PASSWORD)
+
+Stel mailer in op MAIL_MAILER=log (zodat e-mails gelogd worden in plaats van verzonden)
+
+Frontend dependencies
 npm install
 npm run dev
-Gebruik npm run build voor productie.
 
-Storage koppelen
-
-bash
-Copier le code
+Storage link aanmaken
 php artisan storage:link
+
 Database migreren en seeders uitvoeren
+php artisan migrate
+php artisan db:seed
 
-bash
-Copier le code
-php artisan migrate --seed
 Project starten
-
-bash
-Copier le code
 php artisan serve
-Of gebruik Herd/Valet als je dat hebt.
 
- Admin Login
-Voor testdoeleinden bestaat er een admin-account:
+Of gebruik Herd / Valet als je dat hebt.
+
+Admin-login (testaccount)
+
+Voor testdoeleinden is er een standaard administratoraccount:
 
 E-mail: admin@ehb.be
 
 Wachtwoord: Password!321
 
-Met dit account kan je nieuws, FAQ’s, categorieën en contactberichten beheren.
+Met dit account kan je:
 
- Functionaliteiten
-Voor gastgebruikers
-Nieuwsberichten bekijken
+Nieuws beheren (CRUD)
 
-Zoeken op nieuwsartikels
+FAQ’s beheren
 
-FAQ bekijken en filteren op categorie
+Categorieën aanmaken/bewerken
+
+Contactberichten bekijken
+
+Functionaliteiten
+Publieke gebruiker (niet ingelogd)
+
+Nieuws bekijken (lijst + detail)
+
+Zoeken op nieuwsartikelen
+
+FAQ bekijken en filteren per categorie
 
 Contactformulier invullen (berichten worden gelogd)
 
-Registreren en inloggen
-
 Ingelogde gebruiker
-Eigen profiel bekijken en aanpassen (naam, e-mail, bio)
+
+Eigen profiel bekijken
+
+Profielgegevens aanpassen (naam, e-mail, bio)
 
 Profielfoto uploaden
 
 Reageren op nieuwsartikels (comments)
 
 Administrator
-Nieuws CRUD (aanmaken, bewerken, verwijderen)
 
-FAQ CRUD en categoriebeheer
+Nieuws CRUD: aanmaken, bewerken, verwijderen
 
-Contactberichten bekijken en verwijderen
+FAQ CRUD: vragen beheren
 
-Beheer van gebruikersreacties op nieuwsartikels
+Categorieën beheren
 
- Technische details
+Contactberichten in adminoverzicht bekijken
+
+Reacties op nieuws beheren
+
+Extra functionaliteiten
+
+Admin-panel voor contactberichten: Admin kan alle ingevulde berichten bekijken en verwijderen
+
+Zoekfunctie op nieuwsartikelen: Bezoekers kunnen zoeken op titel en content
+
+Like-systeem voor nieuwsartikelen (optioneel)
+
+Dashboard met statistieken (bijvoorbeeld aantal gebruikers, aantal berichten, FAQ’s)
+
+Verbeterde UI: buttons met btn-glam, consistente layout, responsive design
+
+Technische details
+
 Framework: Laravel 10
 
 CSS: Tailwind
@@ -95,75 +112,64 @@ Authenticatie: Laravel Breeze
 
 Database: MySQL / MariaDB
 
-Uploads: storage/app/public
+Uploads: Wordt opgeslagen in storage/app/public
 
-Mailer: ingesteld op log (storage/logs/laravel.log)
+Mailer: Gelogd in storage/logs/laravel.log
 
-Blade-componenten: herbruikbare UI-elementen
+Blade-componenten: gebruikt voor herbruikbare UI-elementen
 
 Middleware: authenticatie + admin-check
 
-Comments: relaties via Eloquent (User ↔ Comments ↔ News)
+Relaties: Eloquent relaties, inclusief one-to-many en many-to-many
 
- Modules en Pagina’s
-Profiel
-Naam, e-mail, bio en profielfoto
+Gebruikte modules/pagina’s
 
-Upload functionaliteit
+Profielsysteem: Naam, e-mail, bio en profielfoto; upload functionaliteit voor afbeeldingen
 
-Validatie en opslag in public disk
+Nieuws: Index, detail, beheer en zoekfunctie; reactiesysteem per artikel
 
-Nieuws
-Index, detail en beheer
+FAQ + categorieën: Filterbaar per categorie; admin kan categorieën en vragen beheren
 
-Zoekfunctionaliteit
+Contactformulier: Validatie van naam, e-mail en bericht; berichten worden opgeslagen en gelogd
 
-Comment systeem per artikel
+Admin panel: Overzicht van contactberichten; nieuwsbeheer; FAQ- en categoriebeheer
 
-FAQ + categorieën
-Filterbaar per categorie
+Testhandleiding
 
-Admin kan categorieën en vragen beheren
+Als gast:
 
-Contactformulier
-Naam, e-mail en bericht validatie
-
-Berichten opgeslagen in database
-
-Gelogd via Laravel mailer
-
-Admin Panel
-Overzicht van alle contactberichten
-
-FAQ beheer
-
-Nieuwsbeheer
-
-Categoriebeheer
-
- Handleiding testen
-Als gast
 Homepagina bezoeken
 
-Nieuws bekijken en zoeken
+Nieuws bekijken + zoeken
 
-FAQ bekijken en filteren
+FAQ bekijken + filteren
 
 Contactformulier invullen
 
-Als gewone gebruiker
-Profiel bewerken + profielfoto uploaden
+Als gewone gebruiker:
 
-Comment plaatsen bij nieuwsartikels
+Profiel bewerken
 
-Als administrator
-Nieuwsartikels aanmaken en beheren
+Profielfoto uploaden
+
+Comment plaatsen bij een nieuwsartikel
+
+Als administrator:
+
+Nieuwsberichten aanmaken/bewerken/verwijderen
 
 FAQ’s beheren
 
-Nieuwe categorie aanmaken
+Nieuwe categorieën aanmaken
 
-Contactberichten bekijken/verwijderen
+Contactberichten openen en beheren
 
- Projectstatus
-Alle verplichte onderdelen zijn geïmplementeerd. Extra functionaliteiten zoals comments en zoekfunctionaliteit zijn toegevoegd voor extra interactie en gebruiksvriendelijkheid.
+Extra dashboards en statistieken bekijken
+
+Bronvermelding
+
+Laravel documentation: https://laravel.com/docs
+
+Tailwind CSS documentation: https://tailwindcss.com/docs
+
+Laravel Breeze: https://laravel.com/docs/10.x/starter-kits#breeze
