@@ -48,11 +48,17 @@ Route::middleware(['auth', \App\Http\Middleware\IsAdmin::class])
     ->prefix('admin')
     ->name('admin.')
     ->group(function () {
+
+
         Route::resource('faqs', AdminFaqController::class)->except(['show']);
+
+
         Route::resource('categories', AdminCategoryController::class)->except(['show']);
+
+
         Route::get('contacts', [AdminContactController::class, 'index'])->name('contacts.index');
         Route::get('contacts/{contact}', [AdminContactController::class, 'show'])->name('contacts.show');
-
+        Route::delete('contacts/{contact}', [AdminContactController::class, 'destroy'])->name('contacts.destroy');
     });
 
 

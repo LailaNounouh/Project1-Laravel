@@ -31,6 +31,10 @@
             <main>
                 @yield('content')
             </main>
+            <footer class="mt-12 py-6 border-t text-center text-xs text-gray-500">
+                GlamConnect © {{ date('Y') }} — Built with 💖 by Laila Nounouh
+            </footer>
+
 
         </div>
     </body>
