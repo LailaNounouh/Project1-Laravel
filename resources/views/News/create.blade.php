@@ -4,9 +4,9 @@
     <div class="container mx-auto py-8 max-w-2xl">
         <h1 class="text-3xl font-bold mb-6 text-pink-600">Nieuw nieuwsbericht</h1>
 
-        <form method="POST" action="{{ route('news.store') }}" enctype="multipart/form-data"
-              class="space-y-5 bg-white p-6 rounded shadow">
-            @csrf
+        <form method="POST" action="{{ route('admin.news.store') }}" enctype="multipart/form-data" class="space-y-5 bg-white p-6 rounded shadow">
+
+        @csrf
 
             <div>
                 <label class="block font-semibold mb-1">Titel</label>
