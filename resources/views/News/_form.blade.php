@@ -3,7 +3,7 @@
 @endphp
 
 <form method="POST"
-      action="{{ $isEdit ? route('news.update', $news) : route('news.store') }}"
+      action="{{ $isEdit ? route('admin.news.update', $news->id) : route('admin.news.store') }}"
       enctype="multipart/form-data"
       class="space-y-5 bg-white p-6 rounded shadow">
     @csrf
@@ -34,7 +34,9 @@
     </div>
 
     <div class="flex gap-3">
-        <button type="submit" class="btn-glam">{{ $isEdit ? '💾 Bijwerken' : '💾 Opslaan' }}</button>
-        <a href="{{ route('news.index') }}" class="underline text-gray-600 hover:text-pink-600">Annuleren</a>
+        <button type="submit" class="btn-glam hover:bg-pink-700 transition-colors">
+            {{ $isEdit ? '💾 Bijwerken' : '💾 Opslaan' }}
+        </button>
+        <a href="{{ route('news.index') }}" class="underline text-gray-600 hover:text-pink-600 transition-colors">Annuleren</a>
     </div>
 </form>
