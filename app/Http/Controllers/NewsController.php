@@ -42,30 +42,22 @@ class NewsController extends Controller
     {
         $this->authorizeAdmin();
 
-        try {
-            $data = $request->validate([
-                'title'   => ['required', 'string', 'max:255'],
-                'content' => ['required', 'string'],
-                'image'   => ['nullable', 'image', 'max:2048'],
-            ]);
+        $data = $request->validate([
+            'title'   => ['required', 'string', 'max:255'],
+            'content' => ['required', 'string'],
+            'image'   => ['nullable', 'image', 'max:2048'],
+        ]);
 
-            if ($request->hasFile('image')) {
-                $data['image'] = $request->file('image')->store('news', 'public');
-            }
-
-            $data['user_id'] = Auth::id();
-
-            News::create($data);
-
-            return redirect()
-                ->route('news.index')
-                ->with('success', '🎉 Nieuwsbericht aangemaakt!');
-
-        } catch (\Exception $e) {
-            return back()
-                ->withInput()
-                ->with('error', '❌ Er ging iets mis bij het aanmaken.');
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('news', 'public');
         }
+
+        $data['user_id'] = Auth::id();
+        News::create($data);
+
+        return redirect()
+            ->route('news.index')
+            ->with('success', '🎉 Nieuwsbericht aangemaakt!');
     }
 
     public function edit(News $news)
@@ -78,53 +70,39 @@ class NewsController extends Controller
     {
         $this->authorizeAdmin();
 
-        try {
-            $data = $request->validate([
-                'title'   => ['required', 'string', 'max:255'],
-                'content' => ['required', 'string'],
-                'image'   => ['nullable', 'image', 'max:2048'],
-            ]);
+        $data = $request->validate([
+            'title'   => ['required', 'string', 'max:255'],
+            'content' => ['required', 'string'],
+            'image'   => ['nullable', 'image', 'max:2048'],
+        ]);
 
-            if ($request->hasFile('image')) {
-                if ($news->image) {
-                    Storage::disk('public')->delete($news->image);
-                }
-                $data['image'] = $request->file('image')->store('news', 'public');
+        if ($request->hasFile('image')) {
+            if ($news->image) {
+                Storage::disk('public')->delete($news->image);
             }
-
-            $news->update($data);
-
-
-            return redirect()
-                ->route('news.index')
-                ->with('success', '✅ Nieuws bijgewerkt.');
-
-        } catch (\Exception $e) {
-            return back()
-                ->withInput()
-                ->with('error', '❌ Er ging iets mis bij het bewerken.');
+            $data['image'] = $request->file('image')->store('news', 'public');
         }
+
+        $news->update($data);
+
+        return redirect()
+            ->route('news.index')
+            ->with('success', '✅ Nieuws bijgewerkt.');
     }
 
     public function destroy(News $news)
     {
         $this->authorizeAdmin();
 
-        try {
-            if ($news->image) {
-                Storage::disk('public')->delete($news->image);
-            }
-
-            $news->delete();
-
-            return redirect()
-                ->route('news.index')
-                ->with('success', '🗑️ Nieuws verwijderd.');
-
-        } catch (\Exception $e) {
-            return back()
-                ->with('error', '❌ Verwijderen is mislukt.');
+        if ($news->image) {
+            Storage::disk('public')->delete($news->image);
         }
+
+        $news->delete();
+
+        return redirect()
+            ->route('news.index')
+            ->with('success', '🗑️ Nieuws verwijderd.');
     }
 
     private function authorizeAdmin()
@@ -134,4 +112,3 @@ class NewsController extends Controller
         }
     }
 }
-

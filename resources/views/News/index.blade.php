@@ -18,7 +18,7 @@
         <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4">
             <h1 class="text-3xl font-bold mb-6 text-pink-600">Nieuws</h1>
 
-
+            {{-- Zoekformulier --}}
             <form method="GET" action="{{ route('news.index') }}" class="mb-6 flex items-center gap-3">
                 <input
                     type="text"
@@ -34,7 +34,6 @@
             </form>
         </div>
 
-
         @auth
             @if(Auth::user()->is_admin)
                 <div class="mb-4">
@@ -43,7 +42,7 @@
             @endif
         @endauth
 
-        {{-- Nieuwsitems --}}
+
         @foreach($news as $item)
             <div class="mb-8 pb-6 border-b">
                 <h2 class="text-2xl font-semibold text-pink-600">
@@ -82,4 +81,5 @@
 
     </div>
 @endsection
+
 
