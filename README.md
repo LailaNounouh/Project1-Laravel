@@ -1,135 +1,93 @@
-GlamNet — Student Project
+# GlamConnect — Laravel Webapplicatie
 
-GlamNet is een dynamische webapplicatie gebouwd met Laravel om studenten en docenten een centrale plek te bieden voor nieuws, FAQ’s, contactberichten en gebruikersprofielen. Het platform bevat een beheerpaneel voor administrators om content te beheren en gebruikersinteracties te modereren.
+GlamConnect is een dynamische Laravel-toepassing voor studenten en docenten. De website biedt nieuws, FAQ’s, contactformulieren en gebruikersprofielen. Administrators kunnen alle inhoud beheren via een aparte adminomgeving.
 
-Quick Start (Lokaal draaien)
+---
 
-Volg deze stappen om het project lokaal werkend te krijgen:
+## Installatiehandleiding
 
-Project klonen
-git clone <je-repo-url>
-cd project1-laravel
+### 1. Project klonen
+- `git clone <repository-url>`
+- `cd glamconnect`
 
-Dependencies installeren
-composer install
-npm install
-npm run dev
+### 2. Dependencies installeren
+- `composer install`
+- `npm install`
+- `npm run dev`
 
-.env instellen
-cp .env.example .env
-php artisan key:generate
-Pas daarna database- en mailinstellingen aan in .env.
+### 3. .env configureren
+- `cp .env.example .env`
+- `php artisan key:generate`
+- Vul je database-instellingen en mail-instellingen aan in `.env`.
 
-Database migreren en seeders uitvoeren
-php artisan migrate
-php artisan db:seed
+### 4. Database migreren & seeders uitvoeren
+- `php artisan migrate`
+- `php artisan db:seed`
 
-Storage link aanmaken (voor uploads)
-php artisan storage:link
+### 5. Storage link aanmaken
+- `php artisan storage:link`
 
-Project starten
-php artisan serve
-Open de aangegeven URL in je browser.
+### 6. Project starten
+- `php artisan serve`
 
-Login als admin
-Standaard admin-account voor testen:
-E-mail: admin@ehb.be
+### 7. Testadmin
+**E-mail:** admin@ehb.be  
+**Wachtwoord:** Password!321
 
-Wachtwoord: Password!321
+---
 
-Functionaliteiten
-Publieke gebruiker (niet ingelogd)
+## Functionaliteiten
 
-Nieuwsberichten bekijken
+### Publieke gebruikers
+- Nieuws bekijken
+- Zoeken op nieuwsartikelen
+- FAQ raadplegen en filteren op categorie
+- Contactformulier gebruiken
 
-Zoeken in nieuwsartikels
+### Ingelogde gebruikers
+- Eigen profielpagina bekijken
+- Profiel bewerken (naam, e-mail, bio, profielfoto)
+- Reacties plaatsen op nieuwsartikelen
 
-FAQ-sectie bekijken en filteren per categorie
+### Administrators
+- CRUD voor nieuwsitems
+- FAQ- en categoriebeheer
+- Overzicht van alle contactberichten
+- Beheer van gebruikersreacties op nieuws
+- Extra toevoegingen zoals zoekfunctie, verbeterde UI en optionele uitbreidingen
 
-Contactformulier invullen (berichten worden gelogd)
+---
 
-Ingelogde gebruiker
+## Technische informatie
 
-Eigen profiel bekijken en aanpassen (naam, e-mail, bio, profielfoto)
+- **Framework:** Laravel 10  
+- **CSS:** Tailwind  
+- **Authenticatie:** Laravel Breeze  
+- **Database:** lokaal ingesteld via `.env`  
+- **Uploads:** `storage/app/public`  
+- **Mailer:** log-driver (`storage/logs/laravel.log`)  
+- **Blade:** herbruikbare componenten  
+- **Middleware:** authenticatie + admin-check  
+- **Routes:** controllers + middleware + grouping waar mogelijk  
+- **Relaties:** meerdere one-to-many en many-to-many relaties (bijv. News ↔ Comments, FAQ ↔ Categories)
 
-Reageren op nieuwsartikels (comments)
+---
 
-Administrator
+## Testen
 
-Nieuws CRUD: aanmaken, bewerken, verwijderen
+- Nieuws zoeken via `/news`
+- FAQ filteren via `/faq`
+- Contactformulier testen (mail-log)
+- Adminpanel testen via `/admin`
+- Profielfoto-upload testen via profielpagina
 
-FAQ CRUD: vragen beheren
+---
 
-Categorieën beheren
+## Bronvermelding
 
-Overzicht van contactberichten in admin-panel
+- Laravel documentation  
+- Tailwind CSS  
+- Laravel Breeze  
+- StackOverflow & diverse tutorials (code begrepen en aangepast)
 
-Beheren van gebruikersreacties op nieuws
-
-Dashboard en extra features zoals zoeken in nieuws
-
-Extra Functionaliteiten
-
-Admin panel voor contactberichten
-
-Nieuws zoekfunctie (titel + content)
-
-UI-polijsten: navbar, footer en layout verbeterd
-
-Mogelijkheid om statistieken te tonen (optioneel)
-
-Like-systeem voor nieuwsartikelen (optioneel)
-
-Technische Details
-
-Framework: Laravel 10
-
-CSS: Tailwind
-
-Authenticatie: Laravel Breeze
-
-Database: lokaal ingesteld in .env (MySQL/MariaDB of andere, afhankelijk van je setup)
-
-Uploads: opgeslagen in storage/app/public
-
-Mailer: log, berichten naar storage/logs/laravel.log
-
-Blade-componenten voor herbruikbare UI-elementen
-
-Middleware: authenticatie + admin-check
-
-Comments: relaties via Eloquent (User ↔ Comments ↔ News)
-
-Gebruikte Modules/Pagina’s
-
-Profielpagina met foto, bio en uploadfunctie
-
-Nieuws: index, show, admin CRUD, zoekfunctie
-
-FAQ + categorieën: filterbaar, admin CRUD
-
-Contactformulier: validatie en logging
-
-Admin panel: overzicht contactberichten, FAQ, nieuws en categorieën
-
-Bronvermeldingen
-
-Laravel documentation: https://laravel.com/docs
-
-Tailwind CSS: https://tailwindcss.com/docs
-
-Laravel Breeze: https://laravel.com/docs/10.x/starter-kits#breeze
-
-StackOverflow & online tutorials als referentie (code volledig begrepen en aangepast)
-
-Testen & Gebruik
-
-Nieuws zoeken: gebruik de zoekbalk bovenaan /news
-
-Contactformulier: berichten verschijnen in storage/logs/laravel.log
-
-Admin: login en controleer /admin/contacts
-
-UI: buttons moeten duidelijk zichtbaar zijn, .btn-glam gebruikt
-
-GlamNet is volledig functioneel en bevat zowel alle verplichte functionaliteiten als extra features zoals het admin-panel en nieuws-zoekfunctie.
+---
