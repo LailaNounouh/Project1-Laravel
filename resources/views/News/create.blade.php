@@ -4,9 +4,20 @@
     <div class="container mx-auto py-8 max-w-2xl">
         <h1 class="text-3xl font-bold mb-6 text-pink-600">Nieuw nieuwsbericht</h1>
 
-        <form method="POST" action="{{ route('admin.news.store') }}" enctype="multipart/form-data">
+        {{-- Flash messages --}}
+        @if(session('success'))
+            <div class="bg-green-100 text-green-800 p-3 mb-4 rounded">
+                {{ session('success') }}
+            </div>
+        @endif
+        @if(session('error'))
+            <div class="bg-red-100 text-red-800 p-3 mb-4 rounded">
+                {{ session('error') }}
+            </div>
+        @endif
 
-        @csrf
+        <form method="POST" action="{{ route('admin.news.store') }}" enctype="multipart/form-data" class="space-y-5 bg-white p-6 rounded shadow">
+            @csrf
 
             <div>
                 <label class="block font-semibold mb-1">Titel</label>
@@ -33,8 +44,8 @@
             </div>
 
             <div class="flex gap-3">
-                <button class="btn-glam">Opslaan</button>
-                <a href="{{ route('news.index') }}" class="underline text-gray-600 hover:text-pink-600">Annuleren</a>
+                <button type="submit" class="btn-glam hover:bg-pink-700 transition-colors">💾 Opslaan</button>
+                <a href="{{ route('news.index') }}" class="underline text-gray-600 hover:text-pink-600 transition-colors">Annuleren</a>
             </div>
         </form>
     </div>
