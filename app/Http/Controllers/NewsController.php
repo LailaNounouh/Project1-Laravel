@@ -89,14 +89,14 @@ class NewsController extends Controller
                 if ($news->image) {
                     Storage::disk('public')->delete($news->image);
                 }
-
                 $data['image'] = $request->file('image')->store('news', 'public');
             }
 
             $news->update($data);
 
+
             return redirect()
-                ->route('news.show', $news)
+                ->route('news.index')
                 ->with('success', '✅ Nieuws bijgewerkt.');
 
         } catch (\Exception $e) {
@@ -134,3 +134,4 @@ class NewsController extends Controller
         }
     }
 }
+
