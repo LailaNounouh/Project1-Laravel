@@ -36,7 +36,8 @@
 
         @if(session('success'))
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="bg-green-100 text-green-800 p-3 rounded mb-4">
+
+                <div class="bg-green-100 dark:bg-green-800 text-green-800 dark:text-green-100 p-3 rounded mb-4">
                     {{ session('success') }}
                 </div>
             </div>
@@ -44,7 +45,8 @@
 
         @if(session('error'))
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="bg-red-100 text-red-800 p-3 rounded mb-4">
+
+                <div class="bg-red-100 dark:bg-red-800 text-red-800 dark:text-red-100 p-3 rounded mb-4">
                     {{ session('error') }}
                 </div>
             </div>
