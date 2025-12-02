@@ -63,7 +63,7 @@ GlamConnect is een dynamische Laravel-toepassing voor studenten en docenten. De 
 - **Framework:** Laravel 10  
 - **CSS:** Tailwind  
 - **Authenticatie:** Laravel Breeze  
-- **Database:** lokaal ingesteld via `.env`  
+- **Database:** SQLite (geconfigureerd via .env)
 - **Uploads:** `storage/app/public`  
 - **Mailer:** log-driver (`storage/logs/laravel.log`)  
 - **Blade:** herbruikbare componenten  
