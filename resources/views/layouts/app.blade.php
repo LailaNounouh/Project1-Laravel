@@ -13,19 +13,27 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="font-sans antialiased">
-<div class="min-h-screen bg-gray-100">
+<div class="min-h-screen bg-gray-100 dark:bg-gray-900">
     @include('layouts.navigation')
 
     @isset($header)
-        <header class="bg-white shadow">
-            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+        <header class="bg-white dark:bg-gray-800 shadow">
+            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
                 {{ $header }}
+                <button id="dark-toggle" class="ml-4 px-3 py-1 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition">
+                    🌙 Glam Mode
+                </button>
             </div>
         </header>
+    @else
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-end">
+            <button id="dark-toggle" class="px-3 py-1 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition">
+                🌙 Glam Mode
+            </button>
+        </div>
     @endisset
-
     <main>
-        {{-- Session messages --}}
+
         @if(session('success'))
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="bg-green-100 text-green-800 p-3 rounded mb-4">
@@ -45,9 +53,34 @@
         @yield('content')
     </main>
 
-    <footer class="mt-12 py-6 border-t text-center text-xs text-gray-500">
+    <footer class="mt-12 py-6 border-t dark:border-gray-700 text-center text-xs text-gray-500 dark:text-gray-400">
         GlamConnect © {{ date('Y') }} — Built with 💖 by Laila Nounouh
     </footer>
 </div>
+
+<script>
+    const toggle = document.getElementById('dark-toggle');
+
+
+    function updateToggleText(isDark) {
+        toggle.innerHTML = isDark ? '☀️ Light Mode' : '🌙 Glam Mode';
+    }
+
+    toggle.addEventListener('click', () => {
+        document.documentElement.classList.toggle('dark');
+        const isDark = document.documentElement.classList.contains('dark');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        updateToggleText(isDark);
+    });
+
+    window.onload = () => {
+        const isDark = localStorage.getItem('theme') === 'dark';
+        if(isDark) {
+            document.documentElement.classList.add('dark');
+        }
+
+        updateToggleText(isDark);
+    };
+</script>
 </body>
 </html>
