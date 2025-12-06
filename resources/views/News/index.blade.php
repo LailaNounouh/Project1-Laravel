@@ -3,7 +3,6 @@
 @section('content')
     <div class="container mx-auto py-8">
 
-
         @if(session('success'))
             <div class="bg-green-100 dark:bg-green-800 text-green-800 dark:text-green-100 p-3 mb-4 rounded shadow">
                 {{ session('success') }}
@@ -17,7 +16,6 @@
 
         <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4">
             <h1 class="text-3xl font-bold mb-6 text-pink-600 dark:text-pink-400">Nieuws</h1>
-
 
             <form method="GET" action="{{ route('news.index') }}" class="mb-6 flex items-center gap-3">
                 <input type="text" name="q" value="{{ old('q', $search ?? '') }}" placeholder="Zoek in nieuws..."
@@ -37,22 +35,24 @@
             @endif
         @endauth
 
-
         @foreach($news as $item)
             <div class="mb-8 pb-6 border-b dark:border-gray-700 bg-white dark:bg-gray-800 p-6 rounded shadow-md">
                 <h2 class="text-2xl font-semibold text-pink-600 dark:text-pink-400">{{ $item->title }}</h2>
+
+                @if($item->image)
+                    <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->title }}" class="my-4 rounded shadow-md max-w-full h-auto">
+                @endif
+
                 <p class="text-gray-700 dark:text-gray-300 mt-2">{{ \Illuminate\Support\Str::limit($item->content, 160) }}</p>
                 <a href="{{ route('news.show', $item) }}" class="underline text-blue-500 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mt-2 inline-block">Lees meer</a>
 
                 @auth
                     @if(Auth::user()->is_admin)
                         <div class="mt-2 flex gap-2">
-
                             <a href="{{ route('admin.news.edit', $item->id) }}"
                                class="px-4 py-2 bg-yellow-200 text-yellow-800 rounded hover:bg-yellow-300 transition">
                                 Bewerk
                             </a>
-
 
                             <form action="{{ route('admin.news.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Weet je het zeker?');">
                                 @csrf
@@ -67,7 +67,6 @@
                 @endauth
             </div>
         @endforeach
-
 
         <div class="mt-4">{{ $news->links() }}</div>
     </div>
