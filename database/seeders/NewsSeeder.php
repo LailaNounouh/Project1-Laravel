@@ -10,25 +10,23 @@ class NewsSeeder extends Seeder
 {
     public function run(): void
     {
-
         News::factory()->count(5)->create();
 
+        $possibleImages = ['news/sample1.jpeg', 'news/sample2.jpeg', 'news/sample3.jpeg', 'news/sample4.jpeg'];
+        $imgPath = null;
 
-        $imgPath = 'news/sample.jpg';
-        if (Storage::disk('public')->exists($imgPath)) {
-            News::create([
-                'title' => 'GlamConnect Launch Event',
-                'content' => 'Kom naar ons launch event — tips, freebies en netwerken voor studenten!',
-                'image' => $imgPath,
-                'user_id' => 1,
-            ]);
-        } else {
-            News::create([
-                'title' => 'GlamConnect Launch Event',
-                'content' => 'Kom naar ons launch event — tips, freebies en netwerken voor studenten!',
-                'image' => null,
-                'user_id' => 1,
-            ]);
+        $existingImages = array_filter($possibleImages, fn($img) => Storage::disk('public')->exists($img));
+        if (!empty($existingImages)) {
+            $imgPath = $existingImages[array_rand($existingImages)];
         }
+
+        News::create([
+            'title' => 'GlamConnect Launch Event',
+            'content' => 'Kom naar ons launch event — tips, freebies en netwerken voor studenten!',
+            'image' => $imgPath,
+            'user_id' => 1,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
     }
 }

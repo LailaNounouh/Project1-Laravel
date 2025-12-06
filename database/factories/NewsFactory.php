@@ -30,8 +30,8 @@ class NewsFactory extends Factory
         $title = $this->faker->randomElement($titles);
         $content = $this->faker->randomElement($contents);
 
-
-        $images = [null, 'news/sample.jpg'];
+        // Random afbeelding of geen afbeelding
+        $images = [null, 'news/sample1.jpeg', 'news/sample2.jpeg', 'news/sample3.jpeg', 'news/sample4.jpeg'];
         $image = $this->faker->randomElement($images);
 
         return [
