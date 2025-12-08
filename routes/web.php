@@ -35,9 +35,10 @@ Route::post('/contact', [ContactController::class, 'store'])->name('contact.stor
 
 
 
-Route::get('/dashboard', fn () => view('dashboard'))
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
 
 
 
