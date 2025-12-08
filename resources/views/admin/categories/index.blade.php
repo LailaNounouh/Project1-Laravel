@@ -1,64 +1,84 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="max-w-4xl mx-auto py-8">
+    <div class="max-w-4xl mx-auto py-10">
 
-        <!-- ⭐ Consistente Pagina Titel -->
-        <div class="flex items-center justify-between mb-6">
+        <!-- Titel + knop -->
+        <div class="flex items-center justify-between mb-8">
             <h1 class="text-3xl font-bold text-pink-600">Categorieën beheren</h1>
-            <a href="{{ route('admin.categories.create') }}" class="btn-glam">+ Nieuwe categorie</a>
+
+            <a href="{{ route('admin.categories.create') }}"
+               class="px-5 py-2.5 rounded-lg bg-pink-500 text-white hover:bg-pink-600 transition shadow-sm">
+                Nieuwe categorie
+            </a>
         </div>
 
-        <!-- Succes melding -->
+        <!-- Flash -->
         @if(session('success'))
-            <div class="bg-green-100 text-green-800 p-3 mb-4 rounded">
+            <div class="mb-6 bg-green-50 border border-green-200 text-green-800 p-3 rounded-lg">
                 {{ session('success') }}
             </div>
         @endif
 
-        <!-- Categorieën Tabel -->
-        <table class="w-full bg-white rounded shadow">
-            <thead>
-            <tr class="border-b">
-                <th class="p-3 text-left">Naam</th>
-                <th class="p-3 text-right">Acties</th>
-            </tr>
-            </thead>
+        <!-- Tabel -->
+        <div class="bg-white rounded-xl shadow overflow-hidden border border-gray-100">
 
-            <tbody>
-            @forelse($categories as $category)
-                <tr class="border-b">
-                    <td class="p-3">{{ $category->name }}</td>
-
-                    <td class="p-3 text-right space-x-2">
-                        <!-- Bewerken -->
-                        <a href="{{ route('admin.categories.edit', $category) }}"
-                           class="text-blue-600 underline">
-                            Bewerken
-                        </a>
-
-                        <!-- Verwijderen -->
-                        <form action="{{ route('admin.categories.destroy', $category) }}"
-                              method="POST" class="inline"
-                              onsubmit="return confirm('Weet je zeker dat je deze categorie wil verwijderen?')">
-                            @csrf
-                            @method('DELETE')
-                            <button class="text-red-600 underline">Verwijderen</button>
-                        </form>
-                    </td>
+            <table class="w-full">
+                <thead>
+                <tr class="bg-gray-50 border-b">
+                    <th class="p-4 text-left text-sm font-semibold text-gray-700">Naam</th>
+                    <th class="p-4 text-right text-sm font-semibold text-gray-700">Acties</th>
                 </tr>
-            @empty
-                <tr>
-                    <td colspan="2" class="p-3 text-gray-500">Geen categorieën gevonden.</td>
-                </tr>
-            @endforelse
-            </tbody>
-        </table>
+                </thead>
 
-        <!-- Paginatie -->
-        <div class="mt-4">
+                <tbody>
+
+                @forelse($categories as $category)
+                    <tr class="border-b hover:bg-gray-50">
+
+                        <td class="p-4 text-gray-800">
+                            {{ $category->name }}
+                        </td>
+
+                        <td class="p-4 text-right space-x-3">
+
+                            <a href="{{ route('admin.categories.edit', $category) }}"
+                               class="text-blue-600 hover:underline">
+                                Bewerken
+                            </a>
+
+                            <form action="{{ route('admin.categories.destroy', $category) }}"
+                                  method="POST"
+                                  class="inline"
+                                  onsubmit="return confirm('Weet je zeker dat je deze categorie wil verwijderen?')">
+                                @csrf
+                                @method('DELETE')
+                                <button class="text-red-600 hover:underline">
+                                    Verwijderen
+                                </button>
+                            </form>
+
+                        </td>
+
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="2" class="p-4 text-gray-500 text-center">
+                            Geen categorieën gevonden.
+                        </td>
+                    </tr>
+                @endforelse
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <div class="mt-6">
             {{ $categories->links() }}
         </div>
 
     </div>
 @endsection
+
