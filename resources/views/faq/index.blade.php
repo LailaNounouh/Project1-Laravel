@@ -2,7 +2,7 @@
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-100 leading-tight">
-            Veelgestelde vragen (FAQ)
+            Veelgestelde vragen
         </h2>
     </x-slot>
 
@@ -10,7 +10,7 @@
 
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
 
-            {{-- Titel + Admin knoppen --}}
+            {{-- Titel + Admin acties --}}
             <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
 
                 <h1 class="text-3xl font-bold text-pink-600 dark:text-pink-400 mb-4">
@@ -22,13 +22,13 @@
                         <div class="flex flex-wrap gap-3">
 
                             <a href="{{ route('admin.faqs.index') }}"
-                               class="px-4 py-2 rounded-lg bg-pink-200 text-pink-800 hover:bg-pink-300 transition">
-                                ✏️ FAQ beheren
+                               class="px-4 py-2 rounded-lg bg-pink-200 text-pink-900 hover:bg-pink-300 transition">
+                                FAQ beheren
                             </a>
 
                             <a href="{{ route('admin.categories.index') }}"
-                               class="px-4 py-2 rounded-lg bg-purple-200 text-purple-800 hover:bg-purple-300 transition">
-                                📂 Categorieën beheren
+                               class="px-4 py-2 rounded-lg bg-purple-200 text-purple-900 hover:bg-purple-300 transition">
+                                Categorieën beheren
                             </a>
 
                         </div>
@@ -38,11 +38,11 @@
             </div>
 
 
-            {{-- Filter sectie --}}
+            {{-- Filter --}}
             <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
 
                 <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4">
-                    🔍 Filter op categorie
+                    Filter op categorie
                 </h2>
 
                 <form method="GET" action="{{ route('faq.index') }}" class="flex flex-wrap items-center gap-4">
@@ -50,6 +50,7 @@
                     <select name="category"
                             class="border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-100 rounded-lg px-4 py-2 min-w-[200px]">
                         <option value="">Alle categorieën</option>
+
                         @foreach($categories as $category)
                             <option value="{{ $category->id }}"
                                 {{ request('category') == $category->id ? 'selected' : '' }}>
@@ -58,7 +59,7 @@
                         @endforeach
                     </select>
 
-                    <button class="bg-pink-200 text-pink-800 px-4 py-2 rounded hover:bg-pink-300 transition">
+                    <button class="bg-pink-200 text-pink-900 px-4 py-2 rounded hover:bg-pink-300 transition">
                         Filter
                     </button>
 
@@ -74,23 +75,23 @@
             </div>
 
 
-            {{-- FAQ lijst --}}
+            {{-- FAQ LIJST --}}
             <div class="space-y-6">
 
                 @forelse($faqs as $faq)
 
-                    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow border-l-4 border-pink-400 dark:border-pink-500">
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow border-l-4 border-pink-300 dark:border-pink-500">
 
-                        <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2 flex items-center gap-2">
-                            ❓ {{ $faq->question }}
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
+                            {{ $faq->question }}
                         </h3>
 
                         <p class="text-gray-700 dark:text-gray-300 mb-2">
                             {{ $faq->answer }}
                         </p>
 
-                        <p class="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-1">
-                            📂 <span class="font-medium">{{ $faq->category->name ?? 'Algemeen' }}</span>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">
+                            Categorie: <span class="font-medium">{{ $faq->category->name ?? 'Algemeen' }}</span>
                         </p>
 
                     </div>
@@ -98,7 +99,7 @@
                 @empty
 
                     <p class="text-gray-500 dark:text-gray-400 text-center">
-                        Er zijn nog geen FAQ-items beschikbaar.
+                        Er zijn nog geen vragen beschikbaar.
                     </p>
 
                 @endforelse
@@ -112,11 +113,11 @@
             </div>
 
 
-            {{-- Vraag insturen --}}
+            {{-- Vraag stellen --}}
             <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
 
-                <h3 class="text-xl font-bold text-pink-600 dark:text-pink-400 mb-4 flex items-center gap-2">
-                    💬 Stel een vraag
+                <h3 class="text-xl font-semibold text-pink-600 dark:text-pink-400 mb-4">
+                    Stel een vraag
                 </h3>
 
                 <form action="{{ route('faq.store') }}" method="POST">
@@ -134,7 +135,7 @@
 
                     <button
                         class="mt-4 bg-pink-500 hover:bg-pink-600 text-white px-5 py-3 rounded-lg shadow transition">
-                        Verstuur vraag
+                        Verstuur
                     </button>
 
                 </form>
@@ -146,3 +147,4 @@
     </div>
 
 </x-app-layout>
+
