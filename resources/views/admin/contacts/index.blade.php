@@ -1,10 +1,12 @@
-@extends('layouts.app')
+<x-app-layout>
 
-@section('content')
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800">
+            Contactberichten
+        </h2>
+    </x-slot>
+
     <div class="max-w-5xl mx-auto py-10">
-
-        <h1 class="text-3xl font-bold text-pink-600 mb-8">Contactberichten</h1>
-
 
         @if(session('success'))
             <div class="mb-6 bg-green-50 border border-green-200 text-green-800 p-3 rounded-lg">
@@ -12,11 +14,9 @@
             </div>
         @endif
 
-
         @if($contacts->isEmpty())
             <p class="text-gray-500">Er zijn nog geen contactberichten.</p>
         @else
-
 
             <div class="bg-white rounded-xl shadow border border-gray-100 overflow-hidden">
 
@@ -35,13 +35,9 @@
                     @foreach($contacts as $contact)
                         <tr class="border-b hover:bg-pink-50/30">
 
-                            <td class="px-4 py-3 text-gray-800">
-                                {{ $contact->name }}
-                            </td>
+                            <td class="px-4 py-3 text-gray-800">{{ $contact->name }}</td>
 
-                            <td class="px-4 py-3 text-gray-800">
-                                {{ $contact->email }}
-                            </td>
+                            <td class="px-4 py-3 text-gray-800">{{ $contact->email }}</td>
 
                             <td class="px-4 py-3 text-gray-700">
                                 {{ \Illuminate\Support\Str::limit($contact->subject ?? $contact->message, 60) }}
@@ -79,7 +75,6 @@
 
             </div>
 
-
             <div class="mt-6">
                 {{ $contacts->links() }}
             </div>
@@ -87,4 +82,5 @@
         @endif
 
     </div>
-@endsection
+
+</x-app-layout>
