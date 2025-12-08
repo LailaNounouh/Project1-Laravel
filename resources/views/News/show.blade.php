@@ -1,47 +1,90 @@
-@extends('layouts.app')
+<x-app-layout>
 
-@section('content')
-    <div class="container mx-auto py-8">
-        <article>
-            <h1 class="text-3xl font-bold mb-4">{{ $news->title }}</h1>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-100 leading-tight">
+            {{ $news->title }}
+        </h2>
+    </x-slot>
 
-            @if($news->image)
-                <img src="{{ asset('storage/'.$news->image) }}" alt="" class="w-full max-w-2xl mb-4 rounded-lg shadow">
-            @endif
+    <div class="py-10">
 
-            <div class="prose">
-                {!! $news->content !!}
-            </div>
+        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8 space-y-10">
 
-            <p class="text-sm text-gray-600 mt-4">
-                Geplaatst op {{ $news->created_at->format('d/m/Y H:i') }}
-            </p>
-        </article>
+            <article class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
 
-        <section class="mt-10">
-            <h3 class="text-xl font-bold mb-4">Reacties</h3>
+                <h1 class="text-3xl font-bold text-pink-600 dark:text-pink-400 mb-4">
+                    {{ $news->title }}
+                </h1>
 
-            @forelse($news->comments as $comment)
-                <div class="p-4 bg-gray-100 rounded-lg mb-3">
-                    <strong class="text-pink-600">{{ $comment->user->name }}</strong>
-                    <p class="mt-1 text-gray-700">{{ $comment->content }}</p>
-                    <p class="text-xs text-gray-500 mt-1">{{ $comment->created_at->diffForHumans() }}</p>
+                @if($news->image)
+                    <img src="{{ asset('storage/'.$news->image) }}"
+                         class="w-full rounded-lg shadow mb-6">
+                @endif
+
+                <div class="prose dark:prose-invert max-w-none">
+                    {!! nl2br(e($news->content)) !!}
                 </div>
-            @empty
-                <p class="text-gray-500">Er zijn nog geen reacties. Wees de eerste!</p>
-            @endforelse
 
-            @auth
-                <form method="POST" action="{{ route('comments.store', $news->id) }}" class="mt-6">
-                    @csrf
-                    <textarea name="body" class="w-full border p-3 rounded-lg" placeholder="Schrijf een reactie..." required></textarea>
-                    <button class="mt-3 bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600 transition">Plaatsen</button>
-                </form>
-            @else
-                <p class="mt-4 text-gray-600">
-                    <a href="{{ route('login') }}" class="text-pink-600 underline">Log in</a> om een reactie te plaatsen.
+                <p class="text-sm text-gray-500 mt-4">
+                    Gepubliceerd op {{ $news->created_at->format('d/m/Y H:i') }}
                 </p>
-            @endauth
-        </section>
+
+            </article>
+
+
+            {{-- Reacties --}}
+            <section>
+
+                <h3 class="text-xl font-bold text-pink-600 dark:text-pink-400 mb-4">
+                    Reacties
+                </h3>
+
+                @forelse($news->comments as $comment)
+
+                    <div class="bg-pink-50 dark:bg-gray-700 p-4 rounded-lg mb-3">
+                        <strong class="text-pink-700 dark:text-pink-300">
+                            {{ $comment->user->name }}
+                        </strong>
+
+                        <p class="text-gray-800 dark:text-gray-200 mt-1">
+                            {{ $comment->content }}
+                        </p>
+
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                            {{ $comment->created_at->diffForHumans() }}
+                        </p>
+                    </div>
+
+                @empty
+                    <p class="text-gray-500">Nog geen reacties.</p>
+                @endforelse
+
+
+                @auth
+                    <form method="POST" action="{{ route('comments.store', $news) }}" class="mt-6">
+                        @csrf
+
+                        <textarea name="body"
+                                  class="w-full border rounded-lg p-3 dark:bg-gray-700 dark:text-white"
+                                  placeholder="Plaats een reactie..."
+                                  required></textarea>
+
+                        <button class="bg-pink-500 hover:bg-pink-600 px-4 py-2 rounded text-white mt-3">
+                            Plaatsen
+                        </button>
+                    </form>
+                @else
+                    <p class="mt-4">
+                        <a href="{{ route('login') }}" class="text-pink-600 underline">
+                            Log in
+                        </a> om te reageren.
+                    </p>
+                @endauth
+
+            </section>
+
+        </div>
+
     </div>
-@endsection
+
+</x-app-layout>
