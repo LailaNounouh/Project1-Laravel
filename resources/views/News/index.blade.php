@@ -1,104 +1,121 @@
-@extends('layouts.app')
 
-@section('content')
-    <div class="container mx-auto py-8">
-
-        <h1 class="text-3xl font-bold mb-3 text-pink-600">
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-100 leading-tight">
             GlamConnect News
-        </h1>
+        </h2>
+    </x-slot>
 
-        <p class="text-gray-700 mb-6">
-            Blijf op de hoogte van de laatste events, workshops en tips rond beauty, styling en IT.
-            Alle nieuwsberichten worden beheerd door het GlamConnect-team.
-        </p>
-
-        @if(session('success'))
-            <div class="bg-green-100 dark:bg-green-800 text-green-800 dark:text-green-100 p-3 mb-4 rounded shadow">
-                {{ session('success') }}
-            </div>
-        @endif
-
-        @if(session('error'))
-            <div class="bg-red-100 dark:bg-red-800 text-red-800 dark:text-red-100 p-3 mb-4 rounded shadow">
-                {{ session('error') }}
-            </div>
-        @endif
+    <div class="py-8">
+        <div class="max-w-5xl mx-auto sm:px-6 lg:px-8 space-y-8">
 
 
-        <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4">
+            <section class="bg-white dark:bg-gray-800 shadow-sm rounded-xl p-6">
+                <h1 class="text-2xl font-bold mb-2 text-pink-600 dark:text-pink-400">
+                    Nieuws & Events
+                </h1>
 
-            <h1 class="text-3xl font-bold mb-6 text-pink-600 dark:text-pink-400">Nieuws</h1>
-
-            <form method="GET" action="{{ route('news.index') }}" class="mb-6 flex items-center gap-3">
-                <input type="text" name="q" value="{{ old('q', $search ?? '') }}" placeholder="Zoek in nieuws..."
-                       class="border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 text-sm w-full max-w-md focus:ring focus:ring-pink-200 dark:bg-gray-700 dark:text-gray-100">
-                <button type="submit" class="px-4 py-2 bg-pink-200 text-pink-800 rounded hover:bg-pink-300 transition">Zoeken</button>
-
-                @if(request('q'))
-                    <a href="{{ route('news.index') }}"
-                       class="ml-2 text-sm text-gray-600 dark:text-gray-400 underline hover:text-pink-400 transition">
-                        Reset
-                    </a>
-                @endif
-            </form>
-        </div>
-
-
-        @auth
-            @if(Auth::user()->is_admin)
-                <div class="mb-4">
-                    <a href="{{ route('admin.news.create') }}" class="px-4 py-2 bg-green-200 text-green-800 rounded hover:bg-green-300 transition">
-                        + Nieuw bericht
-                    </a>
-                </div>
-            @endif
-        @endauth
-
-
-        @foreach($news as $item)
-            <div class="mb-8 pb-6 border-b dark:border-gray-700 bg-white dark:bg-gray-800 p-6 rounded shadow-md">
-                <h2 class="text-2xl font-semibold text-pink-600 dark:text-pink-400">{{ $item->title }}</h2>
-
-                @if($item->image)
-                    <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->title }}"
-                         class="my-4 rounded shadow-md max-w-full h-auto">
-                @endif
-
-                <p class="text-gray-700 dark:text-gray-300 mt-2">
-                    {{ \Illuminate\Support\Str::limit($item->content, 160) }}
+                <p class="text-gray-700 dark:text-gray-300 mb-4 text-sm">
+                    Blijf op de hoogte van de laatste events, workshops en tips rond beauty, styling en IT.
                 </p>
 
-                <a href="{{ route('news.show', $item) }}"
-                   class="underline text-blue-500 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mt-2 inline-block">
-                    Lees meer
-                </a>
+                <form method="GET"
+                      action="{{ route('news.index') }}"
+                      class="flex flex-col md:flex-row md:items-center gap-3">
 
-                @auth
-                    @if(Auth::user()->is_admin)
-                        <div class="mt-2 flex gap-2">
-                            <a href="{{ route('admin.news.edit', $item->id) }}"
-                               class="px-4 py-2 bg-yellow-200 text-yellow-800 rounded hover:bg-yellow-300 transition">
-                                Bewerk
+                    <input
+                        type="text"
+                        name="q"
+                        value="{{ old('q', $search ?? request('q')) }}"
+                        placeholder="Zoek in nieuws (titel of inhoud)…"
+                        class="border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 text-sm w-full md:max-w-md
+                               focus:outline-none focus:ring focus:ring-pink-200 dark:bg-gray-700 dark:text-gray-100">
+
+                    <div class="flex items-center gap-2">
+                        <button type="submit" class="btn-glam text-xs md:text-sm">
+                            Zoeken
+                        </button>
+
+                        @if(request('q'))
+                            <a href="{{ route('news.index') }}"
+                               class="text-xs md:text-sm text-gray-600 dark:text-gray-300 underline">
+                                Reset
                             </a>
+                        @endif
+                    </div>
+                </form>
+            </section>
 
-                            <form action="{{ route('admin.news.destroy', $item->id) }}" method="POST"
-                                  onsubmit="return confirm('Weet je het zeker?');">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit"
-                                        class="px-4 py-2 bg-red-200 text-red-800 rounded hover:bg-red-300 transition">
-                                    Verwijderen
-                                </button>
-                            </form>
+
+            @auth
+                @if(Auth::user()->is_admin)
+                    <div class="flex justify-end">
+                        <a href="{{ route('admin.news.create') }}"
+                           class="btn-glam text-xs md:text-sm">
+                            + Nieuw bericht
+                        </a>
+                    </div>
+                @endif
+            @endauth
+
+
+            @forelse($news as $item)
+                <article class="bg-white dark:bg-gray-800 shadow-sm rounded-xl p-6 border border-pink-50 dark:border-gray-700 mb-2">
+                    <h2 class="text-xl font-semibold text-pink-600 dark:text-pink-400">
+                        {{ $item->title }}
+                    </h2>
+
+                    @if($item->image)
+                        <div class="mt-4">
+                            <img
+                                src="{{ asset('storage/' . $item->image) }}"
+                                alt="{{ $item->title }}"
+                                class="rounded-lg shadow max-h-64 w-full object-cover">
                         </div>
                     @endif
-                @endauth
+
+                    <p class="text-gray-700 dark:text-gray-300 mt-4 text-sm leading-relaxed">
+                        {{ \Illuminate\Support\Str::limit($item->content, 200) }}
+                    </p>
+
+                    <div class="mt-4 flex flex-wrap items-center justify-between gap-3">
+                        <a href="{{ route('news.show', $item) }}"
+                           class="text-sm underline text-pink-600 dark:text-pink-300 hover:text-pink-800 dark:hover:text-pink-200">
+                            Lees meer
+                        </a>
+
+                        @auth
+                            @if(Auth::user()->is_admin)
+                                <div class="flex items-center gap-2">
+                                    <a href="{{ route('admin.news.edit', $item->id) }}"
+                                       class="px-3 py-1 rounded-lg text-xs font-medium bg-yellow-100 text-yellow-800 hover:bg-yellow-200">
+                                        Bewerken
+                                    </a>
+
+                                    <form action="{{ route('admin.news.destroy', $item->id) }}"
+                                          method="POST"
+                                          onsubmit="return confirm('Weet je zeker dat je dit nieuwsbericht wil verwijderen?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                                class="px-3 py-1 rounded-lg text-xs font-medium bg-red-100 text-red-800 hover:bg-red-200">
+                                            Verwijderen
+                                        </button>
+                                    </form>
+                                </div>
+                            @endif
+                        @endauth
+                    </div>
+                </article>
+            @empty
+                <p class="text-gray-600 dark:text-gray-300 text-sm">
+                    Er zijn nog geen nieuwsberichten beschikbaar.
+                </p>
+            @endforelse
+
+            <div>
+                {{ $news->links() }}
             </div>
-        @endforeach
-
-
-        <div class="mt-4">
-            {{ $news->links() }}
         </div>
     </div>
-@endsection
+</x-app-layout>
