@@ -1,29 +1,34 @@
-@extends('layouts.app')
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            Contact
+        </h2>
+    </x-slot>
 
-@section('content')
     <div class="max-w-2xl mx-auto py-10 px-4">
+        <h1 class="text-3xl font-bold mb-6 text-pink-600 text-center">Contact</h1>
 
-        <div class="mb-6 text-center">
-            <h1 class="text-3xl font-bold text-pink-600 mb-2">
-                Contact
-            </h1>
-            <p class="text-sm text-gray-600">
-                Vragen over GlamConnect, ideeën of feedback? Laat je bericht achter via dit formulier.
+        <div class="text-center mb-8">
+            <h2 class="text-4xl font-extrabold mb-2">
+                <span class="text-pink-500">Glam</span><span class="text-gray-800">Connect</span>
+            </h2>
+            <p class="text-gray-600">
+                Heb je een vraag, idee of wil je samenwerken? Laat een bericht achter.
             </p>
         </div>
 
         @if(session('success'))
-            <div class="mb-6 bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg text-sm">
+            <div class="mb-6 rounded-xl bg-green-50 border border-green-200 px-4 py-3 text-sm text-green-800 shadow-sm">
                 {{ session('success') }}
             </div>
         @endif
 
-        <div class="bg-white border border-gray-100 rounded-xl shadow-sm p-6">
+        <div class="bg-white rounded-2xl shadow-lg p-6 border border-pink-50">
             <form method="POST" action="{{ route('contact.store') }}" class="space-y-5">
                 @csrf
 
                 <div>
-                    <label for="name" class="block text-sm font-medium text-gray-700 mb-1">
+                    <label for="name" class="block text-sm font-semibold text-gray-700 mb-1">
                         Naam
                     </label>
                     <input
@@ -31,7 +36,7 @@
                         id="name"
                         name="name"
                         value="{{ old('name') }}"
-                        class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-pink-200"
+                        class="w-full rounded-xl border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-pink-400"
                         required
                     >
                     @error('name')
@@ -40,7 +45,7 @@
                 </div>
 
                 <div>
-                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">
+                    <label for="email" class="block text-sm font-semibold text-gray-700 mb-1">
                         E-mail
                     </label>
                     <input
@@ -48,7 +53,7 @@
                         id="email"
                         name="email"
                         value="{{ old('email') }}"
-                        class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-pink-200"
+                        class="w-full rounded-xl border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-pink-400"
                         required
                     >
                     @error('email')
@@ -57,15 +62,14 @@
                 </div>
 
                 <div>
-                    <label for="message" class="block text-sm font-medium text-gray-700 mb-1">
+                    <label for="message" class="block text-sm font-semibold text-gray-700 mb-1">
                         Bericht
                     </label>
                     <textarea
                         id="message"
                         name="message"
                         rows="5"
-                        class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-pink-200"
-                        placeholder="Beschrijf kort waar je hulp bij nodig hebt..."
+                        class="w-full rounded-xl border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-pink-400"
                         required
                     >{{ old('message') }}</textarea>
                     @error('message')
@@ -74,7 +78,7 @@
                 </div>
 
                 <div class="pt-2">
-                    <button type="submit" class="btn-glam text-sm">
+                    <button type="submit" class="bg-pink-500 text-white px-4 py-2 rounded-lg hover:bg-pink-600">
                         Verstuur bericht
                     </button>
                 </div>
@@ -82,8 +86,9 @@
         </div>
 
         <p class="mt-6 text-center text-xs text-gray-400">
-            Je bericht wordt opgeslagen in het systeem. Een admin kan het bekijken in het beheerpaneel.
+            Je bericht wordt veilig opgeslagen. We beantwoorden je zo snel mogelijk.
         </p>
     </div>
-@endsection
+</x-app-layout>
+
 
