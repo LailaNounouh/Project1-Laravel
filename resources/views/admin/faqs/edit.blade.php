@@ -1,18 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="max-w-3xl mx-auto py-10">
+    <div class="max-w-3xl mx-auto py-10 px-4">
+        <h1 class="text-3xl font-bold mb-6 text-pink-600">
+            FAQ bewerken
+        </h1>
 
-        <h1 class="text-3xl font-bold text-pink-600 mb-6">FAQ bewerken</h1>
-
-        <div class="bg-white rounded-xl shadow p-6 border border-gray-100">
-            <form method="POST" action="{{ route('admin.faqs.update', $faq) }}">
-                @csrf
-                @method('PUT')
-
-                @include('admin.faqs._form')
-            </form>
-        </div>
-
+        <form method="POST" action="{{ route('admin.faqs.update', $faq) }}"
+              class="bg-white border border-gray-100 rounded-xl shadow-sm p-6">
+            @method('PUT')
+            @include('admin.faqs._form')
+        </form>
     </div>
 @endsection
