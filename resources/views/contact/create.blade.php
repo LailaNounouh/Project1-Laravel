@@ -1,37 +1,29 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="max-w-2xl mx-auto py-12">
+    <div class="max-w-2xl mx-auto py-10 px-4">
 
-        <h1 class="text-3xl font-bold mb-6 text-pink-600 text-center">
-            Contact
-        </h1>
-
-        <div class="text-center mb-10">
-            <h2 class="text-4xl font-extrabold mb-2">
-                <span class="text-pink-500">Glam</span><span class="text-gray-800">Connect</span>
-            </h2>
-
-            <p class="text-gray-600">
-                Heb je een vraag of wil je iets met ons delen? Laat hier je bericht achter.
+        <div class="mb-6 text-center">
+            <h1 class="text-3xl font-bold text-pink-600 mb-2">
+                Contact
+            </h1>
+            <p class="text-sm text-gray-600">
+                Vragen over GlamConnect, ideeën of feedback? Laat je bericht achter via dit formulier.
             </p>
         </div>
 
-        {{-- Succesmelding --}}
         @if(session('success'))
-            <div class="mb-6 rounded-xl bg-green-100 border border-green-200 px-4 py-3 text-sm text-green-800 shadow-sm">
+            <div class="mb-6 bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg text-sm">
                 {{ session('success') }}
             </div>
         @endif
 
-        {{-- Formulier --}}
-        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow p-6 border border-pink-50">
+        <div class="bg-white border border-gray-100 rounded-xl shadow-sm p-6">
             <form method="POST" action="{{ route('contact.store') }}" class="space-y-5">
                 @csrf
 
-                {{-- Naam --}}
                 <div>
-                    <label for="name" class="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-1">
+                    <label for="name" class="block text-sm font-medium text-gray-700 mb-1">
                         Naam
                     </label>
                     <input
@@ -39,9 +31,7 @@
                         id="name"
                         name="name"
                         value="{{ old('name') }}"
-                        class="w-full rounded-xl border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-100 px-3 py-2
-                               focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-pink-400"
-                        placeholder="Hoe mogen we je aanspreken?"
+                        class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-pink-200"
                         required
                     >
                     @error('name')
@@ -49,9 +39,8 @@
                     @enderror
                 </div>
 
-                {{-- Email --}}
                 <div>
-                    <label for="email" class="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-1">
+                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">
                         E-mail
                     </label>
                     <input
@@ -59,9 +48,7 @@
                         id="email"
                         name="email"
                         value="{{ old('email') }}"
-                        class="w-full rounded-xl border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-100 px-3 py-2
-                               focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-pink-400"
-                        placeholder="jij@example.com"
+                        class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-pink-200"
                         required
                     >
                     @error('email')
@@ -69,18 +56,16 @@
                     @enderror
                 </div>
 
-                {{-- Bericht --}}
                 <div>
-                    <label for="message" class="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-1">
+                    <label for="message" class="block text-sm font-medium text-gray-700 mb-1">
                         Bericht
                     </label>
                     <textarea
                         id="message"
                         name="message"
                         rows="5"
-                        class="w-full rounded-xl border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-100 px-3 py-2
-                               focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-pink-400"
-                        placeholder="Vertel ons waar je hulp bij nodig hebt..."
+                        class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-pink-200"
+                        placeholder="Beschrijf kort waar je hulp bij nodig hebt..."
                         required
                     >{{ old('message') }}</textarea>
                     @error('message')
@@ -88,20 +73,17 @@
                     @enderror
                 </div>
 
-                {{-- Verstuur --}}
                 <div class="pt-2">
-                    <button type="submit"
-                            class="px-6 py-3 bg-pink-500 hover:bg-pink-600 text-white rounded-xl shadow transition">
+                    <button type="submit" class="btn-glam text-sm">
                         Verstuur bericht
                     </button>
                 </div>
-
             </form>
         </div>
 
         <p class="mt-6 text-center text-xs text-gray-400">
-            We reageren zo snel mogelijk.
+            Je bericht wordt opgeslagen in het systeem. Een admin kan het bekijken in het beheerpaneel.
         </p>
-
     </div>
 @endsection
+
