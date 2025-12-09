@@ -1,150 +1,121 @@
-<x-app-layout>
+@extends('layouts.app')
 
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-100 leading-tight">
-            Veelgestelde vragen
-        </h2>
-    </x-slot>
+@section('content')
+    <div class="max-w-4xl mx-auto py-10 px-4">
 
-    <div class="py-10">
+        <div class="mb-6">
+            <h1 class="text-3xl font-bold text-pink-600 mb-2">
+                Veelgestelde vragen
+            </h1>
+            <p class="text-sm text-gray-600">
+                Hier vind je antwoorden op de meest voorkomende vragen. Je kan onderaan ook zelf een vraag doorsturen.
+            </p>
+        </div>
 
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+        @auth
+            @if(Auth::user()->is_admin)
+                <div class="mb-6 flex flex-wrap gap-3">
+                    <a href="{{ route('admin.faqs.index') }}" class="btn-glam text-sm">
+                        FAQ beheren
+                    </a>
 
-            {{-- Titel + Admin acties --}}
-            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
+                    <a href="{{ route('admin.categories.index') }}"
+                       class="px-4 py-2 rounded-lg border border-gray-300 text-sm text-gray-700 hover:bg-gray-50">
+                        Categorieën beheren
+                    </a>
+                </div>
+            @endif
+        @endauth
 
-                <h1 class="text-3xl font-bold text-pink-600 dark:text-pink-400 mb-4">
-                    Veelgestelde vragen
-                </h1>
+        {{-- Filter --}}
+        <div class="mb-8 bg-white border border-gray-100 rounded-xl shadow-sm p-5">
+            <h2 class="text-lg font-semibold text-gray-800 mb-3">
+                Filter op categorie
+            </h2>
 
-                @auth
-                    @if(Auth::user()->is_admin)
-                        <div class="flex flex-wrap gap-3">
+            <form method="GET" action="{{ route('faq.index') }}" class="flex flex-wrap gap-3 items-center">
+                <select
+                    name="category"
+                    class="border border-gray-300 rounded-lg px-3 py-2 text-sm min-w-[200px] focus:outline-none focus:ring-2 focus:ring-pink-200"
+                >
+                    <option value="">Alle categorieën</option>
+                    @foreach($categories as $category)
+                        <option value="{{ $category->id }}"
+                            {{ request('category') == $category->id ? 'selected' : '' }}>
+                            {{ $category->name }}
+                        </option>
+                    @endforeach
+                </select>
 
-                            <a href="{{ route('admin.faqs.index') }}"
-                               class="px-4 py-2 rounded-lg bg-pink-200 text-pink-900 hover:bg-pink-300 transition">
-                                FAQ beheren
-                            </a>
+                <button class="btn-glam text-sm">
+                    Toepassen
+                </button>
 
-                            <a href="{{ route('admin.categories.index') }}"
-                               class="px-4 py-2 rounded-lg bg-purple-200 text-purple-900 hover:bg-purple-300 transition">
-                                Categorieën beheren
-                            </a>
-
-                        </div>
-                    @endif
-                @endauth
-
-            </div>
-
-
-            {{-- Filter --}}
-            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
-
-                <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4">
-                    Filter op categorie
-                </h2>
-
-                <form method="GET" action="{{ route('faq.index') }}" class="flex flex-wrap items-center gap-4">
-
-                    <select name="category"
-                            class="border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-100 rounded-lg px-4 py-2 min-w-[200px]">
-                        <option value="">Alle categorieën</option>
-
-                        @foreach($categories as $category)
-                            <option value="{{ $category->id }}"
-                                {{ request('category') == $category->id ? 'selected' : '' }}>
-                                {{ $category->name }}
-                            </option>
-                        @endforeach
-                    </select>
-
-                    <button class="bg-pink-200 text-pink-900 px-4 py-2 rounded hover:bg-pink-300 transition">
-                        Filter
-                    </button>
-
-                    @if(request('category'))
-                        <a href="{{ route('faq.index') }}"
-                           class="text-gray-600 dark:text-gray-300 underline">
-                            Reset
-                        </a>
-                    @endif
-
-                </form>
-
-            </div>
-
-
-            {{-- FAQ LIJST --}}
-            <div class="space-y-6">
-
-                @forelse($faqs as $faq)
-
-                    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow border-l-4 border-pink-300 dark:border-pink-500">
-
-                        <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
-                            {{ $faq->question }}
-                        </h3>
-
-                        <p class="text-gray-700 dark:text-gray-300 mb-2">
-                            {{ $faq->answer }}
-                        </p>
-
-                        <p class="text-sm text-gray-500 dark:text-gray-400">
-                            Categorie: <span class="font-medium">{{ $faq->category->name ?? 'Algemeen' }}</span>
-                        </p>
-
-                    </div>
-
-                @empty
-
-                    <p class="text-gray-500 dark:text-gray-400 text-center">
-                        Er zijn nog geen vragen beschikbaar.
-                    </p>
-
-                @endforelse
-
-                @if(method_exists($faqs, 'links'))
-                    <div class="pt-4">
-                        {{ $faqs->links() }}
-                    </div>
+                @if(request('category'))
+                    <a href="{{ route('faq.index') }}"
+                       class="text-xs text-gray-600 underline">
+                        Filter wissen
+                    </a>
                 @endif
+            </form>
+        </div>
 
-            </div>
+        {{-- FAQ lijst --}}
+        <div class="space-y-4">
+            @forelse($faqs as $faq)
+                <div class="bg-white border border-gray-100 rounded-lg shadow-sm p-5">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-1">
+                        {{ $faq->question }}
+                    </h3>
+                    <p class="text-sm text-gray-700 mb-2">
+                        {{ $faq->answer }}
+                    </p>
+                    <p class="text-xs text-gray-500">
+                        Categorie: {{ $faq->category->name ?? 'Algemeen' }}
+                    </p>
+                </div>
+            @empty
+                <p class="text-gray-500 text-sm">
+                    Er zijn nog geen FAQ-items beschikbaar.
+                </p>
+            @endforelse
 
+            @if(method_exists($faqs, 'links'))
+                <div class="pt-4">
+                    {{ $faqs->links() }}
+                </div>
+            @endif
+        </div>
 
-            {{-- Vraag stellen --}}
-            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
+        {{-- Vraag insturen --}}
+        <div class="mt-10 bg-white border border-gray-100 rounded-xl shadow-sm p-6">
+            <h2 class="text-xl font-semibold text-pink-600 mb-3">
+                Stel een vraag
+            </h2>
 
-                <h3 class="text-xl font-semibold text-pink-600 dark:text-pink-400 mb-4">
-                    Stel een vraag
-                </h3>
+            <form action="{{ route('faq.store') }}" method="POST" class="space-y-3">
+                @csrf
 
-                <form action="{{ route('faq.store') }}" method="POST">
-                    @csrf
+                <label for="question" class="block text-sm font-medium text-gray-700">
+                    Je vraag
+                </label>
+                <textarea
+                    id="question"
+                    name="question"
+                    rows="4"
+                    class="w-full border border-gray-300 rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-pink-200"
+                    placeholder="Typ hier je vraag..."
+                >{{ old('question') }}</textarea>
 
-                    <textarea name="question"
-                              rows="4"
-                              placeholder="Typ hier je vraag..."
-                              class="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-lg p-3"
-                    >{{ old('question') }}</textarea>
+                @error('question')
+                <p class="text-xs text-red-500">{{ $message }}</p>
+                @enderror
 
-                    @error('question')
-                    <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
-                    @enderror
-
-                    <button
-                        class="mt-4 bg-pink-500 hover:bg-pink-600 text-white px-5 py-3 rounded-lg shadow transition">
-                        Verstuur
-                    </button>
-
-                </form>
-
-            </div>
-
+                <button type="submit" class="btn-glam text-sm">
+                    Versturen
+                </button>
+            </form>
         </div>
 
     </div>
-
-</x-app-layout>
-
+@endsection
