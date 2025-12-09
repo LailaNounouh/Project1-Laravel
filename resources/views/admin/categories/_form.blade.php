@@ -1,7 +1,6 @@
 @csrf
 
 <div class="space-y-4">
-
     <div>
         <label for="name" class="block text-sm font-medium text-gray-700 mb-1">
             Naam van de categorie
@@ -11,27 +10,25 @@
             name="name"
             id="name"
             value="{{ old('name', isset($category) ? $category->name : '') }}"
-            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-pink-200"
-            placeholder="Bijvoorbeeld: Algemeen, Technisch, Account..."
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring focus:ring-pink-300"
             required
         >
         @error('name')
-        <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
+        <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
         @enderror
     </div>
 
     <div class="flex items-center gap-3 pt-2">
         <button
             type="submit"
-            class="btn-glam text-sm"
-        >
+            class="px-5 py-2.5 rounded-xl font-semibold text-white bg-pink-500 hover:bg-pink-600 transition">
             Opslaan
         </button>
 
         <a href="{{ route('admin.categories.index') }}"
-           class="text-sm text-gray-600 hover:underline">
+           class="px-4 py-2 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-50 transition">
             Annuleren
         </a>
     </div>
-
 </div>
+
