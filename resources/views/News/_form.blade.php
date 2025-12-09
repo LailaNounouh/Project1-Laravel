@@ -3,75 +3,46 @@
     $isEdit = isset($news);
 @endphp
 
-<form
-    method="POST"
-    action="{{ $isEdit ? route('admin.news.update', $news) : route('admin.news.store') }}"
-    enctype="multipart/form-data"
-    class="space-y-5 bg-white border border-gray-100 rounded-xl shadow-sm p-6"
->
+@php $isEdit = isset($news); @endphp
+
+<form method="POST"
+      action="{{ $isEdit ? route('admin.news.update', $news) : route('admin.news.store') }}"
+      enctype="multipart/form-data"
+      class="space-y-5 bg-white p-6 rounded shadow">
     @csrf
-    @if($isEdit)
-        @method('PUT')
-    @endif
+    @if($isEdit) @method('PUT') @endif
 
     <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">
-            Titel
-        </label>
-        <input
-            type="text"
-            name="title"
-            value="{{ old('title', $news->title ?? '') }}"
-            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-pink-200"
-            required
-        >
-        @error('title')
-        <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
-        @enderror
+        <label class="block font-semibold mb-1">Titel</label>
+        <input type="text"
+               name="title"
+               value="{{ old('title', $news->title ?? '') }}"
+               class="border rounded w-full p-2"
+               required>
+        @error('title') <p class="text-red-600 text-sm mt-1">{{ $message }}</p> @enderror
     </div>
 
     <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">
-            Afbeelding (optioneel)
-        </label>
-        <input
-            type="file"
-            name="image"
-            accept="image/*"
-            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm"
-        >
+        <label class="block font-semibold mb-1">Afbeelding (optioneel)</label>
+        <input type="file" name="image" accept="image/*" class="border rounded w-full p-2">
         @if($isEdit && $news->image)
-            <img src="{{ asset('storage/'.$news->image) }}"
-                 alt="Huidige afbeelding"
-                 class="mt-3 w-40 h-24 object-cover rounded-lg border border-gray-200">
+            <img src="{{ asset('storage/'.$news->image) }}" alt="Huidige afbeelding" class="w-40 mt-2 rounded">
         @endif
-        @error('image')
-        <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
-        @enderror
+        @error('image') <p class="text-red-600 text-sm mt-1">{{ $message }}</p> @enderror
     </div>
 
     <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">
-            Inhoud
-        </label>
-        <textarea
-            name="content"
-            rows="8"
-            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-pink-200"
-            required
-        >{{ old('content', $news->content ?? '') }}</textarea>
-        @error('content')
-        <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
-        @enderror
+        <label class="block font-semibold mb-1">Inhoud</label>
+        <textarea name="content" rows="8" class="border rounded w-full p-2" required>{{ old('content', $news->content ?? '') }}</textarea>
+        @error('content') <p class="text-red-600 text-sm mt-1">{{ $message }}</p> @enderror
     </div>
 
-    <div class="flex items-center gap-3 pt-2">
-        <button type="submit" class="btn-glam text-sm">
-            {{ $isEdit ? 'Opslaan' : 'Aanmaken' }}
+    <div class="flex gap-3">
+        <button type="submit" class="bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600">
+            {{ $isEdit ? 'Bijwerken' : 'Opslaan' }}
         </button>
 
-        <a href="{{ route('news.index') }}"
-           class="text-sm text-gray-600 hover:underline">
+        <a href="{{ route('news.index') }}" class="underline text-gray-600 hover:text-pink-600">
             Annuleren
         </a>
     </div>
