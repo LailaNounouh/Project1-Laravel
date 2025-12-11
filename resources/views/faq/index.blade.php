@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-100 leading-tight">
             Veelgestelde vragen
         </h2>
     </x-slot>
@@ -8,36 +8,55 @@
     <div class="py-10">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
 
-            <div class="bg-white p-6 rounded-xl shadow">
-                <h1 class="text-3xl font-bold text-pink-600 mb-4">
+            {{-- Titel + Admin knoppen --}}
+            <div class="bg-white dark:bg-gray-800 dark:text-gray-100
+                        border border-gray-200 dark:border-gray-700
+                        p-6 rounded-xl shadow transition">
+
+                <h1 class="text-3xl font-bold text-pink-600 dark:text-pink-400 mb-4">
                     Veelgestelde vragen
                 </h1>
 
                 @auth
                     @if(Auth::user()->is_admin)
                         <div class="flex flex-wrap gap-3">
+
                             <a href="{{ route('admin.faqs.index') }}"
-                               class="px-4 py-2 rounded-lg bg-pink-200 text-pink-800 hover:bg-pink-300 transition">
+                               class="px-4 py-2 rounded-lg bg-pink-200 dark:bg-pink-800
+                                      text-pink-800 dark:text-pink-200 hover:bg-pink-300
+                                      dark:hover:bg-pink-700 transition">
                                 FAQ beheren
                             </a>
+
                             <a href="{{ route('admin.categories.index') }}"
-                               class="px-4 py-2 rounded-lg bg-purple-200 text-purple-800 hover:bg-purple-300 transition">
+                               class="px-4 py-2 rounded-lg bg-purple-200 dark:bg-purple-800
+                                      text-purple-800 dark:text-purple-200 hover:bg-purple-300
+                                      dark:hover:bg-purple-700 transition">
                                 Categorieën beheren
                             </a>
+
                         </div>
                     @endif
                 @endauth
             </div>
 
-            <div class="bg-white p-6 rounded-xl shadow">
-                <h2 class="text-xl font-semibold mb-4 text-gray-800">
+            {{-- Filter blokk --}}
+            <div class="bg-white dark:bg-gray-800 dark:text-gray-100
+                        border border-gray-200 dark:border-gray-700
+                        p-6 rounded-xl shadow transition">
+
+                <h2 class="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-100">
                     Filter op categorie
                 </h2>
 
                 <form method="GET" action="{{ route('faq.index') }}" class="flex flex-wrap items-center gap-4">
+
                     <select name="category"
-                            class="border border-gray-300 rounded-lg px-4 py-2 min-w-[200px]">
+                            class="border border-gray-300 dark:border-gray-600
+                                   dark:bg-gray-700 dark:text-gray-100
+                                   rounded-lg px-4 py-2 min-w-[200px]">
                         <option value="">Alle categorieën</option>
+
                         @foreach($categories as $category)
                             <option value="{{ $category->id }}"
                                 {{ request('category') == $category->id ? 'selected' : '' }}>
@@ -46,37 +65,47 @@
                         @endforeach
                     </select>
 
-                    <button class="bg-pink-200 text-pink-800 px-4 py-2 rounded hover:bg-pink-300 transition">
+                    <button class="bg-pink-200 dark:bg-pink-800
+                                   text-pink-800 dark:text-pink-200
+                                   px-4 py-2 rounded hover:bg-pink-300 dark:hover:bg-pink-700 transition">
                         Filter
                     </button>
 
                     @if(request('category'))
                         <a href="{{ route('faq.index') }}"
-                           class="text-gray-600 underline">
+                           class="text-gray-600 dark:text-gray-300 underline">
                             Reset
                         </a>
                     @endif
                 </form>
             </div>
 
+            {{-- FAQ lijst --}}
             <div class="space-y-6">
                 @forelse($faqs as $faq)
-                    <div class="bg-white p-6 rounded-xl shadow border-l-4 border-pink-400">
-                        <h3 class="text-lg font-semibold text-gray-900 mb-2">
+
+                    <div class="bg-white dark:bg-gray-800 dark:text-gray-100
+                                border border-gray-200 dark:border-gray-700
+                                p-6 rounded-xl shadow transition">
+
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
                             {{ $faq->question }}
                         </h3>
 
-                        <p class="text-gray-700 mb-2">
+                        <p class="text-gray-700 dark:text-gray-300 mb-2">
                             {{ $faq->answer }}
                         </p>
 
-                        <p class="text-sm text-gray-500">
+                        <p class="text-sm text-gray-500 dark:text-gray-400">
                             Categorie:
-                            <span class="font-medium">{{ $faq->category->name ?? 'Algemeen' }}</span>
+                            <span class="font-medium">
+                                {{ $faq->category->name ?? 'Algemeen' }}
+                            </span>
                         </p>
                     </div>
+
                 @empty
-                    <p class="text-gray-500 text-center">
+                    <p class="text-gray-500 dark:text-gray-300 text-center">
                         Er zijn nog geen FAQ-items beschikbaar.
                     </p>
                 @endforelse
@@ -88,19 +117,24 @@
                 @endif
             </div>
 
-            <div class="bg-white p-6 rounded-xl shadow">
-                <h3 class="text-xl font-semibold mb-4 text-pink-600">
+            {{-- Vraag insturen --}}
+            <div class="bg-white dark:bg-gray-800 dark:text-gray-100
+                        border border-gray-200 dark:border-gray-700
+                        p-6 rounded-xl shadow transition">
+
+                <h3 class="text-xl font-semibold mb-4 text-pink-600 dark:text-pink-400">
                     Stel een vraag
                 </h3>
 
                 <form action="{{ route('faq.store') }}" method="POST">
                     @csrf
 
-                    <textarea
-                        name="question"
-                        rows="4"
-                        placeholder="Typ hier je vraag..."
-                        class="w-full border border-gray-300 rounded-lg p-3">{{ old('question') }}</textarea>
+                    <textarea name="question"
+                              rows="4"
+                              placeholder="Typ hier je vraag..."
+                              class="w-full border border-gray-300 dark:border-gray-600
+                                     dark:bg-gray-700 dark:text-gray-100
+                                     rounded-lg p-3">{{ old('question') }}</textarea>
 
                     @error('question')
                     <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
