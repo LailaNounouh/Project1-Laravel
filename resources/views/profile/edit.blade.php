@@ -1,44 +1,66 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-100 leading-tight">
             Profiel bewerken
         </h2>
     </x-slot>
 
     <div class="max-w-3xl mx-auto py-10 px-4">
-        <h1 class="text-3xl font-bold mb-6 text-pink-600">Profiel bewerken</h1>
+        <h1 class="text-3xl font-bold mb-6 text-pink-600 dark:text-pink-400">Profiel bewerken</h1>
 
         @if(session('success'))
-            <div class="bg-green-100 text-green-800 p-3 rounded mb-4">
+            <div class="bg-green-100 dark:bg-green-900
+                        text-green-800 dark:text-green-200
+                        p-3 rounded mb-4 border border-green-200 dark:border-green-700">
                 {{ session('success') }}
             </div>
         @endif
 
-        <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data"
-              class="bg-white shadow p-6 rounded-lg space-y-5">
+        <form action="{{ route('profile.update') }}"
+              method="POST"
+              enctype="multipart/form-data"
+              class="bg-white dark:bg-gray-800 dark:text-gray-100
+                     border border-gray-200 dark:border-gray-700
+                     shadow p-6 rounded-lg space-y-5 transition">
+
             @csrf
+
 
             <div>
                 <label class="block font-semibold mb-1">Naam</label>
-                <input type="text" name="name" value="{{ old('name', $user->name) }}"
-                       class="w-full border p-2 rounded">
+                <input type="text"
+                       name="name"
+                       value="{{ old('name', $user->name) }}"
+                       class="w-full border border-gray-300 dark:border-gray-600
+                              rounded p-2 dark:bg-gray-700 dark:text-gray-100">
             </div>
+
 
             <div>
                 <label class="block font-semibold mb-1">Email</label>
-                <input type="email" name="email" value="{{ old('email', $user->email) }}"
-                       class="w-full border p-2 rounded">
+                <input type="email"
+                       name="email"
+                       value="{{ old('email', $user->email) }}"
+                       class="w-full border border-gray-300 dark:border-gray-600
+                              rounded p-2 dark:bg-gray-700 dark:text-gray-100">
             </div>
+
 
             <div>
                 <label class="block font-semibold mb-1">Bio</label>
                 <textarea name="bio" rows="4"
-                          class="w-full border p-2 rounded">{{ old('bio', $user->bio) }}</textarea>
+                          class="w-full border border-gray-300 dark:border-gray-600
+                                 rounded p-2 dark:bg-gray-700 dark:text-gray-100">{{ old('bio', $user->bio) }}</textarea>
             </div>
+
 
             <div>
                 <label class="block font-semibold mb-1">Profielfoto</label>
-                <input type="file" name="profile_photo" accept="image/*" class="border rounded w-full p-2">
+                <input type="file"
+                       name="profile_photo"
+                       accept="image/*"
+                       class="border border-gray-300 dark:border-gray-600
+                              rounded w-full p-2 dark:bg-gray-700 dark:text-gray-100">
 
                 @if($user->profile_photo)
                     <img src="{{ asset('storage/'.$user->profile_photo) }}"
@@ -46,12 +68,14 @@
                 @endif
             </div>
 
+
             <div class="flex items-center gap-3">
                 <button class="bg-pink-500 text-white px-4 py-2 rounded-lg hover:bg-pink-600">
                     Opslaan
                 </button>
 
-                <a href="{{ route('profile.show') }}" class="text-gray-600 hover:underline">
+                <a href="{{ route('profile.show') }}"
+                   class="text-gray-600 dark:text-gray-300 hover:underline">
                     Annuleren
                 </a>
             </div>
