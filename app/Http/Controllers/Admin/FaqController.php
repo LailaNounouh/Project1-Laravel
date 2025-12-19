@@ -17,35 +17,40 @@ class FaqController extends Controller
 
     public function create()
     {
-        $categories = Category::orderBy('name')->get();
-        return view('admin.faqs.create', compact('categories'));
+        return view('admin.faqs.create', [
+            'categories' => Category::orderBy('name')->get(),
+        ]);
     }
 
     public function store(Request $request)
     {
         $data = $request->validate([
-            'question' => ['required','string','max:255'],
-            'answer'   => ['required','string'],
-            'category_id' => ['nullable','exists:categories,id'],
+            'question' => ['required', 'string', 'max:255'],
+            'answer' => ['required', 'string'],
+            'category_id' => ['required', 'exists:categories,id'],
         ]);
 
         Faq::create($data);
 
-        return redirect()->route('admin.faqs.index')->with('success','FAQ aangemaakt.');
+        return redirect()->route('admin.faqs.index')
+            ->with('success', 'FAQ aangemaakt.');
     }
+
 
     public function edit(Faq $faq)
     {
-        $categories = Category::orderBy('name')->get();
-        return view('admin.faqs.edit', compact('faq','categories'));
+        return view('admin.faqs.edit', [
+            'faq' => $faq,
+            'categories' => Category::orderBy('name')->get(),
+        ]);
     }
-
     public function update(Request $request, Faq $faq)
     {
         $data = $request->validate([
             'question' => ['required','string','max:255'],
             'answer'   => ['required','string'],
-            'category_id' => ['nullable','exists:categories,id'],
+            'category_id' => ['required', 'exists:categories,id'],
+
         ]);
 
         $faq->update($data);

@@ -7,20 +7,21 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <!-- Dark mode init -->
+    <script>
+        const theme = localStorage.getItem('theme');
+        if (theme === 'dark') {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
 </head>
-<body class="font-sans antialiased">
 
-<script>
-    // Check of user dark mode had aanstaan
-    if (localStorage.getItem('theme') === 'dark' ||
-        (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        document.documentElement.classList.add('dark');
-    } else {
-        document.documentElement.classList.remove('dark');
-    }
-</script>
+<body class="font-sans antialiased bg-gray-100 dark:bg-gray-900">
 
-<div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+<div class="min-h-screen">
     @include('layouts.navigation')
 
     @isset($header)
@@ -36,7 +37,7 @@
     </main>
 </div>
 
-<!-- Stap 3 — toggleTheme functie -->
+<!-- Dark mode toggle -->
 <script>
     function toggleTheme() {
         const html = document.documentElement;
@@ -53,4 +54,3 @@
 
 </body>
 </html>
-

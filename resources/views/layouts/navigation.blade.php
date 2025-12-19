@@ -51,14 +51,10 @@
             <div class="hidden sm:flex sm:items-center sm:space-x-4">
 
 
-                <button
-                    onclick="toggleTheme()"
-                    class="px-3 py-1 rounded text-sm bg-gray-200 dark:bg-gray-700 dark:text-gray-100
-                           hover:bg-gray-300 dark:hover:bg-gray-600 transition"
-                >
-                    🌙 / ☀️
+                <button onclick="toggleTheme()"
+                        class="px-3 py-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition">
+                    🌙
                 </button>
-
 
                 @auth
                     <x-dropdown align="right" width="48">

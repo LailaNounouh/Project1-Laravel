@@ -44,7 +44,9 @@
             class="w-full border border-gray-300 dark:border-gray-700
                    rounded-lg p-2 bg-white dark:bg-gray-800 dark:text-gray-100"
         >
-            <option value="">Geen categorie</option>
+            <select name="category_id" class="border rounded w-full p-2" required>
+                <option value="">-- Kies een categorie --</option>
+            </select>
 
             @foreach($categories as $cat)
                 <option value="{{ $cat->id }}"
