@@ -8,9 +8,12 @@ use Illuminate\Support\Facades\Hash;
 
 class AdminUserSeeder extends Seeder
 {
+    /**
+     * Run the database seeds.
+     */
     public function run(): void
     {
-        User::firstOrCreate(
+        User::updateOrCreate(
             ['email' => 'admin@ehb.be'],
             [
                 'name' => 'admin',
@@ -18,7 +21,5 @@ class AdminUserSeeder extends Seeder
                 'is_admin' => true,
             ]
         );
-
     }
 }
-
