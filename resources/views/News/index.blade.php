@@ -7,9 +7,14 @@
 
     <div class="container mx-auto py-8">
 
-        <h1 class="text-3xl font-bold mb-3 text-pink-600">
-            GlamConnect News
+        <!-- Pagina titel & intro -->
+        <h1 class="text-4xl font-extrabold text-pink-500 mb-4">
+            GlamConnect Looks
         </h1>
+
+        <p class="text-gray-600 max-w-2xl mb-12">
+            Ontdek make-up, glam & beauty inspiratie van creatives binnen GlamConnect.
+        </p>
 
         @if ($news->isEmpty())
             <p class="text-gray-500">Geen nieuws gevonden.</p>
