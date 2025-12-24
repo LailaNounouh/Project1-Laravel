@@ -16,6 +16,22 @@
             Ontdek make-up, glam & beauty inspiratie van creatives binnen GlamConnect.
         </p>
 
+        <!-- Visuele filters (geen backend) -->
+        <div class="flex flex-wrap gap-3 mb-10">
+            <button class="px-4 py-2 rounded-full bg-pink-500 text-white text-sm">
+                All
+            </button>
+            <button class="px-4 py-2 rounded-full bg-gray-100 text-gray-700 text-sm">
+                Bridal
+            </button>
+            <button class="px-4 py-2 rounded-full bg-gray-100 text-gray-700 text-sm">
+                Soft Glam
+            </button>
+            <button class="px-4 py-2 rounded-full bg-gray-100 text-gray-700 text-sm">
+                Bold
+            </button>
+        </div>
+
         @if ($news->isEmpty())
             <p class="text-gray-500">Geen nieuws gevonden.</p>
         @else
