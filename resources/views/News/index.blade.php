@@ -16,30 +16,39 @@
         @else
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 @foreach ($news as $item)
-                    <div class="bg-white rounded-xl shadow overflow-hidden">
-                        <img
-                            src="{{ asset('storage/' . $item->image) }}"
-                            class="w-full h-64 object-cover"
-                            alt="{{ $item->title }}"
-                        >
+
+                    <!-- Lookbook-style news card -->
+                    <div class="group bg-white rounded-2xl shadow hover:shadow-xl transition overflow-hidden">
+                        <div class="relative overflow-hidden">
+                            <img
+                                src="{{ asset('storage/' . $item->image) }}"
+                                class="w-full h-72 object-cover group-hover:scale-105 transition duration-300"
+                                alt="{{ $item->title }}"
+                            >
+
+                            <span class="absolute top-4 left-4 bg-pink-500 text-white text-xs px-3 py-1 rounded-full">
+                                Glam Look
+                            </span>
+                        </div>
 
                         <div class="p-6">
-                            <h3 class="text-lg font-semibold mb-2">
+                            <h3 class="text-2xl font-bold tracking-tight text-gray-900 mb-2">
                                 {{ $item->title }}
                             </h3>
 
-                            <p class="text-sm text-gray-600 mb-4">
-                                {{ \Illuminate\Support\Str::limit($item->content, 120) }}
+                            <p class="text-sm text-gray-500 leading-relaxed mb-4">
+                                {{ Str::limit($item->content, 100) }}
                             </p>
 
                             <a
                                 href="{{ route('news.show', $item) }}"
-                                class="text-pink-500 font-semibold"
+                                class="inline-flex items-center text-pink-500 font-semibold hover:underline"
                             >
-                                Lees meer
+                                Bekijk look →
                             </a>
                         </div>
                     </div>
+
                 @endforeach
             </div>
 
