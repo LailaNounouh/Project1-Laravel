@@ -33,7 +33,7 @@
     @endisset
 
     <main>
-        {{ $slot }}
+         @yield('content')
     </main>
 </div>
 
