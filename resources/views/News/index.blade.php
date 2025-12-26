@@ -44,8 +44,9 @@
                                     {{ $item->title }}
                                 </h3>
 
+                                {{-- 🔒 HTML-vrije preview (BELANGRIJK) --}}
                                 <p class="text-sm text-gray-500 leading-relaxed mb-4">
-                                    {{ Str::limit($item->content, $index === 0 ? 160 : 100) }}
+                                    {{ \Illuminate\Support\Str::limit(strip_tags($item->content), $index === 0 ? 160 : 100) }}
                                 </p>
 
                                 <a
