@@ -3,13 +3,11 @@
         <div class="flex justify-between h-16">
             <div class="flex">
 
-
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
                     </a>
                 </div>
-
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
 
@@ -42,14 +40,16 @@
                             <x-nav-link :href="route('admin.contacts.index')" :active="request()->is('admin/contacts*')">
                                 {{ __('Contactberichten') }}
                             </x-nav-link>
+
+                            <x-nav-link :href="route('admin.users.index')" :active="request()->is('admin/users*')">
+                                {{ __('Users') }}
+                            </x-nav-link>
                         @endif
                     @endauth
                 </div>
             </div>
 
-
             <div class="hidden sm:flex sm:items-center sm:space-x-4">
-
 
                 <button onclick="toggleTheme()"
                         class="px-3 py-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition">
@@ -93,7 +93,6 @@
                 @endif
             </div>
 
-
             <div class="-me-2 flex items-center sm:hidden">
                 <button @click="open = ! open"
                         class="p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700">
@@ -109,7 +108,6 @@
             </div>
         </div>
     </div>
-
 
     <div :class="{'block': open, 'hidden': !open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
@@ -135,15 +133,20 @@
                     <x-responsive-nav-link :href="route('admin.faqs.index')">
                         FAQ beheer
                     </x-responsive-nav-link>
+
                     <x-responsive-nav-link :href="route('admin.categories.index')">
                         Categorieën
                     </x-responsive-nav-link>
+
                     <x-responsive-nav-link :href="route('admin.contacts.index')">
                         Contactberichten
                     </x-responsive-nav-link>
+
+                    <x-responsive-nav-link :href="route('admin.users.index')">
+                        Users
+                    </x-responsive-nav-link>
                 @endif
             @endauth
-
 
             <div class="px-4 py-2">
                 <button
@@ -151,14 +154,12 @@
                     class="w-full px-3 py-2 rounded text-sm bg-gray-200 dark:bg-gray-700 dark:text-gray-100
                            hover:bg-gray-300 dark:hover:bg-gray-600 transition"
                 >
-
                 </button>
             </div>
 
         </div>
     </div>
 </nav>
-
 
 <script>
     function toggleTheme() {
