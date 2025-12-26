@@ -58,13 +58,10 @@ Route::middleware(['auth', \App\Http\Middleware\IsAdmin::class])
         Route::delete('contacts/{contact}', [AdminContactController::class, 'destroy'])->name('contacts.destroy');
 
         Route::get('/users', [AdminUserController::class, 'index'])->name('users.index');
-
-
         Route::get('/users/create', [AdminUserController::class, 'create'])->name('users.create');
         Route::post('/users', [AdminUserController::class, 'store'])->name('users.store');
-
-        Route::patch('/users/{user}/toggle-admin', [AdminUserController::class, 'toggleAdmin'])
-            ->name('users.toggleAdmin');
+        Route::post('/users/{user}/toggle-admin', [AdminUserController::class, 'toggleAdmin'])
+            ->name('users.toggle-admin');
     });
 
 require __DIR__ . '/auth.php';
