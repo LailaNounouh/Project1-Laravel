@@ -25,7 +25,6 @@
 
             @csrf
 
-
             <div>
                 <label class="block font-semibold mb-1">Naam</label>
                 <input type="text"
@@ -34,7 +33,6 @@
                        class="w-full border border-gray-300 dark:border-gray-600
                               rounded p-2 dark:bg-gray-700 dark:text-gray-100">
             </div>
-
 
             <div>
                 <label class="block font-semibold mb-1">Email</label>
@@ -45,14 +43,12 @@
                               rounded p-2 dark:bg-gray-700 dark:text-gray-100">
             </div>
 
-
             <div>
                 <label class="block font-semibold mb-1">Bio</label>
                 <textarea name="bio" rows="4"
                           class="w-full border border-gray-300 dark:border-gray-600
                                  rounded p-2 dark:bg-gray-700 dark:text-gray-100">{{ old('bio', $user->bio) }}</textarea>
             </div>
-
 
             <div>
                 <label class="block font-semibold mb-1">Profielfoto</label>
@@ -68,7 +64,6 @@
                 @endif
             </div>
 
-
             <div class="flex items-center gap-3">
                 <button class="bg-pink-500 text-white px-4 py-2 rounded-lg hover:bg-pink-600">
                     Opslaan
@@ -80,5 +75,57 @@
                 </a>
             </div>
         </form>
+
+        {{-- ===================== --}}
+        {{-- 🔐 WACHTWOORD WIJZIGEN --}}
+        {{-- ===================== --}}
+
+        <h2 class="text-xl font-semibold mt-10 mb-4 text-gray-800 dark:text-gray-100">
+            Change Password
+        </h2>
+
+        <form method="POST"
+              action="{{ route('profile.password.update') }}"
+              class="bg-white dark:bg-gray-800 dark:text-gray-100
+                     border border-gray-200 dark:border-gray-700
+                     shadow p-6 rounded-lg space-y-4 transition">
+            @csrf
+
+            <div>
+                <label class="block text-sm font-medium">Current password</label>
+                <input type="password"
+                       name="current_password"
+                       class="w-full border border-gray-300 dark:border-gray-600
+                              rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+                @error('current_password')
+                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium">New password</label>
+                <input type="password"
+                       name="password"
+                       class="w-full border border-gray-300 dark:border-gray-600
+                              rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+                @error('password')
+                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium">Confirm new password</label>
+                <input type="password"
+                       name="password_confirmation"
+                       class="w-full border border-gray-300 dark:border-gray-600
+                              rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+            </div>
+
+            <button class="bg-pink-500 text-white px-6 py-2 rounded hover:bg-pink-600">
+                Update Password
+            </button>
+        </form>
+
     </div>
 </x-app-layout>
+
