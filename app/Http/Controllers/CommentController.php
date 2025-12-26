@@ -4,19 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Comment;
+use App\Models\News;
 
 class CommentController extends Controller
 {
-    public function store(Request $request, $news_id)
+    public function store(Request $request, News $news)
     {
-        $data = $request->validate([
-            'body' => 'required|string|min:3'
+        $request->validate([
+            'content' => 'required|string|min:3',
         ]);
 
         Comment::create([
             'user_id' => auth()->id(),
-            'news_id' => $news_id,
-            'content' => $data['body'],
+            'news_id' => $news->id,
+            'body' => $request->content,
         ]);
 
         return back();

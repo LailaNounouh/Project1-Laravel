@@ -50,8 +50,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 
 
-    Route::post('/news/{news}/comments', [CommentController::class, 'store'])->name('comments.store');
-});
+
+
+Route::post('/news/{news}/comments', [CommentController::class, 'store'])->name('comments.store');});
 
 
 

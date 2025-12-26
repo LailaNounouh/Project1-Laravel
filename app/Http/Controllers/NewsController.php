@@ -29,7 +29,9 @@ class NewsController extends Controller
 
     public function show(News $news)
     {
-        return view('news.show', compact('news'));
+        $comments = $news->comments()->latest()->get();
+
+        return view('news.show', compact('news', 'comments'));
     }
 
     public function create()

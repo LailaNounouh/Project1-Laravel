@@ -11,7 +11,9 @@
                         border border-gray-200 dark:border-gray-700
                         p-6 rounded-xl shadow">
 
-            <h1 class="text-3xl font-bold mb-4 text-pink-600 dark:text-pink-400">{{ $news->title }}</h1>
+            <h1 class="text-3xl font-bold mb-4 text-pink-600 dark:text-pink-400">
+                {{ $news->title }}
+            </h1>
 
             @if($news->image)
                 <img src="{{ asset('storage/'.$news->image) }}"
@@ -29,19 +31,26 @@
 
         {{-- Reacties --}}
         <section class="mt-10">
-            <h3 class="text-xl font-semibold mb-4 dark:text-gray-100">Reacties</h3>
+            <h3 class="text-xl font-semibold mb-4 dark:text-gray-100">
+                Reacties
+            </h3>
 
-            @forelse($news->comments as $comment)
-                <div class="p-4 bg-gray-100 dark:bg-gray-700 rounded-lg mb-3">
-                    <strong class="text-pink-600 dark:text-pink-400">{{ $comment->user->name }}</strong>
-                    <p class="mt-1 text-gray-700 dark:text-gray-200">{{ $comment->content }}</p>
-                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                        {{ $comment->created_at->diffForHumans() }}
-                    </p>
-                </div>
-            @empty
-                <p class="text-gray-500 dark:text-gray-300">Er zijn nog geen reacties.</p>
-            @endforelse
+            @if ($comments->isEmpty())
+                <p class="text-gray-500 dark:text-gray-300">
+                    Er zijn nog geen reacties.
+                </p>
+            @else
+                @foreach ($comments as $comment)
+                    <div class="p-4 bg-gray-100 dark:bg-gray-700 rounded-lg mb-3">
+                        <p class="text-gray-700 dark:text-gray-200">
+                            {{ $comment->body }}
+                        </p>
+                        <small class="text-gray-500 dark:text-gray-400">
+                            Geplaatst op {{ $comment->created_at->format('d/m/Y H:i') }}
+                        </small>
+                    </div>
+                @endforeach
+            @endif
 
             @auth
                 <form method="POST"
@@ -64,11 +73,13 @@
                 </form>
             @else
                 <p class="mt-4 text-gray-600 dark:text-gray-300">
-                    <a href="{{ route('login') }}" class="text-pink-600 dark:text-pink-400 underline">
+                    <a href="{{ route('login') }}"
+                       class="text-pink-600 dark:text-pink-400 underline">
                         Log in
                     </a> om een reactie te plaatsen.
                 </p>
             @endauth
         </section>
+
     </div>
 </x-app-layout>
