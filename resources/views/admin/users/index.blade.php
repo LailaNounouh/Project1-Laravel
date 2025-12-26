@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
 @section('content')
     <div class="max-w-6xl mx-auto py-10">
@@ -6,11 +6,15 @@
         <h1 class="text-3xl font-bold mb-6">User Management</h1>
 
         @if(session('success'))
-            <div class="mb-4 text-green-600">{{ session('success') }}</div>
+            <div class="mb-4 text-green-600">
+                {{ session('success') }}
+            </div>
         @endif
 
         @if(session('error'))
-            <div class="mb-4 text-red-600">{{ session('error') }}</div>
+            <div class="mb-4 text-red-600">
+                {{ session('error') }}
+            </div>
         @endif
 
         <table class="w-full border-collapse bg-white rounded-lg shadow">
@@ -42,7 +46,7 @@
 
                             <button
                                 class="px-4 py-2 rounded text-white
-                                {{ $user->is_admin ? 'bg-red-500' : 'bg-pink-500' }}">
+                                    {{ $user->is_admin ? 'bg-red-500' : 'bg-pink-500' }}">
                                 {{ $user->is_admin ? 'Remove admin' : 'Make admin' }}
                             </button>
                         </form>
@@ -54,4 +58,3 @@
 
     </div>
 @endsection
-
