@@ -1,6 +1,4 @@
-@extends('layouts.app')
-
-@section('content')
+<x-app-layout>
     <div class="max-w-6xl mx-auto py-10">
 
         <h1 class="text-3xl font-bold mb-6">User Management</h1>
@@ -46,7 +44,7 @@
 
                             <button
                                 class="px-4 py-2 rounded text-white
-                                    {{ $user->is_admin ? 'bg-red-500' : 'bg-pink-500' }}">
+                                        {{ $user->is_admin ? 'bg-red-500' : 'bg-pink-500' }}">
                                 {{ $user->is_admin ? 'Remove admin' : 'Make admin' }}
                             </button>
                         </form>
@@ -57,4 +55,4 @@
         </table>
 
     </div>
-@endsection
+</x-app-layout>
