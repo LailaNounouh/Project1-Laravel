@@ -5,6 +5,12 @@
             User Management
         </h1>
 
+
+        <a href="{{ route('admin.users.create') }}"
+           class="inline-block mb-4 px-4 py-2 bg-pink-500 text-white rounded-lg">
+            + Nieuwe gebruiker
+        </a>
+
         @if(session('success'))
             <div class="mb-4 text-green-600 dark:text-green-400">
                 {{ session('success') }}
@@ -39,12 +45,12 @@
                         <td class="p-4">
                             @if($user->is_admin)
                                 <span class="text-green-600 dark:text-green-400 font-semibold">
-                                        Admin
-                                    </span>
+                                    Admin
+                                </span>
                             @else
                                 <span class="text-gray-600 dark:text-gray-400">
-                                        User
-                                    </span>
+                                    User
+                                </span>
                             @endif
                         </td>
                         <td class="p-4">
