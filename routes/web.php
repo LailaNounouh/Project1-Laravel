@@ -60,8 +60,7 @@ Route::middleware(['auth', \App\Http\Middleware\IsAdmin::class])
         Route::get('/users', [AdminUserController::class, 'index'])->name('users.index');
         Route::get('/users/create', [AdminUserController::class, 'create'])->name('users.create');
         Route::post('/users', [AdminUserController::class, 'store'])->name('users.store');
-        Route::post('/users/{user}/toggle-admin', [AdminUserController::class, 'toggleAdmin'])
-            ->name('users.toggle-admin');
+        Route::post('/users/{user}/toggle-admin', [AdminUserController::class, 'toggleAdmin'])->name('users.toggle-admin');
     });
 
 require __DIR__ . '/auth.php';
