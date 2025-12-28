@@ -54,7 +54,7 @@
                             @endif
                         </td>
                         <td class="p-4">
-                            <form method="POST" action="{{ route('admin.users.toggleAdmin', $user) }}">
+                            <form method="POST" action="{{ route('admin.users.toggle-admin', $user) }}">
                                 @csrf
                                 @method('PATCH')
 
