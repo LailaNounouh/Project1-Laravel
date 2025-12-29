@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contact;
+use App\Mail\ContactMessageMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -19,24 +20,21 @@ class ContactController extends Controller
         $data = $request->validate([
             'name'    => ['required', 'string', 'max:255'],
             'email'   => ['required', 'email'],
-            'message' => ['required', 'string', 'min:10'],
+            'message' => ['required', 'string'],
         ]);
 
 
-        Contact::create($data);
+        $contact = Contact::create($data);
 
 
-        $body = "Nieuw bericht via GlamConnect contactformulier:\n\n"
-            . "Naam: {$data['name']}\n"
-            . "E-mail: {$data['email']}\n\n"
-            . "Bericht:\n{$data['message']}\n";
-
-        Mail::raw($body, function ($message) {
-            $message->to('admin@ehb.be')
-                ->subject('Nieuw GlamConnect contactbericht');
-        });
+        Mail::to('admin@ehb.be')->send(
+            new ContactMessageMail($contact)
+        );
 
 
-        return back()->with('success', 'Bedankt voor je bericht! We hebben het goed ontvangen. 💌');
+        return back()->with(
+            'success',
+            'Bedankt voor je bericht! We hebben het goed ontvangen. 💌'
+        );
     }
 }
