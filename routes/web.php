@@ -36,6 +36,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 
+    // ✅ TOEGEVOEGD: wachtwoord updaten
+    Route::post('/profile/password', [ProfileController::class, 'updatePassword'])
+        ->name('profile.password.update');
+
     Route::post('/news/{news}/comments', [CommentController::class, 'store'])->name('comments.store');
 });
 
