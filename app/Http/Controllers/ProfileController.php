@@ -32,6 +32,10 @@ class ProfileController extends Controller
             'email' => 'required|email',
             'bio' => 'nullable|string',
             'profile_photo' => 'nullable|image|max:2048',
+
+
+            'category_ids' => ['array'],
+            'category_ids.*' => ['integer', 'exists:categories,id'],
         ]);
 
         if ($request->hasFile('profile_photo')) {
@@ -39,11 +43,18 @@ class ProfileController extends Controller
             $data['profile_photo'] = $path;
         }
 
+
+        unset($data['category_ids']);
+
         $user->update($data);
+
+
+        $user->categories()->sync(
+            $request->input('category_ids', [])
+        );
 
         return back()->with('success', 'Je profiel is bijgewerkt 💖');
     }
-
 
     public function updatePassword(Request $request)
     {
