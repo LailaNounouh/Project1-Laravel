@@ -10,39 +10,49 @@ class FaqSeeder extends Seeder
 {
     public function run(): void
     {
-        $algemeen = Category::where('name', 'Algemeen')->first();
-        $profielen = Category::where('name', 'Profielen')->first();
-        $accounts = Category::where('name', 'Accounts')->first();
+        $glamLook = Category::where('name', 'Glam Look')->first();
+        $account = Category::where('name', 'Account')->first();
+        $tutorials = Category::where('name', 'Tutorials')->first();
         $samenwerkingen = Category::where('name', 'Samenwerkingen')->first();
 
         $faqs = [
             [
                 'question' => 'Wat is GlamConnect?',
-                'answer' => 'GlamConnect is een creatief platform waar make-up artists, hairstylists en andere creatives hun werk tonen en connecteren.',
-                'category_id' => $algemeen->id,
+                'answer' => 'GlamConnect is een creatief platform waar beauty professionals hun werk tonen en connecteren.',
+                'category' => $glamLook,
             ],
             [
                 'question' => 'Wie kan een profiel aanmaken?',
-                'answer' => 'Iedere creatieve professional zoals make-up artists, hairstylists en nail artists kan zich registreren.',
-                'category_id' => $profielen->id,
+                'answer' => 'Make-up artists, hairstylists en nail artists kunnen zich registreren.',
+                'category' => $account,
             ],
             [
                 'question' => 'Is GlamConnect gratis?',
-                'answer' => 'Ja, GlamConnect is volledig gratis voor creatives.',
-                'category_id' => $accounts->id,
+                'answer' => 'Ja, GlamConnect is gratis voor creatives.',
+                'category' => $account,
+            ],
+            [
+                'question' => 'Zijn er tutorials beschikbaar?',
+                'answer' => 'Ja, creators kunnen tutorials delen over make-up, haar en skincare.',
+                'category' => $tutorials,
             ],
             [
                 'question' => 'Hoe kan ik samenwerken met een artist?',
                 'answer' => 'Gebruik het contactformulier om een samenwerking of boeking te bespreken.',
-                'category_id' => $samenwerkingen->id,
+                'category' => $samenwerkingen,
             ],
         ];
 
-        foreach ($faqs as $faq) {
-            Faq::updateOrCreate(
-                ['question' => $faq['question']],
-                $faq
-            );
+        foreach ($faqs as $item) {
+            if ($item['category']) {
+                Faq::updateOrCreate(
+                    ['question' => $item['question']],
+                    [
+                        'answer' => $item['answer'],
+                        'category_id' => $item['category']->id,
+                    ]
+                );
+            }
         }
     }
 }

@@ -44,7 +44,9 @@ class NewsSeeder extends Seeder
 
                 <p><em>Mis geen toekomstige events en schrijf je in via onze contactpagina.</em></p>
                 ',
+
                 'image' => 'news/sample.png',
+
             ],
 
 
@@ -67,7 +69,9 @@ class NewsSeeder extends Seeder
 
                 <p>Ideaal voor laatstejaarsstudenten en starters die hun eerste stappen zetten op de arbeidsmarkt.</p>
                 ',
+
                 'image' => 'news/sample2.png',
+
             ],
 
 
@@ -89,6 +93,7 @@ class NewsSeeder extends Seeder
                 <p>Neem je cv mee en wie weet vertrek je met een stageplaats én een frisse look.</p>
                 ',
                 'image' => 'news/sample1.png',
+
             ],
 
 
@@ -112,6 +117,7 @@ class NewsSeeder extends Seeder
                 <p>Focus op hydraterende serums, barrier repair crèmes en SPF — ook in de winter.</p>
                 ',
                 'image' => 'news/sample3.jpg',
+
             ],
 
             [
@@ -132,6 +138,7 @@ class NewsSeeder extends Seeder
                 <p>Denk aan babyblauw, poederroze en minimalistische snits.</p>
                 ',
                 'image' => 'news/sample4.png',
+
             ],
 
 
@@ -153,7 +160,73 @@ class NewsSeeder extends Seeder
                 <p>Werk overal efficiënt én in stijl, zonder compromissen.</p>
                 ',
                 'image' => 'news/sample5.jpg',
+
             ],
+            [
+                'title' => 'Clean Girl Make-Up: waarom minimalisme blijft scoren',
+                'content' => '
+        <p><strong>Minder make-up, meer uitstraling.</strong></p>
+
+        <p>De clean girl look blijft razend populair dankzij haar frisse, natuurlijke uitstraling.</p>
+
+        <h2>Wat maakt deze look zo sterk?</h2>
+
+        <ul>
+            <li>Glowy skin met minimale producten</li>
+            <li>Subtiele blush en lipgloss</li>
+            <li>Natuurlijke brows en zachte highlights</li>
+        </ul>
+
+        <p>Perfect voor everyday looks én professionele settings.</p>
+    ',
+                'image' => 'news/clean-girl.png',
+
+            ],
+            [
+                'title' => '5 Bridal Make-Up Trends voor 2026',
+                'content' => '
+        <p><strong>Stralen op je grote dag.</strong></p>
+
+        <p>Bridal make-up evolueert richting zachtere looks met een focus op natuurlijke schoonheid.</p>
+
+        <h2>Trending bij bridal artists</h2>
+
+        <ul>
+            <li>Soft glam met warme tinten</li>
+            <li>Glowy skin zonder heavy contour</li>
+            <li>Natuurlijke lashes en glossy lips</li>
+        </ul>
+
+        <p>Less is more blijft ook in 2026 de sleutel.</p>
+    ',
+
+                'image' => 'news/bridal-makeup.png',
+
+            ],
+            [
+                'title' => 'Glass Hair: de haartrend die social media verovert',
+                'content' => '
+        <p><strong>Ultieme glans, strak afgewerkt.</strong></p>
+
+        <p>Glass hair staat voor gezond, spiegelglad haar en blijft een favoriet bij hairstylists.</p>
+
+        <h2>Waarom glass hair zo populair is</h2>
+
+        <ul>
+            <li>Perfect afgewerkte snit</li>
+            <li>Intense glans dankzij stylingproducten</li>
+            <li>Ideaal voor fotoshoots en events</li>
+        </ul>
+
+        <p>Een trend die luxe en eenvoud combineert.</p>
+    ',
+
+                'image' => 'news/glass-hair.png',
+
+            ],
+
+
+
         ];
 
         foreach ($items as $item) {

@@ -16,11 +16,24 @@ return new class extends Migration
             $table->string('title');
             $table->text('content');
             $table->string('image')->nullable();
-            $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
+
+            // ✅ auteur van het nieuws
+            $table->foreignId('user_id')
+                ->nullable()
+                ->constrained()
+                ->nullOnDelete();
+
+            // ✅ categorie (DIT ONTBRAK)
+            $table->foreignId('category_id')
+                ->nullable()
+                ->constrained()
+                ->nullOnDelete();
+
+            // ✅ publicatiedatum (DIT ONTBRAK)
+            $table->timestamp('published_at')->nullable();
+
             $table->timestamps();
         });
-
-
     }
 
     /**

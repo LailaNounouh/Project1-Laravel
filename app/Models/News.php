@@ -15,6 +15,11 @@ class News extends Model
         'image',
         'published_at',
         'user_id',
+        'category_id',
+    ];
+
+    protected $casts = [
+        'published_at' => 'datetime',
     ];
 
     public function user()
