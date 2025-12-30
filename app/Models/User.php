@@ -56,4 +56,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(Comment::class);
     }
+
+
+    public function categories()
+    {
+        return $this->belongsToMany(\App\Models\Category::class)
+            ->withTimestamps();
+    }
 }

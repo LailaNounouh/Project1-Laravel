@@ -12,11 +12,16 @@ class Category extends Model
 
     protected $fillable = ['name'];
 
+
     public function news()
     {
         return $this->hasMany(News::class);
     }
 
+
+    public function users()
+    {
+        return $this->belongsToMany(\App\Models\User::class)
+            ->withTimestamps();
+    }
 }
-
-
