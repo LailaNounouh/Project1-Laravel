@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -14,10 +15,12 @@ class ProfileController extends Controller
         return view('profile.show', compact('user'));
     }
 
-    public function edit()
+    public function edit(Request $request)
     {
-        $user = Auth::user();
-        return view('profile.edit', compact('user'));
+        return view('profile.edit', [
+            'user' => $request->user(),
+            'categories' => Category::orderBy('name')->get(),
+        ]);
     }
 
     public function update(Request $request)
@@ -28,7 +31,7 @@ class ProfileController extends Controller
             'name' => 'required|string',
             'email' => 'required|email',
             'bio' => 'nullable|string',
-            'profile_photo' => 'nullable|image|max:2048'
+            'profile_photo' => 'nullable|image|max:2048',
         ]);
 
         if ($request->hasFile('profile_photo')) {
@@ -41,7 +44,7 @@ class ProfileController extends Controller
         return back()->with('success', 'Je profiel is bijgewerkt 💖');
     }
 
-    // ✅ NIEUW: wachtwoord updaten
+
     public function updatePassword(Request $request)
     {
         $request->validate([

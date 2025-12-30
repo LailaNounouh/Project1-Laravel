@@ -50,6 +50,39 @@
                                  rounded p-2 dark:bg-gray-700 dark:text-gray-100">{{ old('bio', $user->bio) }}</textarea>
             </div>
 
+            {{-- ===================== --}}
+            {{-- 🌸 INTERESSES --}}
+            {{-- ===================== --}}
+
+            <div class="mt-6">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                    Interesses
+                </h3>
+
+                <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">
+                    Kies categorieën die passen bij jouw stijl.
+                </p>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    @foreach ($categories as $category)
+                        <label class="flex items-center gap-2 p-3 rounded-lg border border-gray-200 dark:border-gray-700">
+                            <input
+                                type="checkbox"
+                                name="category_ids[]"
+                                value="{{ $category->id }}"
+                                class="rounded border-gray-300 text-pink-500 focus:ring-pink-500"
+                                {{ $user->categories->contains($category->id) ? 'checked' : '' }}
+                            >
+                            <span class="text-gray-800 dark:text-gray-200">
+                                {{ $category->name }}
+                            </span>
+                        </label>
+                    @endforeach
+                </div>
+            </div>
+
+            {{-- ===================== --}}
+
             <div>
                 <label class="block font-semibold mb-1">Profielfoto</label>
                 <input type="file"
