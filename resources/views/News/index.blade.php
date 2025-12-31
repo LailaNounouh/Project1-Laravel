@@ -16,6 +16,25 @@
             Ontdek make-up, glam & beauty inspiratie van creatives binnen GlamConnect.
         </p>
 
+        <!-- ✅ Zoekbalk -->
+        <form method="GET"
+              action="{{ route('news.index') }}"
+              class="mb-6 flex gap-2">
+            <input
+                type="text"
+                name="q"
+                value="{{ request('q') }}"
+                placeholder="Zoek in nieuws..."
+                class="w-full border border-gray-300 rounded px-3 py-2"
+            >
+
+            <button
+                type="submit"
+                class="bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600">
+                Zoeken
+            </button>
+        </form>
+
         @if ($news->isEmpty())
             <p class="text-gray-500">Geen nieuws gevonden.</p>
         @else
@@ -44,7 +63,6 @@
                                     {{ $item->title }}
                                 </h3>
 
-                                {{-- 🔒 HTML-vrije preview (BELANGRIJK) --}}
                                 <p class="text-sm text-gray-500 leading-relaxed mb-4">
                                     {{ \Illuminate\Support\Str::limit(strip_tags($item->content), $index === 0 ? 160 : 100) }}
                                 </p>
