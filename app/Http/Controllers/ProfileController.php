@@ -32,7 +32,7 @@ class ProfileController extends Controller
             'email' => 'required|email',
             'bio' => 'nullable|string',
             'profile_photo' => 'nullable|image|max:2048',
-
+            'birthday' => ['nullable', 'date'],
 
             'category_ids' => ['array'],
             'category_ids.*' => ['integer', 'exists:categories,id'],
@@ -43,11 +43,9 @@ class ProfileController extends Controller
             $data['profile_photo'] = $path;
         }
 
-
         unset($data['category_ids']);
 
         $user->update($data);
-
 
         $user->categories()->sync(
             $request->input('category_ids', [])
