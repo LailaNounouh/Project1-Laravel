@@ -13,9 +13,8 @@ class NewsSeeder extends Seeder
     {
         dump('NewsSeeder running');
 
-        DB::table('news')->truncate();
 
-        $user = User::first();
+        $user = User::where('email', 'admin@ehb.be')->first();
         if (!$user) {
             return;
         }
