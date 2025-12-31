@@ -18,19 +18,28 @@
                      class="w-28 h-28 rounded-full object-cover shadow" />
 
                 <div>
-                    <h2 class="text-xl font-semibold text-gray-900 dark:text-gray-100">{{ $user->name }}</h2>
-                    <p class="text-gray-600 dark:text-gray-300">{{ $user->email }}</p>
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-gray-100">
+                        {{ $user->name }}
+                    </h2>
+
+                    <p class="text-gray-600 dark:text-gray-300">
+                        {{ $user->email }}
+                    </p>
 
                     @if($user->birthday)
                         <p class="text-gray-700 dark:text-gray-300 mt-2">
-                            <strong>Verjaardag:</strong> {{ $user->birthday->format('d/m/Y') }}
+                            <strong>Verjaardag:</strong>
+                            {{ $user->birthday->format('d/m/Y') }}
                         </p>
                     @endif
                 </div>
             </div>
 
             <div class="mt-6">
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-1">Bio</h3>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-1">
+                    Bio
+                </h3>
+
                 <p class="text-gray-700 dark:text-gray-300">
                     {{ $user->bio ?? 'Geen bio toegevoegd.' }}
                 </p>
@@ -43,4 +52,3 @@
         </div>
     </div>
 </x-app-layout>
-
