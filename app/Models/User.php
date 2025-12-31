@@ -22,6 +22,7 @@ class User extends Authenticatable
         'is_admin',
         'bio',
         'profile_photo',
+        'birthday',
     ];
 
     /**
@@ -43,20 +44,18 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'string',
         'is_admin' => 'boolean',
+        'birthday' => 'date',
     ];
-
 
     public function news()
     {
         return $this->hasMany(News::class);
     }
 
-
     public function comments()
     {
         return $this->hasMany(Comment::class);
     }
-
 
     public function categories()
     {
