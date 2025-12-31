@@ -23,18 +23,14 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-
         User::factory()->count(5)->create();
 
-
         $this->call([
-            AdminUserSeeder::class,
             CategorySeeder::class,
             NewsSeeder::class,
             FaqSeeder::class,
             CommentSeeder::class,
         ]);
-
 
         $categoryIds = Category::pluck('id')->toArray();
 
