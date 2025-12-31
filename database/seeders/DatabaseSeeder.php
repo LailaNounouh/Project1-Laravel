@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             NewsSeeder::class,
             FaqSeeder::class,
-            CommentSeeder::class,
+
         ]);
 
         $categoryIds = Category::pluck('id')->toArray();
