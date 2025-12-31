@@ -43,6 +43,16 @@
                               rounded p-2 dark:bg-gray-700 dark:text-gray-100">
             </div>
 
+            {{-- 🌸 VERJAARDAG --}}
+            <div>
+                <label class="block font-semibold mb-1">Verjaardag</label>
+                <input type="date"
+                       name="birthday"
+                       value="{{ old('birthday', optional($user->birthday)->format('Y-m-d')) }}"
+                       class="w-full border border-gray-300 dark:border-gray-600
+                              rounded p-2 dark:bg-gray-700 dark:text-gray-100">
+            </div>
+
             <div>
                 <label class="block font-semibold mb-1">Bio</label>
                 <textarea name="bio" rows="4"
@@ -161,4 +171,3 @@
 
     </div>
 </x-app-layout>
-
