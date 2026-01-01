@@ -48,6 +48,11 @@ Route::middleware(['auth', \App\Http\Middleware\IsAdmin::class])
     ->name('admin.')
     ->group(function () {
 
+
+        Route::get('/dashboard', function () {
+            return view('admin.dashboard');
+        })->name('dashboard');
+
         Route::get('/news/create', [NewsController::class, 'create'])->name('news.create');
         Route::post('/news', [NewsController::class, 'store'])->name('news.store');
         Route::get('/news/{news}/edit', [NewsController::class, 'edit'])->name('news.edit');
