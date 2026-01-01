@@ -26,7 +26,12 @@ Route::post('/faq/question', [FaqQuestionController::class, 'store'])->name('faq
 Route::get('/contact', [ContactController::class, 'create'])->name('contact.create');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
+
 Route::get('/dashboard', function () {
+    if (auth()->check() && auth()->user()->is_admin) {
+        return redirect()->route('admin.dashboard');
+    }
+
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -36,7 +41,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 
-    // ✅ TOEGEVOEGD: wachtwoord updaten
+
     Route::post('/profile/password', [ProfileController::class, 'updatePassword'])
         ->name('profile.password.update');
 
@@ -47,7 +52,6 @@ Route::middleware(['auth', \App\Http\Middleware\IsAdmin::class])
     ->prefix('admin')
     ->name('admin.')
     ->group(function () {
-
 
         Route::get('/dashboard', function () {
             return view('admin.dashboard');
