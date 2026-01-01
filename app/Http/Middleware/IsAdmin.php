@@ -9,10 +9,15 @@ class IsAdmin
 {
     public function handle($request, Closure $next)
     {
-        if (!auth()->check() || (int) auth()->user()->is_admin !== 1) {
-            abort(404);
+        if (!auth()->check()) {
+            return redirect()->route('login');
+        }
+
+        if (!auth()->user()->is_admin) {
+            abort(403);
         }
 
         return $next($request);
     }
+
 }
