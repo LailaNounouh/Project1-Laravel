@@ -11,7 +11,11 @@
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
 
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+
+                    <x-nav-link
+                        :href="Auth::check() && Auth::user()->is_admin ? route('admin.dashboard') : route('dashboard')"
+                        :active="request()->routeIs('dashboard') || request()->routeIs('admin.dashboard')"
+                    >
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
