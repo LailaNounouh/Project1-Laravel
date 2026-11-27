@@ -16,7 +16,7 @@ jobs:
     name: Secrets (gitleaks)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0          # scan the full git history
       - uses: gitleaks/gitleaks-action@v2
@@ -29,14 +29,14 @@ jobs:
     container:
       image: semgrep/semgrep
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - run: semgrep scan --config p/php --config r/php.laravel --config p/secrets --error --exclude vendor --exclude node_modules --exclude security-reports --exclude final-submission
 
   sca:
     name: SCA (composer audit + npm audit)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.4'
