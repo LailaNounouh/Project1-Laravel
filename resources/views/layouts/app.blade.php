@@ -9,7 +9,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <!-- Dark mode init -->
-    <script>
+    <script nonce="{{ Vite::cspNonce() }}">
         const theme = localStorage.getItem('theme');
         if (theme === 'dark') {
             document.documentElement.classList.add('dark');
@@ -38,7 +38,7 @@
 </div>
 
 <!-- Dark mode toggle -->
-<script>
+<script nonce="{{ Vite::cspNonce() }}">
     function toggleTheme() {
         const html = document.documentElement;
 

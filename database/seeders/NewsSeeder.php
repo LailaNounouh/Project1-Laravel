@@ -14,7 +14,7 @@ class NewsSeeder extends Seeder
         dump('NewsSeeder running');
 
 
-        $user = User::where('email', 'admin@ehb.be')->first();
+        $user = User::where('email', env('ADMIN_EMAIL', 'admin@ehb.be'))->first();
         if (!$user) {
             return;
         }

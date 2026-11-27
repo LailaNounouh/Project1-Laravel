@@ -14,6 +14,7 @@
                     rounded-xl shadow p-6">
 
             <form method="POST" action="{{ route('admin.faqs.store') }}">
+                @csrf
                 @include('admin.faqs._form')
             </form>
 

@@ -55,7 +55,7 @@
 
             <div class="hidden sm:flex sm:items-center sm:space-x-4">
 
-                <button onclick="toggleTheme()"
+                <button @click="toggleTheme()"
                         class="px-3 py-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition">
                     🌙
                 </button>
@@ -83,7 +83,7 @@
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
                                 <x-dropdown-link :href="route('logout')"
-                                                 onclick="event.preventDefault(); this.closest('form').submit();">
+                                                 @click.prevent="$el.closest('form').submit()">
                                     {{ __('Log Out') }}
                                 </x-dropdown-link>
                             </form>
@@ -157,7 +157,7 @@
 
             <div class="px-4 py-2">
                 <button
-                    onclick="toggleTheme()"
+                    @click="toggleTheme()"
                     class="w-full px-3 py-2 rounded text-sm bg-gray-200 dark:bg-gray-700 dark:text-gray-100
                            hover:bg-gray-300 dark:hover:bg-gray-600 transition"
                 >
@@ -168,7 +168,7 @@
     </div>
 </nav>
 
-<script>
+<script nonce="{{ Vite::cspNonce() }}">
     function toggleTheme() {
         const html = document.documentElement;
 

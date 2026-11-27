@@ -46,8 +46,8 @@ class NewsController extends Controller
 
         $data = $request->validate([
             'title'   => ['required', 'string', 'max:255'],
-            'content' => ['required', 'string'],
-            'image'   => ['nullable', 'image', 'max:2048'],
+            'content' => ['required', 'string', 'max:20000'],
+            'image'   => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
         ]);
 
         if ($request->hasFile('image')) {
@@ -74,8 +74,8 @@ class NewsController extends Controller
 
         $data = $request->validate([
             'title'   => ['required', 'string', 'max:255'],
-            'content' => ['required', 'string'],
-            'image'   => ['nullable', 'image', 'max:2048'],
+            'content' => ['required', 'string', 'max:20000'],
+            'image'   => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
         ]);
 
         if ($request->hasFile('image')) {
@@ -101,6 +101,12 @@ class NewsController extends Controller
         }
 
         $news->delete();
+
+        \Illuminate\Support\Facades\Log::channel('security')->notice('admin.news_deleted', [
+            'admin_id' => Auth::id(),
+            'news_id' => $news->id,
+            'ip' => request()->ip(),
+        ]);
 
         return redirect()
             ->route('news.index')

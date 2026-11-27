@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+// Security fix: users must verify their e-mail address (also after changing it).
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable;
 
@@ -19,7 +21,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'is_admin',
+        // Security fix: 'is_admin' removed from $fillable to prevent mass-assignment
+        // privilege escalation. It is now only set explicitly via forceFill() by admins.
         'bio',
         'profile_photo',
         'birthday',

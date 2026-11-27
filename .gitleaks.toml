@@ -1,0 +1,12 @@
+# gitleaks configuration: default rules + a project rule for hard-coded passwords in PHP (e.g. seeders)
+[extend]
+useDefault = true
+
+[[rules]]
+id = "php-hardcoded-password"
+description = "Hard-coded password passed to Hash::make() or bcrypt()"
+regex = '''(?i)(Hash::make|bcrypt)\(\s*['"][^'"]{6,}['"]\s*\)'''
+keywords = ["hash::make", "bcrypt"]
+
+[allowlist]
+paths = ['''vendor/''', '''node_modules/''', '''public/build/''']

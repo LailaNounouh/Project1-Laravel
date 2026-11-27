@@ -20,11 +20,12 @@ Route::get('/news/{news}', [NewsController::class, 'show'])->name('news.show');
 
 Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
 
-Route::post('/faq', [FaqController::class, 'store'])->name('faq.store');
-Route::post('/faq/question', [FaqQuestionController::class, 'store'])->name('faq.question.store');
+// Security fix: public forms are rate limited (see 'public-forms' limiter in AppServiceProvider)
+Route::post('/faq', [FaqController::class, 'store'])->middleware('throttle:public-forms')->name('faq.store');
+Route::post('/faq/question', [FaqQuestionController::class, 'store'])->middleware('throttle:public-forms')->name('faq.question.store');
 
 Route::get('/contact', [ContactController::class, 'create'])->name('contact.create');
-Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+Route::post('/contact', [ContactController::class, 'store'])->middleware('throttle:public-forms')->name('contact.store');
 
 
 Route::get('/dashboard', function () {
@@ -43,9 +44,10 @@ Route::middleware('auth')->group(function () {
 
 
     Route::post('/profile/password', [ProfileController::class, 'updatePassword'])
+        ->middleware('throttle:6,1')
         ->name('profile.password.update');
 
-    Route::post('/news/{news}/comments', [CommentController::class, 'store'])->name('comments.store');
+    Route::post('/news/{news}/comments', [CommentController::class, 'store'])->middleware('throttle:comments')->name('comments.store');
 });
 
 Route::middleware(['auth', \App\Http\Middleware\IsAdmin::class])

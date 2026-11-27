@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Category;
 
@@ -15,13 +14,8 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
-        User::firstOrCreate(
-            ['email' => 'admin@ehb.be'],
-            [
-                'name' => 'admin',
-                'password' => Hash::make('Password!321'),
-            ]
-        );
+        // Admin account: credentials come from .env (see AdminUserSeeder), not from source code.
+        $this->call(AdminUserSeeder::class);
 
         User::factory()->count(5)->create();
 

@@ -1,4 +1,3 @@
-@csrf
 
 <div class="space-y-4">
 

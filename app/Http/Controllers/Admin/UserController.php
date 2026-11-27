@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Support\Facades\Log;
+
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -26,6 +28,14 @@ class UserController extends Controller
         $user->is_admin = ! $user->is_admin;
         $user->save();
 
+        // Security logging: privilege changes must be traceable (non-repudiation).
+        Log::channel('security')->warning('admin.role_changed', [
+            'admin_id' => auth()->id(),
+            'target_user_id' => $user->id,
+            'is_admin' => $user->is_admin,
+            'ip' => request()->ip(),
+        ]);
+
         return back()->with('success', 'Admin-rechten bijgewerkt.');
     }
 
@@ -41,15 +51,23 @@ class UserController extends Controller
         $data = $request->validate([
             'name'      => ['required', 'string', 'max:255'],
             'email'     => ['required', 'email', 'max:255', 'unique:users,email'],
-            'password'  => ['required', 'string', 'min:8'],
-            'is_admin'  => ['nullable'],
+            'password'  => ['required', 'string', \Illuminate\Validation\Rules\Password::min(12)->mixedCase()->numbers()->uncompromised()],
+            'is_admin'  => ['nullable', 'boolean'],
         ]);
 
-        User::create([
+        $user = User::create([
             'name'      => $data['name'],
             'email'     => $data['email'],
             'password'  => Hash::make($data['password']),
-            'is_admin'  => $request->boolean('is_admin'),
+        ]);
+        // is_admin is not mass-assignable: set it explicitly.
+        $user->forceFill(['is_admin' => $request->boolean('is_admin')])->save();
+
+        Log::channel('security')->notice('admin.user_created', [
+            'admin_id' => auth()->id(),
+            'new_user_id' => $user->id,
+            'is_admin' => $user->is_admin,
+            'ip' => $request->ip(),
         ]);
 
         return redirect()

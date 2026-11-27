@@ -14,6 +14,7 @@
                     rounded-xl shadow p-6">
 
             <form method="POST" action="{{ route('admin.faqs.update', $faq) }}">
+                @csrf
                 @method('PUT')
                 @include('admin.faqs._form')
             </form>

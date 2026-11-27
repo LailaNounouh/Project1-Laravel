@@ -61,7 +61,7 @@
                                 <form action="{{ route('admin.contacts.destroy', $contact) }}"
                                       method="POST"
                                       class="inline"
-                                      onsubmit="return confirm('Weet je zeker dat je dit bericht wilt verwijderen?')">
+                                      x-data @submit="if (!confirm('Weet je zeker dat je dit bericht wilt verwijderen?')) $event.preventDefault()">
 
                                     @csrf
                                     @method('DELETE')

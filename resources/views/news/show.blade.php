@@ -23,7 +23,8 @@
             @endif
 
             <div class="prose dark:prose-invert max-w-none">
-                {!! $news->content !!}
+                {{-- Security fix: content is HTML-escaped with e() before nl2br() to prevent stored XSS --}}
+                {!! nl2br(e($news->content)) !!}
             </div>
 
             <p class="text-sm text-gray-500 dark:text-gray-400 mt-6">

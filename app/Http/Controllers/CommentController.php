@@ -11,7 +11,7 @@ class CommentController extends Controller
     public function store(Request $request, News $news)
     {
         $request->validate([
-            'content' => 'required|string|min:3',
+            'content' => 'required|string|min:3|max:2000',
         ]);
 
         Comment::create([

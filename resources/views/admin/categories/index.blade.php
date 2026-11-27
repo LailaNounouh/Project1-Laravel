@@ -53,7 +53,7 @@
                         <form action="{{ route('admin.categories.destroy', $category) }}"
                               method="POST"
                               class="inline"
-                              onsubmit="return confirm('Weet je zeker dat je deze categorie wil verwijderen?')">
+                              x-data @submit="if (!confirm('Weet je zeker dat je deze categorie wil verwijderen?')) $event.preventDefault()">
 
                             @csrf
                             @method('DELETE')

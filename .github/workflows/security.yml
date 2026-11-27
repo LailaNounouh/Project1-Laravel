@@ -1,0 +1,49 @@
+# Security pipeline (assignment Software Security): runs on every push and pull request.
+name: security
+
+on:
+  push:
+    branches: [main, security-assignment]
+  pull_request:
+  schedule:
+    - cron: '0 6 * * 1'   # weekly, to catch newly published CVEs in unchanged dependencies
+
+permissions:
+  contents: read
+
+jobs:
+  secrets-scan:
+    name: Secrets (gitleaks)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0          # scan the full git history
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  sast:
+    name: SAST (Semgrep)
+    runs-on: ubuntu-latest
+    container:
+      image: semgrep/semgrep
+    steps:
+      - uses: actions/checkout@v4
+      - run: semgrep scan --config p/php --config r/php.laravel --config p/secrets --error --exclude vendor --exclude node_modules --exclude security-reports --exclude final-submission
+
+  sca:
+    name: SCA (composer audit + npm audit)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: composer install --no-interaction --no-progress
+      - run: composer audit
+      - run: npm ci
+      - run: npm audit --audit-level=high

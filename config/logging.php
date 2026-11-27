@@ -52,6 +52,17 @@ return [
 
     'channels' => [
 
+        // Dedicated security audit log (auth events, authorization failures, admin actions,
+        // rate-limit hits). Kept 90 days; ship to a SIEM / log platform in production.
+        'security' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/security.log'),
+            'level' => env('LOG_SECURITY_LEVEL', 'info'),
+            'days' => 90,
+            'replace_placeholders' => true,
+            'formatter' => Monolog\Formatter\JsonFormatter::class,
+        ],
+
         'stack' => [
             'driver' => 'stack',
             'channels' => explode(',', (string) env('LOG_STACK', 'single')),
