@@ -54,7 +54,7 @@
                         <form action="{{ route('admin.faqs.destroy', $faq) }}"
                               method="POST"
                               class="inline"
-                              onsubmit="return confirm('Zeker weten?')">
+                              x-data @submit="if (!confirm('Zeker weten?')) $event.preventDefault()">
                             @csrf
                             @method('DELETE')
 

@@ -27,7 +27,7 @@ class FaqController extends Controller
     {
 
         $data = $request->validate([
-            'question' => ['required', 'string', 'min:5'],
+            'question' => ['required', 'string', 'min:5', 'max:2000'],
         ]);
 
 

@@ -17,14 +17,15 @@ test('profile information can be updated', function () {
 
     $response = $this
         ->actingAs($user)
-        ->patch('/profile', [
+        ->from('/profile/edit')
+        ->post('/profile/update', [
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
 
     $response
         ->assertSessionHasNoErrors()
-        ->assertRedirect('/profile');
+        ->assertRedirect('/profile/edit');
 
     $user->refresh();
 
@@ -38,48 +39,31 @@ test('email verification status is unchanged when the email address is unchanged
 
     $response = $this
         ->actingAs($user)
-        ->patch('/profile', [
+        ->from('/profile/edit')
+        ->post('/profile/update', [
             'name' => 'Test User',
             'email' => $user->email,
         ]);
 
     $response
         ->assertSessionHasNoErrors()
-        ->assertRedirect('/profile');
+        ->assertRedirect('/profile/edit');
 
     $this->assertNotNull($user->refresh()->email_verified_at);
 });
 
-test('user can delete their account', function () {
+// Self-service account deletion (DELETE /profile) and Breeze PATCH /profile are intentionally
+// not implemented in routes/web.php or ProfileController; verify they remain disabled (405).
+test('legacy Breeze PATCH and DELETE /profile endpoints are disabled', function () {
     $user = User::factory()->create();
 
-    $response = $this
-        ->actingAs($user)
-        ->delete('/profile', [
-            'password' => 'password',
-        ]);
+    $this->actingAs($user)
+        ->patch('/profile', ['name' => 'Test', 'email' => 'new@example.com'])
+        ->assertStatus(405);
 
-    $response
-        ->assertSessionHasNoErrors()
-        ->assertRedirect('/');
-
-    $this->assertGuest();
-    $this->assertNull($user->fresh());
-});
-
-test('correct password must be provided to delete account', function () {
-    $user = User::factory()->create();
-
-    $response = $this
-        ->actingAs($user)
-        ->from('/profile')
-        ->delete('/profile', [
-            'password' => 'wrong-password',
-        ]);
-
-    $response
-        ->assertSessionHasErrorsIn('userDeletion', 'password')
-        ->assertRedirect('/profile');
+    $this->actingAs($user)
+        ->delete('/profile', ['password' => 'password'])
+        ->assertStatus(405);
 
     $this->assertNotNull($user->fresh());
 });

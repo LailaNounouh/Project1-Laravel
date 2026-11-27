@@ -22,3 +22,10 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+# Generated framework cache (machine-specific, should not be in version control)
+/bootstrap/cache/*.php
+# Local databases and secrets
+*.sqlite
+.env.*
+!.env.example

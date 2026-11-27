@@ -14,6 +14,7 @@
                     rounded-lg shadow-sm p-6">
 
             <form method="POST" action="{{ route('admin.categories.store') }}">
+                @csrf
                 @include('admin.categories._form')
             </form>
 

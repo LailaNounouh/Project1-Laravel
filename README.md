@@ -45,9 +45,9 @@ php artisan serve
 
 
 
-### 7. Testadmin
-**E-mail:** admin@ehb.be  
-**Wachtwoord:** Password!321
+### 7. Administratoraccount aanmaken (lokaal)
+Standaard admin-wachtwoorden worden **niet** meer in code of documentatie opgeslagen.  
+Stel optioneel `ADMIN_EMAIL` (standaard `admin@ehb.be`) en een sterk eigen `ADMIN_PASSWORD` in je lokale `.env` in vóór het seeden, of laat `ADMIN_PASSWORD=` leeg zodat `php artisan migrate:fresh --seed` eenmalig een willekeurig wachtwoord van 20 tekens in de terminal toont.
 
 ---
 

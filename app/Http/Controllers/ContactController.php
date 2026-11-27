@@ -19,15 +19,15 @@ class ContactController extends Controller
 
         $data = $request->validate([
             'name'    => ['required', 'string', 'max:255'],
-            'email'   => ['required', 'email'],
-            'message' => ['required', 'string'],
+            'email'   => ['required', 'email:rfc', 'max:255'],
+            'message' => ['required', 'string', 'max:5000'],
         ]);
 
 
         $contact = Contact::create($data);
 
 
-        Mail::to('admin@ehb.be')->send(
+        Mail::to(config('mail.admin_address'))->send(
             new ContactMessageMail($contact)
         );
 

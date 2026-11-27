@@ -110,6 +110,9 @@ return [
     |
     */
 
+    // Recipient of contact-form notifications (configured via .env, not hard-coded).
+    'admin_address' => env('MAIL_ADMIN_ADDRESS', 'admin@ehb.be'),
+
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
         'name' => env('MAIL_FROM_NAME', 'Example'),
